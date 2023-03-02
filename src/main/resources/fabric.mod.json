@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "grimoire",
+  "version": "${version}",
+  "name": "grimoire",
+  "authors": ["PhoMC"],
+  "license": "MIT License",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "dev.phomc.grimoire.Grimoire"
+    ]
+  },
+  "mixins": [
+    "grimoire.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.14",
+    "fabric": "*",
+    "minecraft": "1.19.3"
+  }
+}
