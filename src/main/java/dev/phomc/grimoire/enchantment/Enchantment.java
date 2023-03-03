@@ -4,15 +4,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
 public abstract class Enchantment {
     public static class Target {
+        public static Predicate<Item> WEAPON = item -> item instanceof SwordItem || item instanceof AxeItem;
         public static Predicate<Item> ARMOR = item -> item instanceof ArmorItem;
         public static Predicate<Item> BOOTS = ARMOR.and(item -> ((ArmorItem) item).getSlot() == EquipmentSlot.FEET);
     }

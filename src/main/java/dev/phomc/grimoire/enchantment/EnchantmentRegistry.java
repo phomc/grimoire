@@ -1,21 +1,21 @@
 package dev.phomc.grimoire.enchantment;
 
+import com.google.common.base.CaseFormat;
 import dev.phomc.grimoire.Grimoire;
-import dev.phomc.grimoire.enchantment.boots.SpringsEnchantment;
+import dev.phomc.grimoire.enchantment.weapon.ColorShuffleEnchantment;
 import net.minecraft.resources.ResourceLocation;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class EnchantmentRegistry {
     public static Map<ResourceLocation, Enchantment> ALL = new LinkedHashMap<>(); // preserve order
 
-    public static Enchantment SPRINGS;
+    public static Enchantment COLOR_SHUFFLE;
 
     public static void init() {
-        registerEnchant(SpringsEnchantment.class);
+        registerEnchant(ColorShuffleEnchantment.class);
     }
 
     private static Enchantment registerEnchant(Class<? extends Enchantment> clazz) {
@@ -27,7 +27,7 @@ public class EnchantmentRegistry {
             Enchantment instance = clazz.getDeclaredConstructor(ResourceLocation.class).newInstance(identifier);
 
             try {
-                EnchantmentRegistry.class.getDeclaredField(id.toUpperCase()).set(null, instance);
+                EnchantmentRegistry.class.getDeclaredField(CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, id)).set(null, instance);
             } catch (IllegalAccessException | NoSuchFieldException e) {
                 Grimoire.LOGGER.warn("No public field specified for enchantment '{}' ", id);
             }
