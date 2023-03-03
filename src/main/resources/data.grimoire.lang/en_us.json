@@ -1,0 +1,5 @@
+{
+  "grimoire.command.enchant.not_found": "Unknown enchantment: %s",
+  "grimoire.command.enchant.no_item": "%s is not holding any item",
+  "enchantment.grimoire.springs": "Springs"
+}

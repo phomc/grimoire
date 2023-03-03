@@ -8,7 +8,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-
+    maven { url 'https://maven.nucleoid.xyz' }
 }
 
 dependencies {
@@ -17,6 +17,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation include("fr.catcore:server-translations-api:${project.server_translations_api_version}")
 }
 
 shadowJar {

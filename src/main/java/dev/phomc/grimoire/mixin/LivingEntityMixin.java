@@ -1,6 +1,9 @@
 package dev.phomc.grimoire.mixin;
 
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
+import dev.phomc.grimoire.item.GrimoireItem;
+import dev.phomc.grimoire.item.features.EnchantmentFeature;
+import net.fabricmc.fabric.api.item.v1.FabricItemStack;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +22,7 @@ public abstract class LivingEntityMixin {
     @Inject(method = "getJumpBoostPower()D", at = @At("HEAD"), cancellable = true)
     public void getJumpBoostPower(CallbackInfoReturnable<Double> info) {
         ItemStack item = getItemBySlot(EquipmentSlot.FEET);
-        int lv = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegistry.SPRINGS, item);
+        int lv = GrimoireItem.of(item).getEnchantmentFeature().getEnchantment(EnchantmentRegistry.SPRINGS);
         if (lv > 0) {
             info.setReturnValue(0.1d * lv);
         }

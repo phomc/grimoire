@@ -11,7 +11,7 @@ public class SpringsEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMaxLevel() {
+    public byte getMaxLevel() {
         return 2;
     }
 }

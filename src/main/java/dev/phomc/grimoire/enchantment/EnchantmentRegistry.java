@@ -6,10 +6,11 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class EnchantmentRegistry {
-    public static Map<ResourceLocation, Enchantment> ALL = new HashMap<>();
+    public static Map<ResourceLocation, Enchantment> ALL = new LinkedHashMap<>(); // preserve order
 
     public static Enchantment SPRINGS;
 

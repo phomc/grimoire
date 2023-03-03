@@ -1,5 +1,7 @@
 package dev.phomc.grimoire.enchantment;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
@@ -16,11 +18,13 @@ public abstract class Enchantment {
     }
 
     private final ResourceLocation identifier;
+    private final MutableComponent displayName;
     private final Rarity rarity;
     private final Predicate<Item> itemCheck;
 
     public Enchantment(@NotNull ResourceLocation identifier, @NotNull Rarity rarity, @NotNull Predicate<Item> itemCheck) {
         this.identifier = identifier;
+        this.displayName = Component.translatable("enchantment." + identifier.toString().replace(":", "."));
         this.rarity = rarity;
         this.itemCheck = itemCheck;
     }
@@ -28,6 +32,11 @@ public abstract class Enchantment {
     @NotNull
     public ResourceLocation getIdentifier() {
         return identifier;
+    }
+
+    @NotNull
+    public MutableComponent getDisplayName() {
+        return displayName.copy();
     }
 
     @NotNull
@@ -40,7 +49,20 @@ public abstract class Enchantment {
         return itemCheck;
     }
 
-    public int getMaxLevel() {
+    public byte getMaxLevel() {
         return 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Enchantment that = (Enchantment) o;
+        return identifier.equals(that.identifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return identifier.hashCode();
     }
 }
