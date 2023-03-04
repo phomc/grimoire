@@ -15,28 +15,11 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
-public class EnchantmentFeature implements ItemFeature, Displayable {
-    private static final String ENC_TAG = "enchant";
-    private static final String ID_TAG = "id";
-    private static final String LV_TAG = "lv";
-    private static final MutableComponent[] PREFIX_IDENTIFIER = new MutableComponent[]{
-            // &a&l&c&r
-            Component.empty().withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD),
-            Component.empty().withStyle(ChatFormatting.RED, ChatFormatting.RESET)
-    };
-    private static final Predicate<Component> PREFIX_CHECK = component -> {
-        List<Component> flatten = component.toFlatList();
-        // must have prefix + at least 1 component
-        if (flatten.size() <= PREFIX_IDENTIFIER.length) return false;
-        for (int i = 0; i < PREFIX_IDENTIFIER.length; i++) {
-            if (!flatten.get(i).equals(PREFIX_IDENTIFIER[i])) {
-                return false;
-            }
-        }
-        return true;
-    };
+public class EnchantmentFeature extends ItemFeature implements Displayable {
+    public static final String ENC_TAG = "enchant";
+    public static final String ID_TAG = "id";
+    public static final String LV_TAG = "lv";
 
     public final Map<Enchantment, Byte> enchantments = new Object2ByteLinkedOpenHashMap<>(3); // preserve order
 
@@ -46,8 +29,8 @@ public class EnchantmentFeature implements ItemFeature, Displayable {
 
     @Override
     public void load(ItemStack itemStack) {
-        CompoundTag compoundTag = itemStack.getTag();
-        if (compoundTag == null || !compoundTag.contains(ENC_TAG, Tag.TAG_COMPOUND)) return;
+        CompoundTag compoundTag = getGrimoireTag(itemStack);
+        if (compoundTag == null || !compoundTag.contains(ENC_TAG, Tag.TAG_LIST)) return;
         ListTag listTag = compoundTag.getList(ENC_TAG, Tag.TAG_COMPOUND);
         for (Tag elem : listTag) {
             if (elem instanceof CompoundTag) {
@@ -64,7 +47,7 @@ public class EnchantmentFeature implements ItemFeature, Displayable {
 
     @Override
     public void save(ItemStack itemStack) {
-        CompoundTag compoundTag = itemStack.getOrCreateTag();
+        CompoundTag compoundTag = getOrCreateGrimoireTag(itemStack);
         ListTag listTag = new ListTag();
         compoundTag.put(ENC_TAG, listTag);
         for (Map.Entry<Enchantment, Byte> e : enchantments.entrySet()) {
@@ -77,25 +60,15 @@ public class EnchantmentFeature implements ItemFeature, Displayable {
 
     @Override
     public void reset(ItemStack itemStack) {
-        itemStack.removeTagKey(ENC_TAG);
+        removeGrimoireElement(itemStack, ENC_TAG);
     }
 
     @Override
     public void displayLore(List<Component> lines) {
         for (Enchantment e : enchantments.keySet()) {
-            String lv = StringUtils.intToRoman(enchantments.get(e));
-            MutableComponent line = Component.empty();
-            for (MutableComponent mutableComponent : PREFIX_IDENTIFIER) {
-                line.append(mutableComponent);
-            }
-            MutableComponent text = Component.empty().withStyle(e.getRarity().color).append(e.getDisplayName()).append(" ").append(lv);
-            line.append(text);
-            lines.add(line);
+            String lv = " " + StringUtils.intToRoman(enchantments.get(e));
+            MutableComponent text = Component.empty().withStyle(e.getRarity().color).append(e.getDisplayName()).append(lv);
+            lines.add(text);
         }
-    }
-
-    @Override
-    public void hideLore(List<Component> lines) {
-        lines.removeIf(PREFIX_CHECK);
     }
 }
