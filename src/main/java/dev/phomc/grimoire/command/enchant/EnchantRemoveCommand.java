@@ -1,7 +1,6 @@
 package dev.phomc.grimoire.command.enchant;
 
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -20,33 +19,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-public class EnchantAddCommand implements SubCommand {
+public class EnchantRemoveCommand implements SubCommand {
     @Override
     public void register(LiteralArgumentBuilder<CommandSourceStack> builder) {
         builder.requires(forStaff)
             .then(
                 Commands.argument("enchantment", ResourceLocationArgument.id())
                     .suggests(EnchantCommand.ALL_ENCHANTMENTS_SUGGESTION)
-                    .executes(context -> enchant(context, 1, null))
-                    .then(
-                        Commands.argument("level", IntegerArgumentType.integer(1, Byte.MAX_VALUE))
-                            .executes(context -> enchant(
-                                    context,
-                                    IntegerArgumentType.getInteger(context, "level"),
-                                    null)
-                            ).then(
+                    .executes(context -> disenchant(context, null))
+                        .then(
                                 Commands.argument("target", EntityArgument.player())
-                                    .executes(context -> enchant(
-                                            context,
-                                            IntegerArgumentType.getInteger(context, "level"),
-                                            EntityArgument.getPlayer(context, "target")
-                                    ))
-                            )
-                    )
+                                        .executes(context -> disenchant(
+                                                context,
+                                                EntityArgument.getPlayer(context, "target")
+                                        ))
+                        )
             );
     }
 
-    public int enchant(CommandContext<CommandSourceStack> context, int lv, @Nullable Player target) throws CommandSyntaxException {
+    public int disenchant(CommandContext<CommandSourceStack> context, @Nullable Player target) throws CommandSyntaxException {
         GrimoireEnchantment enchantment = EnchantCommand.getEnchantment(context, "enchantment");
         ServerPlayer executor = context.getSource().getPlayer();
         if (executor == null) throw new RuntimeException();
@@ -55,15 +46,12 @@ public class EnchantAddCommand implements SubCommand {
         if (itemStack.isEmpty()) {
             throw EnchantCommand.ERROR_NO_ITEM.create(target.getName().getString());
         }
-        if (!enchantment.getItemCheck().test(itemStack.getItem())) {
-            throw EnchantCommand.ERROR_WRONG_ITEM.create(target.getName().getString());
-        }
         GrimoireItem grimoireItem = GrimoireItem.of(itemStack);
         EnchantmentFeature enchantmentFeature = grimoireItem.getEnchantmentFeature();
-        enchantmentFeature.enchantments.put(enchantment, (byte) lv);
+        enchantmentFeature.enchantments.remove(enchantment);
         grimoireItem.pushChanges();
         target.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
-        executor.displayClientMessage(Component.translatable("grimoire.command.enchant.success", target.getName().getString()), false);
+        executor.displayClientMessage(Component.translatable("grimoire.command.disenchant.success", target.getName().getString()), false);
         return Command.SINGLE_SUCCESS;
     }
 }

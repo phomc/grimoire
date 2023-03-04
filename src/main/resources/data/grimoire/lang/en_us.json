@@ -1,5 +1,8 @@
 {
   "grimoire.command.enchant.not_found": "Unknown enchantment: %s",
   "grimoire.command.enchant.no_item": "%s is not holding any item",
+  "grimoire.command.enchant.wrong_item": "%s is holding an incompatible item",
+  "grimoire.command.enchant.success": "Enchanted %s's item successfully",
+  "grimoire.command.disenchant.success": "Enchanted %s's item successfully",
   "enchantment.grimoire.color_shuffle": "Color Shuffle"
 }

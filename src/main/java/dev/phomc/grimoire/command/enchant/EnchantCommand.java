@@ -4,8 +4,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
+import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
@@ -26,6 +26,9 @@ public class EnchantCommand {
     });
     public static final DynamicCommandExceptionType ERROR_NO_ITEM = new DynamicCommandExceptionType(who -> {
         return Component.translatable("grimoire.command.enchant.no_item", who);
+    });
+    public static final DynamicCommandExceptionType ERROR_WRONG_ITEM = new DynamicCommandExceptionType(who -> {
+        return Component.translatable("grimoire.command.enchant.wrong_item", who);
     });
 
     public static GrimoireEnchantment getEnchantment(CommandContext<CommandSourceStack> commandContext, String string) throws CommandSyntaxException {

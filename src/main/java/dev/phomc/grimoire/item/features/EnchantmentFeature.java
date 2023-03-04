@@ -54,7 +54,7 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
         for (Map.Entry<GrimoireEnchantment, Byte> e : enchantments.entrySet()) {
             CompoundTag child = new CompoundTag();
             child.putString(ID_TAG, e.getKey().getIdentifier().toString());
-            child.putInt(LV_TAG, e.getValue());
+            child.putByte(LV_TAG, e.getValue());
             listTag.add(child);
         }
         compoundTag.put(ENC_TAG, listTag);
