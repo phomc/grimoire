@@ -6,7 +6,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.phomc.grimoire.command.SubCommand;
-import dev.phomc.grimoire.enchantment.Enchantment;
+import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.item.GrimoireItem;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import net.minecraft.commands.CommandSourceStack;
@@ -45,7 +45,7 @@ public class EnchantAddCommand implements SubCommand {
     }
 
     public int enchant(CommandContext<CommandSourceStack> context, int lv, @Nullable Player target) throws CommandSyntaxException {
-        Enchantment enchantment = EnchantCommand.getEnchantment(context, "enchantment");
+        GrimoireEnchantment enchantment = EnchantCommand.getEnchantment(context, "enchantment");
         ServerPlayer executor = context.getSource().getPlayer();
         if (executor == null) throw new RuntimeException();
         if (target == null) target = executor;

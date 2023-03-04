@@ -27,15 +27,5 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V", at = @At("TAIL"))
     protected void actuallyHurt(DamageSource damageSource, float f, CallbackInfo ci) {
-        if (getType() == EntityType.SHEEP && damageSource instanceof EntityDamageSource) {
-            Entity source = damageSource.getEntity();
-            if (source instanceof Player) {
-                ItemStack item = ((Player) source).getMainHandItem();
-                if (item.isEmpty()) return;
-                if (GrimoireItem.of(item).getEnchantmentFeature().getEnchantment(EnchantmentRegistry.COLOR_SHUFFLE) > 0) {
-                    ((Sheep) (Object) this).setColor(DyeColor.values()[ThreadLocalRandom.current().nextInt(DyeColor.values().length)]);
-                }
-            }
-        }
     }
 }

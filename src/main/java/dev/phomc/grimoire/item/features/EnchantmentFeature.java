@@ -1,6 +1,6 @@
 package dev.phomc.grimoire.item.features;
 
-import dev.phomc.grimoire.enchantment.Enchantment;
+import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.utils.StringUtils;
 import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
@@ -21,9 +21,9 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
     public static final String ID_TAG = "id";
     public static final String LV_TAG = "lv";
 
-    public final Map<Enchantment, Byte> enchantments = new Object2ByteLinkedOpenHashMap<>(3); // preserve order
+    public final Map<GrimoireEnchantment, Byte> enchantments = new Object2ByteLinkedOpenHashMap<>(3); // preserve order
 
-    public byte getEnchantment(Enchantment enchantment) {
+    public byte getEnchantment(GrimoireEnchantment enchantment) {
         return enchantments.getOrDefault(enchantment, (byte) 0);
     }
 
@@ -37,7 +37,7 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
                 byte lv = ((CompoundTag) elem).getByte(LV_TAG);
                 if (lv < 1) return;
                 String id = ((CompoundTag) elem).getString(ID_TAG);
-                Enchantment enchantment = EnchantmentRegistry.ALL.get(new ResourceLocation(id));
+                GrimoireEnchantment enchantment = EnchantmentRegistry.ALL.get(new ResourceLocation(id));
                 if (enchantment != null) {
                     enchantments.put(enchantment, lv);
                 }
@@ -50,7 +50,7 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
         CompoundTag compoundTag = getOrCreateGrimoireTag(itemStack);
         ListTag listTag = new ListTag();
         compoundTag.put(ENC_TAG, listTag);
-        for (Map.Entry<Enchantment, Byte> e : enchantments.entrySet()) {
+        for (Map.Entry<GrimoireEnchantment, Byte> e : enchantments.entrySet()) {
             CompoundTag child = new CompoundTag();
             child.putString(ID_TAG, e.getKey().getIdentifier().toString());
             child.putByte(LV_TAG, e.getValue());
@@ -65,10 +65,14 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
 
     @Override
     public void displayLore(List<Component> lines) {
-        for (Enchantment e : enchantments.keySet()) {
-            String lv = " " + StringUtils.intToRoman(enchantments.get(e));
-            MutableComponent text = Component.empty().withStyle(e.getRarity().color).append(e.getDisplayName()).append(lv);
-            lines.add(text);
+        for (GrimoireEnchantment e : enchantments.keySet()) {
+            MutableComponent mutableComponent = e.getDisplayName();
+            mutableComponent.withStyle(ChatFormatting.GRAY);
+            int lv = enchantments.get(e);
+            if (lv != 1 || e.getMaxLevel() != 1) {
+                mutableComponent.append(" " + StringUtils.intToRoman(lv));
+            }
+            lines.add(mutableComponent);
         }
     }
 }

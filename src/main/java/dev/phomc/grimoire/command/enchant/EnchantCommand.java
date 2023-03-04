@@ -4,7 +4,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import dev.phomc.grimoire.enchantment.Enchantment;
+import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -28,9 +28,9 @@ public class EnchantCommand {
         return Component.translatable("grimoire.command.enchant.no_item", who);
     });
 
-    public static Enchantment getEnchantment(CommandContext<CommandSourceStack> commandContext, String string) throws CommandSyntaxException {
+    public static GrimoireEnchantment getEnchantment(CommandContext<CommandSourceStack> commandContext, String string) throws CommandSyntaxException {
         ResourceLocation resourceLocation = ResourceLocationArgument.getId(commandContext, string);
-        Enchantment enchantment = EnchantmentRegistry.ALL.get(resourceLocation);
+        GrimoireEnchantment enchantment = EnchantmentRegistry.ALL.get(resourceLocation);
         if (enchantment == null) {
             throw ERROR_UNKNOWN_ENCHANTMENT.create(resourceLocation);
         }

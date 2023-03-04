@@ -5,12 +5,16 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ItemStackUtils {
 
@@ -39,5 +43,30 @@ public class ItemStackUtils {
             listTag.add(StringTag.valueOf(Component.Serializer.toJson(component)));
         }
         compoundTag.put(ItemStack.TAG_LORE, listTag);
+    }
+
+    public static void removeEnchantment(@Nullable ItemStack itemStack, Enchantment enchantment) {
+        if (itemStack == null || itemStack.getTag() == null) {
+            return;
+        }
+        if (itemStack.getTag().getTagType(ItemStack.TAG_ENCH) != Tag.TAG_LIST) {
+            return;
+        }
+        ListTag listTag = itemStack.getTag().getList(ItemStack.TAG_ENCH, Tag.TAG_COMPOUND);
+        ListTag newList = new ListTag();
+        for (Tag elem : listTag) {
+            if (elem instanceof CompoundTag) {
+                String a = ((CompoundTag) elem).getString("id");
+                String b = Objects.requireNonNull(EnchantmentHelper.getEnchantmentId(enchantment)).toString();
+                if (!a.equals(b)) {
+                    newList.add(elem);
+                }
+            }
+        }
+        if (newList.isEmpty()) {
+            itemStack.removeTagKey(ItemStack.TAG_ENCH);
+        } else {
+            itemStack.getTag().put(ItemStack.TAG_ENCH, newList);
+        }
     }
 }
