@@ -23,25 +23,26 @@ public class EnchantAddCommand implements SubCommand {
     @Override
     public void register(LiteralArgumentBuilder<CommandSourceStack> builder) {
         builder.requires(forStaff)
-                .then(
-                        Commands.argument("enchantment", ResourceLocationArgument.id())
-                                .suggests(EnchantCommand.ALL_ENCHANTMENTS_SUGGESTION)
-                                .executes(context -> enchant(context, 1, null))
-                ).then(
+            .then(
+                Commands.argument("enchantment", ResourceLocationArgument.id())
+                    .suggests(EnchantCommand.ALL_ENCHANTMENTS_SUGGESTION)
+                    .executes(context -> enchant(context, 1, null))
+                    .then(
                         Commands.argument("level", IntegerArgumentType.integer(1, Byte.MAX_VALUE))
-                                .executes(context -> enchant(
-                                        context,
-                                        IntegerArgumentType.getInteger(context, "level"),
-                                        null)
-                                )
-                ).then(
-                        Commands.argument("target", EntityArgument.player())
-                                .executes(context -> enchant(
-                                        context,
-                                        IntegerArgumentType.getInteger(context, "level"),
-                                        EntityArgument.getPlayer(context, "targets")
-                                ))
-                );
+                            .executes(context -> enchant(
+                                    context,
+                                    IntegerArgumentType.getInteger(context, "level"),
+                                    null)
+                            ).then(
+                                Commands.argument("target", EntityArgument.player())
+                                    .executes(context -> enchant(
+                                            context,
+                                            IntegerArgumentType.getInteger(context, "level"),
+                                            EntityArgument.getPlayer(context, "targets")
+                                    ))
+                            )
+                    )
+            );
     }
 
     public int enchant(CommandContext<CommandSourceStack> context, int lv, @Nullable Player target) throws CommandSyntaxException {

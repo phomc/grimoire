@@ -31,7 +31,7 @@ public class EnchantmentRegistry {
             String id = clazz.getSimpleName();
             if (!id.matches("\\w{3,}Enchantment")) throw new RuntimeException("Invalid Enchantment class name");
             id = id.substring(0, id.length() - "Enchantment".length());
-            ResourceLocation identifier = new ResourceLocation("grimoire", id.toLowerCase());
+            ResourceLocation identifier = new ResourceLocation("grimoire", CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, id));
             GrimoireEnchantment instance = clazz.getDeclaredConstructor(ResourceLocation.class).newInstance(identifier);
 
             try {

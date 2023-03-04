@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoreFeature extends ItemFeature implements Displayable {
-    public static final String LORE_TAG = "enchant";
+    public static final String LORE_TAG = "lore";
     public List<Component> lore = new ArrayList<>();
 
     @Override
@@ -33,6 +33,7 @@ public class LoreFeature extends ItemFeature implements Displayable {
 
     @Override
     public void save(ItemStack itemStack) {
+        if (lore.isEmpty()) return;
         CompoundTag compoundTag = getOrCreateGrimoireTag(itemStack);
         ListTag listTag = new ListTag();
         for (Component component : lore) {

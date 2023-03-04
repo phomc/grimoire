@@ -19,15 +19,13 @@ import java.util.List;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements GrimoireItem {
-    @Shadow public abstract void enchant(Enchantment enchantment, int i);
-
     @Unique
     private EnchantmentFeature enchantmentFeature;
 
     @Unique
     private LoreFeature loreFeature;
 
-    private ItemStack self(){
+    private ItemStack self() {
         return (ItemStack) (Object) this;
     }
 
@@ -52,14 +50,14 @@ public abstract class ItemStackMixin implements GrimoireItem {
     public void updateDisplay() {
         List<Component> newLore = new ArrayList<>();
         // 1. enchantment first
-        enchantmentFeature.displayLore(newLore);
+        getEnchantmentFeature().displayLore(newLore);
         // 2. then lore
-        loreFeature.displayLore(newLore);
+        getLoreFeature().displayLore(newLore);
 
         ItemStackUtils.setLore(self(), newLore);
 
         // enchantment effect
-        if (enchantmentFeature.enchantments.isEmpty()) {
+        if (getEnchantmentFeature().enchantments.isEmpty()) {
             ItemStackUtils.removeEnchantment(self(), EnchantmentRegistry.DUMMY);
         } else {
             self().enchant(EnchantmentRegistry.DUMMY, 1);
@@ -67,8 +65,8 @@ public abstract class ItemStackMixin implements GrimoireItem {
     }
 
     public void pushChanges() {
-        enchantmentFeature.save(self());
-        loreFeature.save(self());
+        getEnchantmentFeature().save(self());
+        getLoreFeature().save(self());
         updateDisplay();
     }
 }

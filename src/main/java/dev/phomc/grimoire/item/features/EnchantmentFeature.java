@@ -12,7 +12,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
     public static final String ID_TAG = "id";
     public static final String LV_TAG = "lv";
 
-    public final Map<GrimoireEnchantment, Byte> enchantments = new Object2ByteLinkedOpenHashMap<>(3); // preserve order
+    public final Map<GrimoireEnchantment, Byte> enchantments = new HashMap<>(); // preserve order
 
     public byte getEnchantment(GrimoireEnchantment enchantment) {
         return enchantments.getOrDefault(enchantment, (byte) 0);
@@ -47,15 +49,16 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
 
     @Override
     public void save(ItemStack itemStack) {
+        if (enchantments.isEmpty()) return;
         CompoundTag compoundTag = getOrCreateGrimoireTag(itemStack);
         ListTag listTag = new ListTag();
-        compoundTag.put(ENC_TAG, listTag);
         for (Map.Entry<GrimoireEnchantment, Byte> e : enchantments.entrySet()) {
             CompoundTag child = new CompoundTag();
             child.putString(ID_TAG, e.getKey().getIdentifier().toString());
-            child.putByte(LV_TAG, e.getValue());
+            child.putInt(LV_TAG, e.getValue());
             listTag.add(child);
         }
+        compoundTag.put(ENC_TAG, listTag);
     }
 
     @Override
