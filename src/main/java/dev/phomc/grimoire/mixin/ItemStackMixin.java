@@ -6,12 +6,9 @@ import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import dev.phomc.grimoire.item.features.LoreFeature;
 import dev.phomc.grimoire.utils.ItemStackUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.inventory.GrindstoneMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.ArrayList;

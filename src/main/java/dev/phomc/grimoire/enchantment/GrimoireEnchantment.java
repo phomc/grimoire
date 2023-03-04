@@ -7,7 +7,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;

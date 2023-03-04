@@ -1,18 +1,17 @@
 package dev.phomc.grimoire.item.features;
 
-import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
+import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.utils.StringUtils;
-import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +69,7 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
     public void displayLore(List<Component> lines) {
         for (GrimoireEnchantment e : enchantments.keySet()) {
             MutableComponent mutableComponent = e.getDisplayName();
-            mutableComponent.withStyle(ChatFormatting.GRAY);
+            mutableComponent.withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(false));
             int lv = enchantments.get(e);
             if (lv != 1 || e.getMaxLevel() != 1) {
                 mutableComponent.append(" " + StringUtils.intToRoman(lv));
