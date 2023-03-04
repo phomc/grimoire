@@ -8,6 +8,7 @@ import dev.phomc.grimoire.command.SubCommand;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.item.GrimoireItem;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -51,7 +52,7 @@ public class EnchantRemoveCommand implements SubCommand {
         enchantmentFeature.enchantments.remove(enchantment);
         grimoireItem.pushChanges();
         target.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
-        executor.displayClientMessage(Component.translatable("grimoire.command.disenchant.success", target.getName().getString()), false);
+        executor.displayClientMessage(Component.translatable("grimoire.command.disenchant.success", target.getName().getString()).withStyle(ChatFormatting.YELLOW), false);
         return Command.SINGLE_SUCCESS;
     }
 }

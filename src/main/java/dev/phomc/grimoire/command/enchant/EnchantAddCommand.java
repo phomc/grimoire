@@ -9,6 +9,7 @@ import dev.phomc.grimoire.command.SubCommand;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.item.GrimoireItem;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -48,6 +49,9 @@ public class EnchantAddCommand implements SubCommand {
 
     public int enchant(CommandContext<CommandSourceStack> context, int lv, @Nullable Player target) throws CommandSyntaxException {
         GrimoireEnchantment enchantment = EnchantCommand.getEnchantment(context, "enchantment");
+        if (enchantment.getMaxLevel() < lv) {
+            throw EnchantCommand.ERROR_OVER_LEVEL.create(enchantment.getMaxLevel());
+        }
         ServerPlayer executor = context.getSource().getPlayer();
         if (executor == null) throw new RuntimeException();
         if (target == null) target = executor;
@@ -63,7 +67,7 @@ public class EnchantAddCommand implements SubCommand {
         enchantmentFeature.enchantments.put(enchantment, (byte) lv);
         grimoireItem.pushChanges();
         target.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
-        executor.displayClientMessage(Component.translatable("grimoire.command.enchant.success", target.getName().getString()), false);
+        executor.displayClientMessage(Component.translatable("grimoire.command.enchant.success", target.getName().getString()).withStyle(ChatFormatting.GREEN), false);
         return Command.SINGLE_SUCCESS;
     }
 }
