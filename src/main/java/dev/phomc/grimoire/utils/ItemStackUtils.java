@@ -23,10 +23,11 @@ public class ItemStackUtils {
         if (itemStack == null || itemStack.getTag() == null) {
             return null;
         }
-        if (itemStack.getTag().getTagType(ItemStack.TAG_LORE) != Tag.TAG_LIST) {
+        CompoundTag display = itemStack.getTagElement(ItemStack.TAG_DISPLAY);
+        if (display == null || display.getTagType(ItemStack.TAG_LORE) != Tag.TAG_LIST) {
             return null;
         }
-        ListTag listTag = itemStack.getTag().getList(ItemStack.TAG_LORE, Tag.TAG_STRING);
+        ListTag listTag = display.getList(ItemStack.TAG_LORE, Tag.TAG_STRING);
         List<Component> lines = new ArrayList<>(listTag.size());
         for (Tag tag : listTag) {
             if (tag instanceof StringTag) {
@@ -37,12 +38,12 @@ public class ItemStackUtils {
     }
 
     public static void setLore(@NotNull ItemStack itemStack, List<Component> lines) {
-        CompoundTag compoundTag = itemStack.getOrCreateTag();
+        CompoundTag display = itemStack.getOrCreateTagElement(ItemStack.TAG_DISPLAY);
         ListTag listTag = new ListTag();
         for (Component component : lines) {
             listTag.add(StringTag.valueOf(Component.Serializer.toJson(component)));
         }
-        compoundTag.put(ItemStack.TAG_LORE, listTag);
+        display.put(ItemStack.TAG_LORE, listTag);
     }
 
     public static void removeEnchantment(@Nullable ItemStack itemStack, Enchantment enchantment) {
