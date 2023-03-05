@@ -4,6 +4,7 @@ import com.google.common.base.CaseFormat;
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.dummy.DummyEnchantment;
 import dev.phomc.grimoire.enchantment.weapon.ColorShuffleEnchantment;
+import dev.phomc.grimoire.enchantment.weapon.effect.*;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +24,12 @@ public class EnchantmentRegistry {
         Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation("grimoire", "dummy"), DUMMY = new DummyEnchantment());
 
         registerEnchant(ColorShuffleEnchantment.class);
+        registerEnchant(WitherEnchantment.class);
+        registerEnchant(PoisonEnchantment.class);
+        registerEnchant(NauseaEnchantment.class);
+        registerEnchant(FrozenEnchantment.class);
+        registerEnchant(BlindnessEnchantment.class);
+        registerEnchant(LevitationEnchantment.class);
     }
 
     private static GrimoireEnchantment registerEnchant(Class<? extends GrimoireEnchantment> clazz) {

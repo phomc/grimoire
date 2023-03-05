@@ -5,5 +5,11 @@
   "grimoire.command.enchant.wrong_item": "%s is holding an incompatible item",
   "grimoire.command.enchant.success": "Enchanted %s's item",
   "grimoire.command.disenchant.success": "Disenchanted %s's item",
-  "enchantment.grimoire.color_shuffle": "Color Shuffle"
+  "enchantment.grimoire.color_shuffle": "Color Shuffle",
+  "enchantment.grimoire.blindness": "Blindness",
+  "enchantment.grimoire.frozen": "Frozen",
+  "enchantment.grimoire.levitation": "Levitation",
+  "enchantment.grimoire.nausea": "Nausea",
+  "enchantment.grimoire.poison": "Poison",
+  "enchantment.grimoire.wither": "Wither"
 }
