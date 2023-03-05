@@ -1,5 +1,6 @@
 package dev.phomc.grimoire.enchantment;
 
+import dev.phomc.grimoire.event.AttackRecord;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -64,11 +65,7 @@ public abstract class GrimoireEnchantment {
 
     }
 
-    public void onDirectPlayerAttack(Player player, Entity entity, byte level, ItemStack weapon) {
-
-    }
-
-    public void onProjectileAttack(LivingEntity attacker, LivingEntity victim, Projectile projectile, float damage, byte level) {
+    public void onAttack(AttackRecord attackRecord, byte level) {
 
     }
 
