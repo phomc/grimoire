@@ -17,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ColorShuffleEnchantment extends GrimoireEnchantment {
     public ColorShuffleEnchantment(ResourceLocation identifier) {
-        super(identifier, EnchantmentRarity.UNCOMMON, EnchantmentTarget.WEAPON);
+        super(identifier, EnchantmentRarity.COMMON, EnchantmentTarget.WEAPON);
     }
 
     @Override
