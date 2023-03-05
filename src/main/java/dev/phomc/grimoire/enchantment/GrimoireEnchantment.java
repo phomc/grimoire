@@ -7,6 +7,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,11 +58,11 @@ public abstract class GrimoireEnchantment {
         return 0;
     }
 
-    public void doPostAttack(LivingEntity livingEntity, Entity entity, int level) {
+    public void doPostHurt(LivingEntity livingEntity, Entity entity, int level) {
 
     }
 
-    public void doPostHurt(LivingEntity livingEntity, Entity entity, int level) {
+    public void onPlayerAttack(Player player, Entity entity, byte level) {
 
     }
 

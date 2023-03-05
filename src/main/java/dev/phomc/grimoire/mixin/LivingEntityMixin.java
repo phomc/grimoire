@@ -18,5 +18,6 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V", at = @At("TAIL"))
     protected void actuallyHurt(DamageSource damageSource, float f, CallbackInfo ci) {
+
     }
 }

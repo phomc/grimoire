@@ -45,17 +45,16 @@ public class DummyEnchantment extends Enchantment {
         return value;
     }
 
-    public void doPostAttack(LivingEntity livingEntity, Entity entity, int i) {
-        for (GrimoireEnchantment e : EnchantmentRegistry.ALL.values()) {
-            e.doPostAttack(livingEntity, entity, i);
-        }
-    }
-
     public void doPostHurt(LivingEntity livingEntity, Entity entity, int i) {
         for (GrimoireEnchantment e : EnchantmentRegistry.ALL.values()) {
             e.doPostHurt(livingEntity, entity, i);
         }
     }
+
+    public void doPostAttack(LivingEntity livingEntity, Entity entity, int i) {
+        // what is this different from doPostHurt ???
+    }
+
     // ==== END event ====
 
     public boolean canEnchant(ItemStack itemStack) {

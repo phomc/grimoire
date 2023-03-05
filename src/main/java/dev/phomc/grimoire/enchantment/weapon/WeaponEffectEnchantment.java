@@ -12,6 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,10 +28,13 @@ public class WeaponEffectEnchantment extends GrimoireEnchantment {
         this.amplifiers = amplifiers;
         if (amplifiers.length == 0) throw new IllegalArgumentException();
         this.duration = duration;
-        if (amplifiers.length != duration.length) throw new IllegalArgumentException();
+        if (amplifiers.length != duration.length) {
+            throw new IllegalArgumentException(String.format("%s: len(amplifiers) != len(duration)", identifier));
+        }
         this.chances = chances;
-        if (amplifiers.length != chances.length) throw new IllegalArgumentException();
-        Grimoire.LOGGER.debug("Enchantment {} amplifiers = {}, duration = {}, chances = {}", identifier, amplifiers, duration, chances);
+        if (amplifiers.length != chances.length) {
+            throw new IllegalArgumentException(String.format("%s: len(amplifiers) != len(chances)", identifier));
+        }
     }
 
     @Override
@@ -39,17 +43,12 @@ public class WeaponEffectEnchantment extends GrimoireEnchantment {
     }
 
     @Override
-    public void doPostAttack(LivingEntity livingEntity, Entity entity, int level) {
-        if (livingEntity instanceof Player && entity instanceof LivingEntity) {
-            ItemStack item = livingEntity.getMainHandItem();
-            if (item.isEmpty()) return;
-            int lv = GrimoireItem.of(item).getEnchantmentFeature().getEnchantment(this);
-            if (lv == 0) return;
-            int index = Math.min(lv, chances.length) - 1;
-            if (ThreadLocalRandom.current().nextFloat() > chances[index]) return;
-            ((LivingEntity) entity).addEffect(new MobEffectInstance(
-                    effect, duration[index], amplifiers[index]
-            ));
-        }
+    public void onPlayerAttack(Player player, Entity entity, byte level) {
+        int index = Math.min(level, chances.length) - 1;
+        float rand = ThreadLocalRandom.current().nextFloat();
+        if (rand > chances[index]) return;
+        ((LivingEntity) entity).addEffect(new MobEffectInstance(
+                effect, duration[index], amplifiers[index]
+        ));
     }
 }
