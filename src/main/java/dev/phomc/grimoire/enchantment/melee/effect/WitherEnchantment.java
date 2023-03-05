@@ -1,10 +1,10 @@
-package dev.phomc.grimoire.enchantment.weapon.effect;
+package dev.phomc.grimoire.enchantment.melee.effect;
 
-import dev.phomc.grimoire.enchantment.weapon.WeaponEffectEnchantment;
+import dev.phomc.grimoire.enchantment.melee.MeleeEffectEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 
-public class WitherEnchantment extends WeaponEffectEnchantment {
+public class WitherEnchantment extends MeleeEffectEnchantment {
     public WitherEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.WITHER,
                 new int[]{0, 1, 2, 3, 4},

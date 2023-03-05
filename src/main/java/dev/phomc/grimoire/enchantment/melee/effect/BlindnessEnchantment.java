@@ -1,10 +1,10 @@
-package dev.phomc.grimoire.enchantment.weapon.effect;
+package dev.phomc.grimoire.enchantment.melee.effect;
 
-import dev.phomc.grimoire.enchantment.weapon.WeaponEffectEnchantment;
+import dev.phomc.grimoire.enchantment.melee.MeleeEffectEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 
-public class BlindnessEnchantment extends WeaponEffectEnchantment {
+public class BlindnessEnchantment extends MeleeEffectEnchantment {
     public BlindnessEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.BLINDNESS,
                 new int[]{0, 0},

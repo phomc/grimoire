@@ -1,28 +1,24 @@
-package dev.phomc.grimoire.enchantment.weapon;
+package dev.phomc.grimoire.enchantment.melee;
 
-import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.EnchantmentRarity;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
-import dev.phomc.grimoire.item.GrimoireItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class WeaponEffectEnchantment extends GrimoireEnchantment {
+public class MeleeEffectEnchantment extends GrimoireEnchantment {
     private final MobEffect effect;
     private final int[] amplifiers;
     private final float[] chances;
     private final int[] duration;
 
-    public WeaponEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
+    public MeleeEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
         super(identifier, EnchantmentRarity.COMMON, EnchantmentTarget.WEAPON);
         this.effect = effect;
         this.amplifiers = amplifiers;

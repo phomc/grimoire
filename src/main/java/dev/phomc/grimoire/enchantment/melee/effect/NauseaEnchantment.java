@@ -1,10 +1,10 @@
-package dev.phomc.grimoire.enchantment.weapon.effect;
+package dev.phomc.grimoire.enchantment.melee.effect;
 
-import dev.phomc.grimoire.enchantment.weapon.WeaponEffectEnchantment;
+import dev.phomc.grimoire.enchantment.melee.MeleeEffectEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 
-public class NauseaEnchantment extends WeaponEffectEnchantment {
+public class NauseaEnchantment extends MeleeEffectEnchantment {
     public NauseaEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.CONFUSION,
                 new int[]{0, 1, 1},

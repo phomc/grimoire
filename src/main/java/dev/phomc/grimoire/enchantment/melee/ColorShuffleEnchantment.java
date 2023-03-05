@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.enchantment.weapon;
+package dev.phomc.grimoire.enchantment.melee;
 
 import dev.phomc.grimoire.enchantment.EnchantmentRarity;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
