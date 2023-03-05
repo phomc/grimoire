@@ -10,6 +10,7 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
@@ -63,7 +64,7 @@ public abstract class GrimoireEnchantment {
 
     }
 
-    public void onPlayerAttack(Player player, Entity entity, byte level) {
+    public void onDirectPlayerAttack(Player player, Entity entity, byte level, ItemStack weapon) {
 
     }
 

@@ -1,5 +1,8 @@
-package dev.phomc.grimoire.enchantment;
+package dev.phomc.grimoire.enchantment.effect;
 
+import dev.phomc.grimoire.enchantment.EnchantmentRarity;
+import dev.phomc.grimoire.enchantment.EnchantmentTarget;
+import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -7,6 +10,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -44,8 +49,10 @@ public class ActiveEffectEnchantment extends GrimoireEnchantment {
     }
 
     @Override
-    public void onPlayerAttack(Player player, Entity entity, byte level) {
-        if (entity instanceof LivingEntity) execute((LivingEntity) entity, level);
+    public void onDirectPlayerAttack(Player player, Entity entity, byte level, ItemStack weapon) {
+        if (entity instanceof LivingEntity && EnchantmentTarget.MELEE.test(weapon.getItem())) {
+            execute((LivingEntity) entity, level);
+        }
     }
 
     @Override

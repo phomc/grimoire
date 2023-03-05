@@ -1,6 +1,6 @@
-package dev.phomc.grimoire.enchantment.effect;
+package dev.phomc.grimoire.enchantment.effect.active;
 
-import dev.phomc.grimoire.enchantment.ActiveEffectEnchantment;
+import dev.phomc.grimoire.enchantment.effect.ActiveEffectEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 
