@@ -1,10 +1,10 @@
-package dev.phomc.grimoire.enchantment.melee.effect;
+package dev.phomc.grimoire.enchantment.effect;
 
-import dev.phomc.grimoire.enchantment.melee.MeleeEffectEnchantment;
+import dev.phomc.grimoire.enchantment.ActiveEffectEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 
-public class PoisonEnchantment extends MeleeEffectEnchantment {
+public class PoisonEnchantment extends ActiveEffectEnchantment {
     public PoisonEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.POISON,
                 new int[]{0, 1, 2, 3, 4},

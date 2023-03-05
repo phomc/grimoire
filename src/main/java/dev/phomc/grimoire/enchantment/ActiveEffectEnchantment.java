@@ -1,25 +1,23 @@
-package dev.phomc.grimoire.enchantment.melee;
+package dev.phomc.grimoire.enchantment;
 
-import dev.phomc.grimoire.enchantment.EnchantmentRarity;
-import dev.phomc.grimoire.enchantment.EnchantmentTarget;
-import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class MeleeEffectEnchantment extends GrimoireEnchantment {
+public class ActiveEffectEnchantment extends GrimoireEnchantment {
     private final MobEffect effect;
     private final int[] amplifiers;
     private final float[] chances;
     private final int[] duration;
 
-    public MeleeEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
-        super(identifier, EnchantmentRarity.COMMON, EnchantmentTarget.WEAPON);
+    public ActiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
+        super(identifier, EnchantmentRarity.COMMON, EnchantmentTarget.MELEE.or(EnchantmentTarget.RANGED));
         this.effect = effect;
         this.amplifiers = amplifiers;
         if (amplifiers.length == 0) throw new IllegalArgumentException();
@@ -38,13 +36,20 @@ public class MeleeEffectEnchantment extends GrimoireEnchantment {
         return (byte) amplifiers.length;
     }
 
-    @Override
-    public void onPlayerAttack(Player player, Entity entity, byte level) {
+    public void execute(LivingEntity entity, byte level) {
         int index = Math.min(level, chances.length) - 1;
         float rand = ThreadLocalRandom.current().nextFloat();
         if (rand > chances[index]) return;
-        ((LivingEntity) entity).addEffect(new MobEffectInstance(
-                effect, duration[index], amplifiers[index]
-        ));
+        entity.addEffect(new MobEffectInstance(effect, duration[index], amplifiers[index]));
+    }
+
+    @Override
+    public void onPlayerAttack(Player player, Entity entity, byte level) {
+        if (entity instanceof LivingEntity) execute((LivingEntity) entity, level);
+    }
+
+    @Override
+    public void onProjectileAttack(LivingEntity attacker, LivingEntity victim, Projectile projectile, float damage, byte level) {
+        execute(victim, level);
     }
 }

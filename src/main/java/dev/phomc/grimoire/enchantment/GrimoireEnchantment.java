@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,6 +64,10 @@ public abstract class GrimoireEnchantment {
     }
 
     public void onPlayerAttack(Player player, Entity entity, byte level) {
+
+    }
+
+    public void onProjectileAttack(LivingEntity attacker, LivingEntity victim, Projectile projectile, float damage, byte level) {
 
     }
 

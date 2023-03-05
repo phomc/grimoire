@@ -1,10 +1,10 @@
-package dev.phomc.grimoire.enchantment.melee.effect;
+package dev.phomc.grimoire.enchantment.effect;
 
-import dev.phomc.grimoire.enchantment.melee.MeleeEffectEnchantment;
+import dev.phomc.grimoire.enchantment.ActiveEffectEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 
-public class LevitationEnchantment extends MeleeEffectEnchantment {
+public class LevitationEnchantment extends ActiveEffectEnchantment {
     public LevitationEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.LEVITATION,
                 new int[]{0, 1, 1},

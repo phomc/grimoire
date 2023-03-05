@@ -15,14 +15,17 @@ import org.jetbrains.annotations.Nullable;
 public class AttackEntityListener implements AttackEntityCallback {
     @Override
     public InteractionResult interact(Player player, Level world, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-        if (player instanceof ServerPlayer && ((ServerPlayer) player).gameMode.isSurvival()) {
-            if (!entity.isAttackable() || entity.skipAttackInteraction(player)) {
-                return InteractionResult.PASS;
-            }
+        if (!entity.isAttackable() || entity.skipAttackInteraction(player)) {
+            return InteractionResult.PASS;
+        }
+        if (player != entity && player instanceof ServerPlayer) {
             if (hand == InteractionHand.MAIN_HAND) {
                 ItemStack item = player.getMainHandItem();
                 if (!item.isEmpty()) {
-                    GrimoireItem.of(item).getEnchantmentFeature().enchantments.forEach((key, value) -> key.onPlayerAttack(player, entity, value));
+                    GrimoireItem.of(item).getEnchantmentFeature().enchantments.forEach((key, value) -> {
+                        if (value < 1) return;
+                        key.onPlayerAttack(player, entity, value);
+                    });
                 }
             }
         }
