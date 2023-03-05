@@ -3,7 +3,7 @@ package dev.phomc.grimoire.enchantment;
 import com.google.common.base.CaseFormat;
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.dummy.DummyEnchantment;
-import dev.phomc.grimoire.enchantment.effect.*;
+import dev.phomc.grimoire.enchantment.effect.active.*;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;

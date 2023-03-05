@@ -24,7 +24,7 @@ public class AttackEntityListener implements AttackEntityCallback {
                 if (!item.isEmpty()) {
                     GrimoireItem.of(item).getEnchantmentFeature().enchantments.forEach((key, value) -> {
                         if (value < 1) return;
-                        key.onPlayerAttack(player, entity, value);
+                        key.onDirectPlayerAttack(player, entity, value, item);
                     });
                 }
             }

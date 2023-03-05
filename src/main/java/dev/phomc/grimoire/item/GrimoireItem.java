@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface GrimoireItem {
     static GrimoireItem of(ItemStack itemStack) {
+        if (itemStack == null) throw new IllegalArgumentException("item is null");
         return (GrimoireItem) (Object) itemStack;
     }
 

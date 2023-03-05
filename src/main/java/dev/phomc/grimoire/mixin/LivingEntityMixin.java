@@ -22,6 +22,7 @@ public class LivingEntityMixin {
             Entity attacker = damageSource.getEntity();
             if (direct instanceof Projectile && attacker instanceof LivingEntity) {
                 ItemStack weapon = ((ProjectileMixinAccessor) direct).getWeapon();
+                if (weapon == null) return;
                 GrimoireItem.of(weapon).getEnchantmentFeature().enchantments.forEach((key, value) -> {
                     if (value < 1) return;
                     key.onProjectileAttack((LivingEntity) attacker, (LivingEntity) (Object) this, (Projectile) direct, f, value);
