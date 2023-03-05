@@ -11,5 +11,8 @@
   "enchantment.grimoire.levitation": "Levitation",
   "enchantment.grimoire.nausea": "Nausea",
   "enchantment.grimoire.poison": "Poison",
-  "enchantment.grimoire.wither": "Wither"
+  "enchantment.grimoire.wither": "Wither",
+  "enchantment.grimoire.decay": "Decay",
+  "enchantment.grimoire.petrified": "Petrified",
+  "enchantment.grimoire.venom": "Venom"
 }

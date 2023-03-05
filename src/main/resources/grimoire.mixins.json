@@ -10,6 +10,7 @@
     "BowItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
+    "PlayerMixin",
     "ProjectileMixin"
   ]
 }

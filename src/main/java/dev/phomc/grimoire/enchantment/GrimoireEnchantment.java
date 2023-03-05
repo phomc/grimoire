@@ -8,8 +8,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -66,6 +64,10 @@ public abstract class GrimoireEnchantment {
     }
 
     public void onAttack(AttackRecord attackRecord, byte level) {
+
+    }
+
+    public void onAttacked(AttackRecord attackRecord, ItemStack armor, byte level) {
 
     }
 

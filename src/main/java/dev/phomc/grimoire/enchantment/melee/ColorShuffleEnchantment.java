@@ -3,12 +3,10 @@ package dev.phomc.grimoire.enchantment.melee;
 import dev.phomc.grimoire.enchantment.EnchantmentRarity;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.event.AttackRecord;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Sheep;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -23,7 +21,9 @@ public class ColorShuffleEnchantment extends GrimoireEnchantment {
     }
 
     @Override
-    public void onDirectPlayerAttack(Player player, Entity entity, byte level, ItemStack itemStack) {
-        ((Sheep) entity).setColor(DyeColor.values()[ThreadLocalRandom.current().nextInt(DyeColor.values().length)]);
+    public void onAttack(AttackRecord attackRecord, byte level) {
+        if (attackRecord.victim() instanceof Sheep) {
+            ((Sheep) attackRecord.victim()).setColor(DyeColor.values()[ThreadLocalRandom.current().nextInt(DyeColor.values().length)]);
+        }
     }
 }
