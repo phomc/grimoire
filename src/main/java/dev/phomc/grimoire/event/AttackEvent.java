@@ -1,6 +1,6 @@
 package dev.phomc.grimoire.event;
 
-import dev.phomc.grimoire.accessor.ProjectileMixinAccessor;
+import dev.phomc.grimoire.accessor.ProjectileAccessor;
 import dev.phomc.grimoire.item.GrimoireItem;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -38,7 +38,7 @@ public class AttackEvent {
             });
         }
         else if (damageSource.is(DamageTypeTags.IS_PROJECTILE) && damageSource.getDirectEntity() instanceof Projectile projectile) {
-            ItemStack weapon = ((ProjectileMixinAccessor) projectile).getWeapon();
+            ItemStack weapon = ((ProjectileAccessor) projectile).getWeapon();
 
             AttackRecord attackRecord = new AttackRecord(attacker, victim, projectile, f, weapon);
             if (weapon != null) {

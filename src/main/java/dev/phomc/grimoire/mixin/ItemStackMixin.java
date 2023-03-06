@@ -9,12 +9,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ItemStack.class)
-public class ItemStackMixin implements GrimoireItem {
+public abstract class ItemStackMixin implements GrimoireItem {
+    @Shadow
+    public abstract boolean isEmpty();
+
     private EnchantmentFeature enchantmentFeature;
     private LoreFeature loreFeature;
 
@@ -26,7 +30,7 @@ public class ItemStackMixin implements GrimoireItem {
     public EnchantmentFeature getEnchantmentFeature() {
         if (enchantmentFeature == null) {
             enchantmentFeature = new EnchantmentFeature();
-            enchantmentFeature.load(self());
+            if (!isEmpty()) enchantmentFeature.load(self());
         }
         return enchantmentFeature;
     }
@@ -35,7 +39,7 @@ public class ItemStackMixin implements GrimoireItem {
     public LoreFeature getLoreFeature() {
         if (loreFeature == null) {
             loreFeature = new LoreFeature();
-            loreFeature.load(self());
+            if (!isEmpty()) loreFeature.load(self());
         }
         return loreFeature;
     }
@@ -58,6 +62,7 @@ public class ItemStackMixin implements GrimoireItem {
     }
 
     public void pushChanges() {
+        if (isEmpty()) return;
         getEnchantmentFeature().save(self());
         getLoreFeature().save(self());
         updateDisplay();

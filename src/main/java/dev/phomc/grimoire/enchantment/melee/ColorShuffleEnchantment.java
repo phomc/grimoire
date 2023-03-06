@@ -16,11 +16,6 @@ public class ColorShuffleEnchantment extends GrimoireEnchantment {
     }
 
     @Override
-    public byte getMaxLevel() {
-        return 1;
-    }
-
-    @Override
     public void onAttack(AttackRecord attackRecord, byte level) {
         if (attackRecord.victim() instanceof Sheep) {
             ((Sheep) attackRecord.victim()).setColor(DyeColor.values()[ThreadLocalRandom.current().nextInt(DyeColor.values().length)]);
