@@ -2,6 +2,7 @@ package dev.phomc.grimoire.enchantment;
 
 import com.google.common.base.CaseFormat;
 import dev.phomc.grimoire.Grimoire;
+import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
 import dev.phomc.grimoire.enchantment.dummy.DummyEnchantment;
 import dev.phomc.grimoire.enchantment.effect.active.*;
 import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
@@ -26,9 +27,13 @@ public class EnchantmentRegistry {
     public static void init() {
         Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation("grimoire", "dummy"), DUMMY = new DummyEnchantment());
 
+        // melee
         registerEnchant(ColorShuffleEnchantment.class);
 
-        // effect (active)
+        // armor
+        registerEnchant(AntidoteEnchantment.class);
+
+        // armor - effect (active)
         registerEnchant(WitherEnchantment.class);
         registerEnchant(PoisonEnchantment.class);
         registerEnchant(NauseaEnchantment.class);
@@ -36,7 +41,7 @@ public class EnchantmentRegistry {
         registerEnchant(BlindnessEnchantment.class);
         registerEnchant(LevitationEnchantment.class);
 
-        // effect (passive)
+        // armor - effect (passive)
         registerEnchant(DecayEnchantment.class);
         registerEnchant(PetrifiedEnchantment.class);
         registerEnchant(VenomEnchantment.class);

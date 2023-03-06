@@ -11,6 +11,10 @@ repositories {
     maven { url 'https://maven.nucleoid.xyz' }
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/grimoire.accesswidener")
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.officialMojangMappings()

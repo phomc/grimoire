@@ -11,6 +11,7 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "PlayerMixin",
-    "ProjectileMixin"
+    "ProjectileMixin",
+    "ServerPlayerMixin"
   ]
 }

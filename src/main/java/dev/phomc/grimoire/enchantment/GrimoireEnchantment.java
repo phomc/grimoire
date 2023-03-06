@@ -6,8 +6,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -63,11 +65,17 @@ public abstract class GrimoireEnchantment {
 
     }
 
+    // must have player as either attacker or victim
     public void onAttack(AttackRecord attackRecord, byte level) {
 
     }
 
+    // must have player as either attacker or victim
     public void onAttacked(AttackRecord attackRecord, ItemStack armor, byte level) {
+
+    }
+
+    public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, byte level, int tick) {
 
     }
 
