@@ -9,5 +9,6 @@ public class EnchantmentTarget {
     public static Predicate<Item> MELEE = item -> item instanceof SwordItem || item instanceof AxeItem;
     public static Predicate<Item> RANGED = item -> item instanceof ProjectileWeaponItem;
     public static Predicate<Item> ARMOR = item -> item instanceof ArmorItem;
+    public static Predicate<Item> PICKAXE = item -> item instanceof PickaxeItem;
     public static Predicate<Item> BOOTS = ARMOR.and(item -> ((ArmorItem) item).getEquipmentSlot() == EquipmentSlot.FEET);
 }

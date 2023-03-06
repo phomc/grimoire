@@ -52,7 +52,7 @@ public class DummyEnchantment extends Enchantment {
     }
 
     public void doPostAttack(LivingEntity livingEntity, Entity entity, int i) {
-        // what is this different from doPostHurt ???
+        // how is this different from doPostHurt ???
     }
 
     // ==== END event ====

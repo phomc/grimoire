@@ -9,6 +9,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
+import dev.phomc.grimoire.enchantment.tool.ForgeEnchantment;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +23,7 @@ public class EnchantmentRegistry {
     public static Map<ResourceLocation, GrimoireEnchantment> ALL = new LinkedHashMap<>(); // preserve order
 
     public static Enchantment DUMMY;
-    public static GrimoireEnchantment COLOR_SHUFFLE;
+    public static ForgeEnchantment FORGE;
 
     public static void init() {
         Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation("grimoire", "dummy"), DUMMY = new DummyEnchantment());
@@ -32,6 +33,9 @@ public class EnchantmentRegistry {
 
         // armor
         registerEnchant(AntidoteEnchantment.class);
+
+        // pickaxe
+        registerEnchant(ForgeEnchantment.class);
 
         // armor - effect (active)
         registerEnchant(WitherEnchantment.class);
