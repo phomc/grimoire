@@ -22,6 +22,7 @@ import java.util.Map;
 public class EnchantmentRegistry {
     public static Map<ResourceLocation, GrimoireEnchantment> ALL = new LinkedHashMap<>(); // preserve order
 
+    public static CompatibilityGraph COMPATIBILITY_GRAPH;
     public static Enchantment DUMMY;
     public static ForgeEnchantment FORGE;
 
@@ -49,6 +50,8 @@ public class EnchantmentRegistry {
         registerEnchant(DecayEnchantment.class);
         registerEnchant(PetrifiedEnchantment.class);
         registerEnchant(VenomEnchantment.class);
+
+        COMPATIBILITY_GRAPH = new CompatibilityGraph();
     }
 
     private static GrimoireEnchantment registerEnchant(Class<? extends GrimoireEnchantment> clazz) {

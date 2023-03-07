@@ -6,6 +6,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.phomc.grimoire.command.SubCommand;
+import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.item.GrimoireItem;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
@@ -61,6 +62,9 @@ public class EnchantAddCommand implements SubCommand {
         }
         if (!enchantment.getItemCheck().test(itemStack.getItem())) {
             throw EnchantCommand.ERROR_WRONG_ITEM.create(target.getName().getString());
+        }
+        if (!EnchantmentRegistry.COMPATIBILITY_GRAPH.isCompatible(itemStack, enchantment)) {
+            throw EnchantCommand.ERROR_COMPATIBILITY.create(target.getName().getString());
         }
         GrimoireItem grimoireItem = GrimoireItem.of(itemStack);
         EnchantmentFeature enchantmentFeature = grimoireItem.getEnchantmentFeature();
