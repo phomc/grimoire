@@ -1,9 +1,9 @@
 package dev.phomc.grimoire.command.enchant;
 
-import com.mojang.authlib.Environment;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
@@ -34,9 +34,9 @@ public class EnchantCommand {
     public static final DynamicCommandExceptionType ERROR_WRONG_ITEM = new DynamicCommandExceptionType(who -> {
         return Component.translatable("grimoire.command.enchant.wrong_item", who);
     });
-    public static final DynamicCommandExceptionType ERROR_COMPATIBILITY = new DynamicCommandExceptionType(who -> {
-        return Component.translatable("grimoire.command.enchant.incompatible", who);
-    });
+    public static final SimpleCommandExceptionType ERROR_COMPATIBILITY = new SimpleCommandExceptionType(
+            Component.translatable("grimoire.command.enchant.incompatible")
+    );
 
     public static GrimoireEnchantment getEnchantment(CommandContext<CommandSourceStack> commandContext, String string) throws CommandSyntaxException {
         ResourceLocation resourceLocation = ResourceLocationArgument.getId(commandContext, string);

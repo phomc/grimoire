@@ -64,7 +64,7 @@ public class EnchantAddCommand implements SubCommand {
             throw EnchantCommand.ERROR_WRONG_ITEM.create(target.getName().getString());
         }
         if (!EnchantmentRegistry.COMPATIBILITY_GRAPH.isCompatible(itemStack, enchantment)) {
-            throw EnchantCommand.ERROR_COMPATIBILITY.create(target.getName().getString());
+            throw EnchantCommand.ERROR_COMPATIBILITY.create();
         }
         GrimoireItem grimoireItem = GrimoireItem.of(itemStack);
         EnchantmentFeature enchantmentFeature = grimoireItem.getEnchantmentFeature();

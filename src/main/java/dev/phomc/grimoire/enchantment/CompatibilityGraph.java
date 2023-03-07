@@ -27,15 +27,11 @@ public class CompatibilityGraph {
     }
 
     public void addConflict(GrimoireEnchantment a, GrimoireEnchantment b) {
-        conflictGraph.putEdge(a.getIdentifier(), b.getIdentifier());
-    }
-
-    public void addConflict(GrimoireEnchantment a, ResourceLocation b) {
-        conflictGraph.putEdge(a.getIdentifier(), b);
+        addConflict(a.getIdentifier(), b.getIdentifier());
     }
 
     public void addConflict(GrimoireEnchantment a, Enchantment b) {
-        conflictGraph.putEdge(a.getIdentifier(), Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.getKey(b)));
+        addConflict(a.getIdentifier(), Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.getKey(b)));
     }
 
     public boolean isCompatible(ItemStack item, ResourceLocation elem) {
@@ -44,7 +40,7 @@ public class CompatibilityGraph {
                         .stream().map(GrimoireEnchantment::getIdentifier),
                 EnchantmentHelper.getEnchantments(item).keySet()
                         .stream().map(e -> Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.getKey(e)))
-        ).collect(Collectors.toSet());
+        ).filter(e -> conflictGraph.nodes().contains(e)).collect(Collectors.toSet());
         if (all.contains(elem)) return false;
         for(ResourceLocation resourceLocation : all){
             if (conflictGraph.adjacentNodes(resourceLocation).contains(elem)) {
