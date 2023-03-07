@@ -10,6 +10,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
+import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
 import dev.phomc.grimoire.enchantment.tool.ForgeEnchantment;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -32,6 +33,7 @@ public class EnchantmentRegistry {
 
         // melee
         registerEnchant(ColorShuffleEnchantment.class);
+        registerEnchant(VampireEnchantment.class);
 
         // armor
         registerEnchant(AntidoteEnchantment.class);
