@@ -3,6 +3,7 @@ package dev.phomc.grimoire.enchantment;
 import com.google.common.base.CaseFormat;
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
+import dev.phomc.grimoire.enchantment.armor.RefillEnchantment;
 import dev.phomc.grimoire.enchantment.dummy.DummyEnchantment;
 import dev.phomc.grimoire.enchantment.effect.active.*;
 import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
@@ -34,9 +35,10 @@ public class EnchantmentRegistry {
 
         // armor
         registerEnchant(AntidoteEnchantment.class);
+        registerEnchant(RefillEnchantment.class); // armor
 
-        // pickaxe
-        registerEnchant(ForgeEnchantment.class);
+        // tool
+        registerEnchant(ForgeEnchantment.class); // pickaxe
 
         // armor - effect (active)
         registerEnchant(WitherEnchantment.class);
