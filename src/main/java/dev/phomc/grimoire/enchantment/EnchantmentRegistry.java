@@ -72,7 +72,7 @@ public class EnchantmentRegistry {
             try {
                 EnchantmentRegistry.class.getDeclaredField(CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, id)).set(null, instance);
             } catch (IllegalAccessException | NoSuchFieldException e) {
-                Grimoire.LOGGER.warn("No public field specified for enchantment '{}' ", id);
+                //Grimoire.LOGGER.warn("No public field specified for enchantment '{}' ", id);
             }
 
             ALL.put(identifier, instance);
