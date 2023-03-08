@@ -3,6 +3,7 @@ package dev.phomc.grimoire.mixin;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.item.GrimoireItem;
+import dev.phomc.grimoire.tags.GrimoireBlockTags;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -69,7 +70,7 @@ public abstract class BlockMixin {
         if(itemStack == null || itemStack.isEmpty()) return;
         if (EnchantmentTarget.PICKAXE.test(itemStack.getItem())) {
             byte lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(EnchantmentRegistry.DIGGER);
-            if (lv > 0) {
+            if (lv > 0 && !blockState.is(GrimoireBlockTags.DIGGER_BLACKLIST)) {
                 EnchantmentRegistry.DIGGER.dig((ServerPlayer) player, blockPos, blockState);
             }
         }

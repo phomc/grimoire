@@ -43,6 +43,6 @@ public abstract class ServerPlayerMixin extends Player implements ServerPlayerAc
 
     @Override
     public void ignoreDigger(boolean value) {
-        ignoreDigger = true;
+        ignoreDigger = value;
     }
 }
