@@ -11,6 +11,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
+import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
 import dev.phomc.grimoire.enchantment.tool.ForgeEnchantment;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,6 +28,7 @@ public class EnchantmentRegistry {
     public static CompatibilityGraph COMPATIBILITY_GRAPH;
     public static Enchantment DUMMY;
     public static ForgeEnchantment FORGE;
+    public static DiggerEnchantment DIGGER;
 
     public static void init() {
         Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation("grimoire", "dummy"), DUMMY = new DummyEnchantment());
@@ -41,6 +43,7 @@ public class EnchantmentRegistry {
 
         // tool
         registerEnchant(ForgeEnchantment.class); // pickaxe
+        registerEnchant(DiggerEnchantment.class); // pickaxe
 
         // armor - effect (active)
         registerEnchant(WitherEnchantment.class);

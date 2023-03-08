@@ -20,6 +20,8 @@ public class CompatibilityGraph {
 
     public CompatibilityGraph(){
         addConflict(EnchantmentRegistry.FORGE, Enchantments.SILK_TOUCH);
+        addConflict(EnchantmentRegistry.DIGGER, Enchantments.BLOCK_FORTUNE);
+        addConflict(EnchantmentRegistry.DIGGER, Enchantments.SILK_TOUCH);
     }
 
     public void addConflict(ResourceLocation a, ResourceLocation b) {

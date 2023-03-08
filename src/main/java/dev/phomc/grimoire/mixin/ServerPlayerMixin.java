@@ -1,6 +1,7 @@
 package dev.phomc.grimoire.mixin;
 
 import com.mojang.authlib.GameProfile;
+import dev.phomc.grimoire.accessor.ServerPlayerAccessor;
 import dev.phomc.grimoire.item.GrimoireItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,8 +15,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayer.class)
-public abstract class ServerPlayerMixin extends Player {
+public abstract class ServerPlayerMixin extends Player implements ServerPlayerAccessor {
     private int armorTick;
+    private boolean ignoreDigger;
 
     public ServerPlayerMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
         super(level, blockPos, f, gameProfile);
@@ -32,5 +34,15 @@ public abstract class ServerPlayerMixin extends Player {
                 key.onArmorTick(this, slot, itemStack, value, ticks);
             });
         }
+    }
+
+    @Override
+    public boolean shouldIgnoreDigger() {
+        return ignoreDigger;
+    }
+
+    @Override
+    public void ignoreDigger(boolean value) {
+        ignoreDigger = true;
     }
 }
