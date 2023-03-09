@@ -2,6 +2,7 @@ package dev.phomc.grimoire.enchantment;
 
 import com.google.common.base.CaseFormat;
 import dev.phomc.grimoire.Grimoire;
+import dev.phomc.grimoire.enchantment.armor.AftershockEnchantment;
 import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
 import dev.phomc.grimoire.enchantment.armor.RefillEnchantment;
 import dev.phomc.grimoire.enchantment.effect.active.*;
@@ -35,10 +36,11 @@ public class EnchantmentRegistry {
 
         // armor
         registerEnchant(AntidoteEnchantment.class);
-        registerEnchant(RefillEnchantment.class); // armor
+        registerEnchant(RefillEnchantment.class); // helmet
+        registerEnchant(AftershockEnchantment.class); // boots
 
         // tool
-        registerEnchant(SmeltingEnchantment.class); // pickaxe
+        registerEnchant(SmeltingEnchantment.class); // digger
         registerEnchant(DiggerEnchantment.class); // pickaxe
 
         // armor - effect (active)

@@ -1,6 +1,6 @@
 package dev.phomc.grimoire.mixin;
 
-import dev.phomc.grimoire.event.AttackEvent;
+import dev.phomc.grimoire.event.EventDispatcher;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +18,6 @@ public class LivingEntityMixin {
             )
     )
     protected void actuallyHurt(DamageSource damageSource, float f, CallbackInfo ci) {
-        AttackEvent.handleHurt(damageSource, f, (LivingEntity) (Object) this);
+        EventDispatcher.handleHurt(damageSource, f, (LivingEntity) (Object) this);
     }
 }

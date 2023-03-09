@@ -1,7 +1,9 @@
 package dev.phomc.grimoire.enchantment;
 
 import dev.phomc.grimoire.event.AttackRecord;
+import dev.phomc.grimoire.event.NaturalDamageRecord;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -55,6 +57,10 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
     }
 
     public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, int level, int tick) {
+
+    }
+
+    public void onNaturalDamaged(NaturalDamageRecord naturalDamageRecord, ItemStack armor, int level) {
 
     }
 
