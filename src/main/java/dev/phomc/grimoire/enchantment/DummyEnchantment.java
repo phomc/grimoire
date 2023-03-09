@@ -21,6 +21,11 @@ public class DummyEnchantment extends Enchantment {
     }
 
     @Override
+    public final int getMinLevel() {
+        return 1;
+    }
+
+    @Override
     public final int getMinCost(int i) {
         return Integer.MAX_VALUE;
     }
