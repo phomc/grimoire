@@ -11,7 +11,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
-import dev.phomc.grimoire.enchantment.tool.ForgeEnchantment;
+import dev.phomc.grimoire.enchantment.tool.SmeltingEnchantment;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -25,8 +25,7 @@ public class EnchantmentRegistry {
     public static Map<ResourceLocation, GrimoireEnchantment> ALL = new LinkedHashMap<>(); // preserve order
 
     public static CompatibilityGraph COMPATIBILITY_GRAPH;
-    public static Enchantment DUMMY;
-    public static ForgeEnchantment FORGE;
+    public static SmeltingEnchantment SMELTING;
     public static DiggerEnchantment DIGGER;
 
     public static void init() {
@@ -39,7 +38,7 @@ public class EnchantmentRegistry {
         registerEnchant(RefillEnchantment.class); // armor
 
         // tool
-        registerEnchant(ForgeEnchantment.class); // pickaxe
+        registerEnchant(SmeltingEnchantment.class); // pickaxe
         registerEnchant(DiggerEnchantment.class); // pickaxe
 
         // armor - effect (active)

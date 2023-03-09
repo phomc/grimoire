@@ -8,9 +8,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ForgeEnchantment extends GrimoireEnchantment {
-    public ForgeEnchantment(@NotNull ResourceLocation identifier) {
-        super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.PICKAXE);
+public class SmeltingEnchantment extends GrimoireEnchantment {
+    public SmeltingEnchantment(@NotNull ResourceLocation identifier) {
+        super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.DIGGER);
     }
 
     public int getMaxLevel() {

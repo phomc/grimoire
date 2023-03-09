@@ -18,7 +18,7 @@ public class CompatibilityGraph {
     private final MutableGraph<ResourceLocation> conflictGraph = GraphBuilder.undirected().build();
 
     public CompatibilityGraph(){
-        addConflict(EnchantmentRegistry.FORGE, Enchantments.SILK_TOUCH);
+        addConflict(EnchantmentRegistry.SMELTING, Enchantments.SILK_TOUCH);
         addConflict(EnchantmentRegistry.DIGGER, Enchantments.BLOCK_FORTUNE);
         addConflict(EnchantmentRegistry.DIGGER, Enchantments.SILK_TOUCH);
     }

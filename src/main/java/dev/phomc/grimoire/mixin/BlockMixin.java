@@ -38,9 +38,9 @@ public abstract class BlockMixin {
                                  @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack itemStack,
                                  CallbackInfoReturnable<List<ItemStack>> cir) {
         if(itemStack == null || itemStack.isEmpty()) return;
-        if (EnchantmentTarget.PICKAXE.test(itemStack.getItem())) {
-            int lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(itemStack, EnchantmentRegistry.FORGE);
-            if (lv > 0 && EnchantmentRegistry.FORGE.shouldSmelt(lv)) {
+        if (EnchantmentTarget.DIGGER.test(itemStack.getItem())) {
+            int lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(itemStack, EnchantmentRegistry.SMELTING);
+            if (lv > 0 && itemStack.isCorrectToolForDrops(blockState) && EnchantmentRegistry.SMELTING.shouldSmelt(lv)) {
                 List<Pair<Ingredient, ItemStack>> recipes = serverLevel.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING)
                         .stream()
                         .map(r -> Pair.of(r.getIngredients().get(0), r.getResultItem(serverLevel.registryAccess())))
