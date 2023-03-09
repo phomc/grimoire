@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("UnstableApiUsage")
 public class CompatibilityGraph {
     private final MutableGraph<ResourceLocation> conflictGraph = GraphBuilder.undirected().build();
 
@@ -38,12 +39,12 @@ public class CompatibilityGraph {
         Set<ResourceLocation> all = EnchantmentHelper.getEnchantments(item)
                 .keySet().stream()
                 .map(e -> Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.getKey(e)))
-                .filter(e -> conflictGraph.nodes().contains(e))
                 .collect(Collectors.toSet());
-        if (all.contains(elem)) return false;
-        for(ResourceLocation resourceLocation : all){
-            if (conflictGraph.adjacentNodes(resourceLocation).contains(elem)) {
-                return false;
+        if (conflictGraph.nodes().contains(elem)) {
+            for (ResourceLocation resourceLocation : conflictGraph.adjacentNodes(elem)) {
+                if (all.contains(resourceLocation)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -54,6 +55,9 @@ public class CompatibilityGraph {
     }
 
     public boolean isCompatible(GrimoireEnchantment a, Enchantment b) {
-        return conflictGraph.nodes().contains(a) && !conflictGraph.adjacentNodes(a.getIdentifier()).contains(b);
+        if (conflictGraph.nodes().contains(a.getIdentifier())) {
+            return conflictGraph.adjacentNodes(a.getIdentifier()).contains(Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.getKey(b)));
+        }
+        return true;
     }
 }
