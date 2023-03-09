@@ -45,6 +45,7 @@ public abstract class ItemStackMixin implements GrimoireItem {
 
     public void updateDisplay() {
         List<Component> newLore = new ArrayList<>();
+        getEnchantmentFeature().displayLore(newLore);
         getLoreFeature().displayLore(newLore);
 
         ItemStackUtils.setLore(self(), newLore);
@@ -53,6 +54,7 @@ public abstract class ItemStackMixin implements GrimoireItem {
     public void pushChanges() {
         if (isEmpty()) return;
         getLoreFeature().save(self());
+        getEnchantmentFeature().save(self());
         updateDisplay();
     }
 }

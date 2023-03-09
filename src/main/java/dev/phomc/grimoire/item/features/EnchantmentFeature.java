@@ -2,20 +2,18 @@ package dev.phomc.grimoire.item.features;
 
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-public class EnchantmentFeature extends ItemFeature {
-    public static final String ENC_TAG = "enchant";
-    public static final String ID_TAG = "id";
-    public static final String LV_TAG = "lv";
-
+public class EnchantmentFeature extends ItemFeature implements Displayable {
     private final Map<GrimoireEnchantment, Integer> enchantments = new LinkedHashMap<>(); // preserve order
 
     public int getEnchantment(@Nullable ItemStack itemStack, GrimoireEnchantment enchantment) {
@@ -72,5 +70,12 @@ public class EnchantmentFeature extends ItemFeature {
 
     public void resetAll(ItemStack itemStack) {
         itemStack.removeTagKey("Enchantments");
+    }
+
+    @Override
+    public void displayLore(List<Component> lines) {
+        for (Map.Entry<GrimoireEnchantment, Integer> entry : enchantments.entrySet()) {
+            lines.add(entry.getKey().getFullname(entry.getValue()));
+        }
     }
 }
