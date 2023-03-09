@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 public class DummyEnchantment extends Enchantment {
     public DummyEnchantment(Enchantment.Rarity rarity, EnchantmentCategory category, EquipmentSlot[] equipmentSlots) {
@@ -36,7 +37,7 @@ public class DummyEnchantment extends Enchantment {
     }
 
     @Override
-    public final Component getFullname(int lv) {
+    public final @NotNull Component getFullname(int lv) {
         MutableComponent mutableComponent = Component.translatable(this.getDescriptionId());
         if (this.isCurse()) {
             mutableComponent.withStyle(Style.EMPTY.withColor(ChatFormatting.RED).withItalic(false));
@@ -56,7 +57,8 @@ public class DummyEnchantment extends Enchantment {
 
     @Override
     public final boolean isTradeable() {
-        return false;
+        // allows in trading
+        return getRarity() == Rarity.COMMON || getRarity() == Rarity.UNCOMMON;
     }
 
     @Override
