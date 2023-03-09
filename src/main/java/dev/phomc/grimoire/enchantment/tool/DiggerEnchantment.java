@@ -7,6 +7,7 @@ import dev.phomc.grimoire.tags.GrimoireBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +19,7 @@ public class DiggerEnchantment extends GrimoireEnchantment {
         super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.PICKAXE);
     }
 
-    public void dig(ServerPlayer player, BlockPos origin, BlockState originState) {
+    public void dig(ServerPlayer player, BlockPos origin, BlockState originState, ItemStack itemStack) {
         // ignoredPlayers prevents infinite recursion
         if (((ServerPlayerAccessor) player).shouldIgnoreDigger()) return;
         ((ServerPlayerAccessor) player).ignoreDigger(true);
@@ -36,7 +37,7 @@ public class DiggerEnchantment extends GrimoireEnchantment {
                     if (p != origin && !blockState.is(GrimoireBlockTags.DIGGER_BLACKLIST) &&
                             blockState.getBlock().defaultDestroyTime() <= originState.getBlock().defaultDestroyTime() &&
                             player.level.mayInteract(player, p) &&
-                            player.hasCorrectToolForDrops(blockState)) {
+                            itemStack.isCorrectToolForDrops(blockState)) {
                         // this handles the rest: do extra validation
                         // and calculate exp, drops, sound, item durability, etc
                         player.gameMode.destroyBlock(p);

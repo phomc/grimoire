@@ -65,13 +65,12 @@ public abstract class BlockMixin {
             method = "playerDestroy(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/item/ItemStack;)V",
             at = @At("TAIL")
     )
-    // This code is called when a player who is not in creative breaks block with appropriate tools
     public void playerDestroy(Level level, Player player, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity, ItemStack itemStack, CallbackInfo ci) {
         if(itemStack == null || itemStack.isEmpty()) return;
         if (EnchantmentTarget.PICKAXE.test(itemStack.getItem())) {
             int lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(itemStack, EnchantmentRegistry.DIGGER);
-            if (lv > 0 && !blockState.is(GrimoireBlockTags.DIGGER_BLACKLIST)) {
-                EnchantmentRegistry.DIGGER.dig((ServerPlayer) player, blockPos, blockState);
+            if (lv > 0 && !blockState.is(GrimoireBlockTags.DIGGER_BLACKLIST) && itemStack.isCorrectToolForDrops(blockState)) {
+                EnchantmentRegistry.DIGGER.dig((ServerPlayer) player, blockPos, blockState, itemStack);
             }
         }
     }
