@@ -1,6 +1,8 @@
 package dev.phomc.grimoire.enchantment;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.armor.AftershockEnchantment;
 import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
@@ -19,8 +21,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class EnchantmentRegistry {
     public static Map<ResourceLocation, GrimoireEnchantment> ALL = new LinkedHashMap<>(); // preserve order
@@ -57,6 +61,7 @@ public class EnchantmentRegistry {
         registerEnchant(VenomEnchantment.class);
 
         COMPATIBILITY_GRAPH = new CompatibilityGraph();
+        reportRegistration();
     }
 
     private static GrimoireEnchantment registerEnchant(Class<? extends GrimoireEnchantment> clazz) {
@@ -79,11 +84,22 @@ public class EnchantmentRegistry {
 
             ALL.put(identifier, instance);
             Registry.register(BuiltInRegistries.ENCHANTMENT, identifier, instance);
-            Grimoire.LOGGER.info("Enchantment '{}' registered", id);
             return instance;
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
                  NoSuchMethodException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void reportRegistration() {
+        Multimap<Enchantment.Rarity, ResourceLocation> map = ArrayListMultimap.create();
+        for (Map.Entry<ResourceLocation, GrimoireEnchantment> entry : ALL.entrySet()) {
+            map.put(entry.getValue().getRarity(), entry.getKey());
+        }
+        for (Enchantment.Rarity entry : map.keySet()) {
+            Collection<ResourceLocation> collection = map.get(entry);
+            Grimoire.LOGGER.info("{} {} enchantments: {}", collection.size(), entry, collection.stream()
+                    .map(ResourceLocation::toString).collect(Collectors.joining(", ")));
         }
     }
 }
