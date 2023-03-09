@@ -56,7 +56,7 @@ public class CompatibilityGraph {
 
     public boolean isCompatible(GrimoireEnchantment a, Enchantment b) {
         if (conflictGraph.nodes().contains(a.getIdentifier())) {
-            return conflictGraph.adjacentNodes(a.getIdentifier()).contains(Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.getKey(b)));
+            return !conflictGraph.adjacentNodes(a.getIdentifier()).contains(Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.getKey(b)));
         }
         return true;
     }
