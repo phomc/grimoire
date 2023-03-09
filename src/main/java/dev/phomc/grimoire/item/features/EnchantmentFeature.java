@@ -3,7 +3,9 @@ package dev.phomc.grimoire.item.features;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.jetbrains.annotations.Nullable;
@@ -69,7 +71,11 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
     }
 
     public void resetAll(ItemStack itemStack) {
-        itemStack.removeTagKey("Enchantments");
+        if (itemStack.is(Items.ENCHANTED_BOOK)) {
+            itemStack.removeTagKey(EnchantedBookItem.TAG_STORED_ENCHANTMENTS);
+        } else {
+            itemStack.removeTagKey("Enchantments");
+        }
     }
 
     @Override
