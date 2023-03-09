@@ -49,7 +49,7 @@ public class EnchantRemoveCommand implements SubCommand {
         }
         GrimoireItem grimoireItem = GrimoireItem.of(itemStack);
         EnchantmentFeature enchantmentFeature = grimoireItem.getEnchantmentFeature();
-        enchantmentFeature.enchantments.remove(enchantment);
+        enchantmentFeature.removeEnchantment(enchantment);
         grimoireItem.pushChanges();
         target.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
         executor.displayClientMessage(Component.translatable("grimoire.command.disenchant.success", target.getName().getString()).withStyle(ChatFormatting.YELLOW), false);

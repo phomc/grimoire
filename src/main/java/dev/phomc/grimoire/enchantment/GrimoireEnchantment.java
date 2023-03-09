@@ -1,81 +1,60 @@
 package dev.phomc.grimoire.enchantment;
 
 import dev.phomc.grimoire.event.AttackRecord;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public abstract class GrimoireEnchantment {
+public abstract class GrimoireEnchantment extends DummyEnchantment {
     private final ResourceLocation identifier;
-    private final MutableComponent displayName;
-    private final EnchantmentRarity rarity;
     private final Predicate<Item> itemCheck;
 
-    public GrimoireEnchantment(@NotNull ResourceLocation identifier, @NotNull EnchantmentRarity rarity, @NotNull Predicate<Item> itemCheck) {
+    public GrimoireEnchantment(@NotNull ResourceLocation identifier,
+                               @NotNull Enchantment.Rarity rarity,
+                               @NotNull Predicate<Item> itemCheck) {
+        super(rarity, EnchantmentCategory.VANISHABLE, EquipmentSlot.values());
         this.identifier = identifier;
-        this.displayName = Component.translatable("enchantment." + identifier.toString().replace(":", "."));
-        this.rarity = rarity;
         this.itemCheck = itemCheck;
     }
 
     @NotNull
-    public ResourceLocation getIdentifier() {
+    public final ResourceLocation getIdentifier() {
         return identifier;
     }
 
     @NotNull
-    public MutableComponent getDisplayName() {
-        return displayName.copy();
-    }
-
-    @NotNull
-    public EnchantmentRarity getRarity() {
-        return rarity;
-    }
-
-    @NotNull
-    public Predicate<Item> getItemCheck() {
+    public final Predicate<Item> getItemCheck() {
         return itemCheck;
     }
 
-    public byte getMaxLevel() {
-        return 1;
+    @Override
+    public final boolean canEnchant(ItemStack itemStack) {
+        return itemStack != null && itemCheck.test(itemStack.getItem());
     }
 
-    public int getDamageProtection(int level, DamageSource damageSource) {
-        return 0;
+    @Override
+    protected final boolean checkCompatibility(Enchantment enchantment) {
+        return this != enchantment && EnchantmentRegistry.COMPATIBILITY_GRAPH.isCompatible(this, enchantment);
     }
 
-    public float getDamageBonus(int level, MobType mobType) {
-        return 0;
-    }
-
-    public void doPostHurt(LivingEntity livingEntity, Entity entity, int level) {
+    // must have player as either attacker or victim
+    public void onAttack(AttackRecord attackRecord, int level) {
 
     }
 
     // must have player as either attacker or victim
-    public void onAttack(AttackRecord attackRecord, byte level) {
+    public void onAttacked(AttackRecord attackRecord, ItemStack armor, int level) {
 
     }
 
-    // must have player as either attacker or victim
-    public void onAttacked(AttackRecord attackRecord, ItemStack armor, byte level) {
-
-    }
-
-    public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, byte level, int tick) {
+    public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, int level, int tick) {
 
     }
 

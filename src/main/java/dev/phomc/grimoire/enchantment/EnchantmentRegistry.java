@@ -4,7 +4,6 @@ import com.google.common.base.CaseFormat;
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
 import dev.phomc.grimoire.enchantment.armor.RefillEnchantment;
-import dev.phomc.grimoire.enchantment.dummy.DummyEnchantment;
 import dev.phomc.grimoire.enchantment.effect.active.*;
 import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
@@ -31,8 +30,6 @@ public class EnchantmentRegistry {
     public static DiggerEnchantment DIGGER;
 
     public static void init() {
-        Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation("grimoire", "dummy"), DUMMY = new DummyEnchantment());
-
         // melee
         registerEnchant(ColorShuffleEnchantment.class);
         registerEnchant(VampireEnchantment.class);
@@ -69,6 +66,10 @@ public class EnchantmentRegistry {
             ResourceLocation identifier = new ResourceLocation("grimoire", CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, id));
             GrimoireEnchantment instance = clazz.getDeclaredConstructor(ResourceLocation.class).newInstance(identifier);
 
+            if (instance.getMaxLevel() > Byte.MAX_VALUE) {
+                Grimoire.LOGGER.warn("Enchantment '{}' has excessive maximum level", id);
+            }
+
             try {
                 EnchantmentRegistry.class.getDeclaredField(CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, id)).set(null, instance);
             } catch (IllegalAccessException | NoSuchFieldException e) {
@@ -76,6 +77,7 @@ public class EnchantmentRegistry {
             }
 
             ALL.put(identifier, instance);
+            Registry.register(BuiltInRegistries.ENCHANTMENT, identifier, instance);
             Grimoire.LOGGER.info("Enchantment '{}' registered", id);
             return instance;
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException |

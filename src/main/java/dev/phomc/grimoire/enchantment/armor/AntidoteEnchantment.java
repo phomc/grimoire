@@ -1,7 +1,5 @@
 package dev.phomc.grimoire.enchantment.armor;
 
-import dev.phomc.grimoire.Grimoire;
-import dev.phomc.grimoire.enchantment.EnchantmentRarity;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import net.minecraft.resources.ResourceLocation;
@@ -10,6 +8,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,15 +17,15 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AntidoteEnchantment extends GrimoireEnchantment {
 
     public AntidoteEnchantment(@NotNull ResourceLocation identifier) {
-        super(identifier, EnchantmentRarity.RARE, EnchantmentTarget.ARMOR);
+        super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.ARMOR);
     }
 
-    public byte getMaxLevel() {
+    public int getMaxLevel() {
         return 3;
     }
 
     @Override
-    public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, byte level, int tick) {
+    public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, int level, int tick) {
         if (tick % 20 == 0 && ThreadLocalRandom.current().nextFloat() < (level + 1) * 0.05f) {
             List<MobEffectInstance> harmfulEffects = player.getActiveEffects().stream()
                     .filter(mobEffectInstance -> {

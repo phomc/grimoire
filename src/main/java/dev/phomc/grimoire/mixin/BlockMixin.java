@@ -39,7 +39,7 @@ public abstract class BlockMixin {
                                  CallbackInfoReturnable<List<ItemStack>> cir) {
         if(itemStack == null || itemStack.isEmpty()) return;
         if (EnchantmentTarget.PICKAXE.test(itemStack.getItem())) {
-            byte lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(EnchantmentRegistry.FORGE);
+            int lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(itemStack, EnchantmentRegistry.FORGE);
             if (lv > 0 && EnchantmentRegistry.FORGE.shouldSmelt(lv)) {
                 List<Pair<Ingredient, ItemStack>> recipes = serverLevel.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING)
                         .stream()
@@ -69,7 +69,7 @@ public abstract class BlockMixin {
     public void playerDestroy(Level level, Player player, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity, ItemStack itemStack, CallbackInfo ci) {
         if(itemStack == null || itemStack.isEmpty()) return;
         if (EnchantmentTarget.PICKAXE.test(itemStack.getItem())) {
-            byte lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(EnchantmentRegistry.DIGGER);
+            int lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(itemStack, EnchantmentRegistry.DIGGER);
             if (lv > 0 && !blockState.is(GrimoireBlockTags.DIGGER_BLACKLIST)) {
                 EnchantmentRegistry.DIGGER.dig((ServerPlayer) player, blockPos, blockState);
             }

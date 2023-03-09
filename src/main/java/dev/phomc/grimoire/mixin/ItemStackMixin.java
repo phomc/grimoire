@@ -1,6 +1,5 @@
 package dev.phomc.grimoire.mixin;
 
-import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.item.GrimoireItem;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import dev.phomc.grimoire.item.features.LoreFeature;
@@ -46,24 +45,13 @@ public abstract class ItemStackMixin implements GrimoireItem {
 
     public void updateDisplay() {
         List<Component> newLore = new ArrayList<>();
-        // 1. enchantment first
-        getEnchantmentFeature().displayLore(newLore);
-        // 2. then lore
         getLoreFeature().displayLore(newLore);
 
         ItemStackUtils.setLore(self(), newLore);
-
-        // enchantment effect
-        if (getEnchantmentFeature().enchantments.isEmpty()) {
-            ItemStackUtils.removeEnchantment(self(), EnchantmentRegistry.DUMMY);
-        } else {
-            self().enchant(EnchantmentRegistry.DUMMY, 1);
-        }
     }
 
     public void pushChanges() {
         if (isEmpty()) return;
-        getEnchantmentFeature().save(self());
         getLoreFeature().save(self());
         updateDisplay();
     }

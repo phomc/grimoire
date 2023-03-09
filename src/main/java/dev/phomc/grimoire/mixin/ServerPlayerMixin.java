@@ -30,7 +30,7 @@ public abstract class ServerPlayerMixin extends Player implements ServerPlayerAc
             if (!slot.isArmor()) continue;
             ItemStack itemStack = getItemBySlot(slot);
             if (itemStack.isEmpty()) continue;
-            GrimoireItem.of(itemStack).getEnchantmentFeature().enchantments.forEach((key, value) -> {
+            GrimoireItem.of(itemStack).getEnchantmentFeature().iterateEnchantments(itemStack, (key, value) -> {
                 key.onArmorTick(this, slot, itemStack, value, ticks);
             });
         }

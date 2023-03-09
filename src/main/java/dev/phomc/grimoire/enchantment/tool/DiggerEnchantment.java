@@ -1,13 +1,13 @@
 package dev.phomc.grimoire.enchantment.tool;
 
 import dev.phomc.grimoire.accessor.ServerPlayerAccessor;
-import dev.phomc.grimoire.enchantment.EnchantmentRarity;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.tags.GrimoireBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +15,7 @@ public class DiggerEnchantment extends GrimoireEnchantment {
     private static final int RADIUS = 1;
 
     public DiggerEnchantment(@NotNull ResourceLocation identifier) {
-        super(identifier, EnchantmentRarity.RARE, EnchantmentTarget.PICKAXE);
+        super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.PICKAXE);
     }
 
     public void dig(ServerPlayer player, BlockPos origin, BlockState originState) {

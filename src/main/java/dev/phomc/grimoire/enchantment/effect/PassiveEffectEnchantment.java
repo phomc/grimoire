@@ -1,6 +1,5 @@
 package dev.phomc.grimoire.enchantment.effect;
 
-import dev.phomc.grimoire.enchantment.EnchantmentRarity;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.event.AttackRecord;
@@ -9,6 +8,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -19,7 +19,7 @@ public class PassiveEffectEnchantment extends GrimoireEnchantment {
     private final int[] duration;
 
     public PassiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
-        super(identifier, EnchantmentRarity.UNCOMMON, EnchantmentTarget.ARMOR);
+        super(identifier, Enchantment.Rarity.UNCOMMON, EnchantmentTarget.ARMOR);
         this.effect = effect;
         this.amplifiers = amplifiers;
         if (amplifiers.length == 0) throw new IllegalArgumentException();
@@ -34,11 +34,11 @@ public class PassiveEffectEnchantment extends GrimoireEnchantment {
     }
 
     @Override
-    public byte getMaxLevel() {
-        return (byte) amplifiers.length;
+    public int getMaxLevel() {
+        return amplifiers.length;
     }
 
-    public void execute(LivingEntity entity, byte level) {
+    public void execute(LivingEntity entity, int level) {
         int index = Math.min(level, chances.length) - 1;
         float rand = ThreadLocalRandom.current().nextFloat();
         if (rand > chances[index]) return;
@@ -46,7 +46,7 @@ public class PassiveEffectEnchantment extends GrimoireEnchantment {
     }
 
     @Override
-    public void onAttacked(AttackRecord attackRecord, ItemStack armor, byte level) {
+    public void onAttacked(AttackRecord attackRecord, ItemStack armor, int level) {
         if (attackRecord.isRanged()) return;
         execute(attackRecord.attacker(), level);
     }

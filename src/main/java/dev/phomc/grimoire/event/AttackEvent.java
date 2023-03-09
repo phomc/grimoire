@@ -24,14 +24,14 @@ public class AttackEvent {
         if (damageSource.typeHolder().is(DamageTypes.PLAYER_ATTACK) || damageSource.typeHolder().is(DamageTypes.MOB_ATTACK)) {
             ItemStack weapon = attacker.getMainHandItem();
             AttackRecord attackRecord = new AttackRecord(attacker, victim, null, f, weapon);
-            GrimoireItem.of(weapon).getEnchantmentFeature().enchantments.forEach((key, value) -> {
+            GrimoireItem.of(weapon).getEnchantmentFeature().iterateEnchantments(weapon, (key, value) -> {
                 if (value < 1) return;
                 key.onAttack(attackRecord, value);
             });
 
             victim.getArmorSlots().forEach(armor -> {
                 if (armor == null) return;
-                GrimoireItem.of(armor).getEnchantmentFeature().enchantments.forEach((key, value) -> {
+                GrimoireItem.of(armor).getEnchantmentFeature().iterateEnchantments(armor, (key, value) -> {
                     if (value < 1) return;
                     key.onAttacked(attackRecord, armor, value);
                 });
@@ -42,7 +42,7 @@ public class AttackEvent {
 
             AttackRecord attackRecord = new AttackRecord(attacker, victim, projectile, f, weapon);
             if (weapon != null) {
-                GrimoireItem.of(weapon).getEnchantmentFeature().enchantments.forEach((key, value) -> {
+                GrimoireItem.of(weapon).getEnchantmentFeature().iterateEnchantments(weapon, (key, value) -> {
                     if (value < 1) return;
                     key.onAttack(attackRecord, value);
                 });
@@ -50,7 +50,7 @@ public class AttackEvent {
 
             victim.getArmorSlots().forEach(armor -> {
                 if (armor == null) return;
-                GrimoireItem.of(armor).getEnchantmentFeature().enchantments.forEach((key, value) -> {
+                GrimoireItem.of(armor).getEnchantmentFeature().iterateEnchantments(armor, (key, value) -> {
                     if (value < 1) return;
                     key.onAttacked(attackRecord, armor, value);
                 });
