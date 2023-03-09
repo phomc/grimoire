@@ -38,6 +38,10 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
         enchantments.remove(enchantment);
     }
 
+    public boolean isEmpty() {
+        return enchantments.isEmpty();
+    }
+
     @Override
     public void load(ItemStack itemStack) {
         for(Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(itemStack).entrySet()) {
