@@ -21,6 +21,8 @@ public class CompatibilityGraph {
         addConflict(EnchantmentRegistry.SMELTING, Enchantments.SILK_TOUCH);
         addConflict(EnchantmentRegistry.DIGGER, Enchantments.BLOCK_FORTUNE);
         addConflict(EnchantmentRegistry.DIGGER, Enchantments.SILK_TOUCH);
+        addConflict(EnchantmentRegistry.TUNNEL, Enchantments.BLOCK_FORTUNE);
+        addConflict(EnchantmentRegistry.TUNNEL, EnchantmentRegistry.DIGGER);
         addConflict(EnchantmentRegistry.RIFT, Enchantments.INFINITY_ARROWS);
         addConflict(EnchantmentRegistry.RIFT, Enchantments.MULTISHOT);
     }
