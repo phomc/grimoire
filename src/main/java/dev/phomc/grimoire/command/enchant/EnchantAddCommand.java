@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 
 public class EnchantAddCommand implements SubCommand {
@@ -60,9 +61,10 @@ public class EnchantAddCommand implements SubCommand {
         if (itemStack.isEmpty()) {
             throw EnchantCommand.ERROR_NO_ITEM.create(target.getName().getString());
         }
-        if (!enchantment.getItemCheck().test(itemStack.getItem())) {
+        if (!enchantment.getItemCheck().test(itemStack.getItem()) && !itemStack.is(Items.ENCHANTED_BOOK)) {
             throw EnchantCommand.ERROR_WRONG_ITEM.create(target.getName().getString());
         }
+        // also checks compatibility for enchanted book, no exception
         if (!EnchantmentRegistry.COMPATIBILITY_GRAPH.isCompatible(itemStack, enchantment)) {
             throw EnchantCommand.ERROR_COMPATIBILITY.create();
         }
