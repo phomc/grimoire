@@ -1,24 +1,22 @@
 package dev.phomc.grimoire.enchantment.effect;
 
-import dev.phomc.grimoire.enchantment.EnchantmentTarget;
-import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.attack.AbstractAttackEnchantment;
 import dev.phomc.grimoire.event.AttackRecord;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ActiveEffectEnchantment extends GrimoireEnchantment {
+public class ActiveEffectEnchantment extends AbstractAttackEnchantment {
     private final MobEffect effect;
     private final int[] amplifiers;
     private final float[] chances;
     private final int[] duration;
 
     public ActiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
-        super(identifier, Enchantment.Rarity.COMMON, EnchantmentTarget.MELEE.or(EnchantmentTarget.RANGED));
+        super(identifier, Enchantment.Rarity.COMMON);
         this.effect = effect;
         this.amplifiers = amplifiers;
         if (amplifiers.length == 0) throw new IllegalArgumentException();
@@ -37,17 +35,11 @@ public class ActiveEffectEnchantment extends GrimoireEnchantment {
         return amplifiers.length;
     }
 
-    public void execute(LivingEntity entity, int level) {
+    @Override
+    protected void execute(AttackRecord attackRecord, int level) {
         int index = Math.min(level, chances.length) - 1;
         float rand = ThreadLocalRandom.current().nextFloat();
         if (rand > chances[index]) return;
-        entity.addEffect(new MobEffectInstance(effect, duration[index], amplifiers[index]));
-    }
-
-    @Override
-    public void onAttack(AttackRecord attackRecord, int level) {
-        if (attackRecord.isRanged() || EnchantmentTarget.MELEE.test(attackRecord.weapon().getItem())) {
-            execute(attackRecord.victim(), level);
-        }
+        attackRecord.victim().addEffect(new MobEffectInstance(effect, duration[index], amplifiers[index]));
     }
 }
