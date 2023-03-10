@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SmeltingEnchantment extends GrimoireEnchantment {
     public SmeltingEnchantment(@NotNull ResourceLocation identifier) {
-        super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.DIGGER);
+        super(identifier, Rarity.UNCOMMON, EnchantmentTarget.DIGGER);
     }
 
     public int getMaxLevel() {

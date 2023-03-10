@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RefillEnchantment extends GrimoireEnchantment {
     public RefillEnchantment(@NotNull ResourceLocation identifier) {
-        super(identifier, Enchantment.Rarity.UNCOMMON, EnchantmentTarget.HELMET);
+        super(identifier, Rarity.RARE, EnchantmentTarget.HELMET);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class VampireEnchantment extends GrimoireEnchantment {
     private static final float[] TRANSFER_RATE = new float[]{0.1f, 0.15f, 0.2f, 0.3f, 0.4f};
 
     public VampireEnchantment(ResourceLocation identifier) {
-        super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.MELEE);
+        super(identifier, Rarity.UNCOMMON, EnchantmentTarget.MELEE);
     }
 
     @Override
