@@ -16,6 +16,7 @@ import dev.phomc.grimoire.enchantment.melee.ThunderEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
 import dev.phomc.grimoire.enchantment.tool.SmeltingEnchantment;
+import dev.phomc.grimoire.enchantment.tool.TunnelEnchantment;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -33,6 +34,7 @@ public class EnchantmentRegistry {
     public static CompatibilityGraph COMPATIBILITY_GRAPH;
     public static SmeltingEnchantment SMELTING;
     public static DiggerEnchantment DIGGER;
+    public static TunnelEnchantment TUNNEL;
 
     public static void init() {
         // melee
@@ -48,8 +50,9 @@ public class EnchantmentRegistry {
         // tool
         registerEnchant(SmeltingEnchantment.class); // digger
         registerEnchant(DiggerEnchantment.class); // pickaxe
+        registerEnchant(TunnelEnchantment.class); // pickaxe, shovel
 
-        // armor - effect (active)
+        // melee/ranged - active effect
         registerEnchant(WitherEnchantment.class);
         registerEnchant(PoisonEnchantment.class);
         registerEnchant(NauseaEnchantment.class);
@@ -57,7 +60,7 @@ public class EnchantmentRegistry {
         registerEnchant(BlindnessEnchantment.class);
         registerEnchant(LevitationEnchantment.class);
 
-        // armor - effect (passive)
+        // armor - passive effect
         registerEnchant(DecayEnchantment.class);
         registerEnchant(PetrifiedEnchantment.class);
         registerEnchant(VenomEnchantment.class);

@@ -67,10 +67,19 @@ public abstract class BlockMixin {
     )
     public void playerDestroy(Level level, Player player, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity, ItemStack itemStack, CallbackInfo ci) {
         if(itemStack == null || itemStack.isEmpty()) return;
-        if (EnchantmentTarget.PICKAXE.test(itemStack.getItem())) {
+        if (EnchantmentTarget.DIGGER.test(itemStack.getItem())) {
             int lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(itemStack, EnchantmentRegistry.DIGGER);
-            if (lv > 0 && !blockState.is(GrimoireBlockTags.DIGGER_BLACKLIST) && itemStack.isCorrectToolForDrops(blockState)) {
-                EnchantmentRegistry.DIGGER.trigger((ServerPlayer) player, blockPos, blockState, itemStack);
+            if (lv > 0) {
+                if (!blockState.is(GrimoireBlockTags.DIGGER_BLACKLIST) && itemStack.isCorrectToolForDrops(blockState)) {
+                    EnchantmentRegistry.DIGGER.trigger((ServerPlayer) player, blockPos, blockState, itemStack, lv);
+                }
+            } else {
+                lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(itemStack, EnchantmentRegistry.TUNNEL);
+                if (lv > 0) {
+                    if (!blockState.is(GrimoireBlockTags.TUNNEL_BLACKLIST) && itemStack.isCorrectToolForDrops(blockState)) {
+                        EnchantmentRegistry.TUNNEL.trigger((ServerPlayer) player, blockPos, blockState, itemStack, lv);
+                    }
+                }
             }
         }
     }

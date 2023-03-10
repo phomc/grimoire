@@ -21,17 +21,17 @@ public abstract class AbstractDiggingEnchantment extends GrimoireEnchantment {
 
     protected abstract void onTriggered(Excavator excavator);
 
-    public void trigger(ServerPlayer player, BlockPos origin, BlockState originState, ItemStack itemStack) {
+    public void trigger(ServerPlayer player, BlockPos origin, BlockState originState, ItemStack itemStack, int enchantLevel) {
         // ignoredPlayers prevents infinite recursion
         if (((ServerPlayerAccessor) player).shouldIgnoreDiggingEnchantment()) {
             return;
         }
         ((ServerPlayerAccessor) player).ignoreDiggingEnchantment(true);
-        onTriggered(new Excavator(player, origin, originState, itemStack));
+        onTriggered(new Excavator(player, origin, originState, itemStack, enchantLevel));
         ((ServerPlayerAccessor) player).ignoreDiggingEnchantment(false);
     }
 
-    public record Excavator(ServerPlayer player, BlockPos originPos, BlockState originState, ItemStack itemStack) {
+    public record Excavator(ServerPlayer player, BlockPos originPos, BlockState originState, ItemStack itemStack, int enchantLevel) {
         public void tryDig(BlockPos pos, TagKey<Block> blacklist) {
             BlockState blockState = player.level.getBlockState(pos);
             if (!pos.equals(originPos) && (blacklist == null || !blockState.is(blacklist)) &&
