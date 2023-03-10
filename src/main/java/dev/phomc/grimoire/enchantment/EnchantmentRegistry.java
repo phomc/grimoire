@@ -12,6 +12,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
+import dev.phomc.grimoire.enchantment.melee.ThunderEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
 import dev.phomc.grimoire.enchantment.tool.SmeltingEnchantment;
@@ -37,6 +38,7 @@ public class EnchantmentRegistry {
         // melee
         registerEnchant(ColorShuffleEnchantment.class);
         registerEnchant(VampireEnchantment.class);
+        registerEnchant(ThunderEnchantment.class);
 
         // armor
         registerEnchant(AntidoteEnchantment.class);

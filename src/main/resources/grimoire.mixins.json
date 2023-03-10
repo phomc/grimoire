@@ -11,6 +11,7 @@
     "BlockMixin",
     "BowItemMixin",
     "ItemStackMixin",
+    "LightningBoltMixin",
     "LivingEntityMixin",
     "PlayerMixin",
     "ProjectileMixin",
