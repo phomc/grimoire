@@ -2,6 +2,7 @@ package dev.phomc.grimoire.enchantment;
 
 import dev.phomc.grimoire.event.AttackRecord;
 import dev.phomc.grimoire.event.NaturalDamageRecord;
+import dev.phomc.grimoire.event.ProjectileHitRecord;
 import dev.phomc.grimoire.item.GrimoireItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -67,6 +68,10 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
     }
 
     public void onNaturalDamaged(NaturalDamageRecord naturalDamageRecord, ItemStack armor, int enchantLevel) {
+
+    }
+
+    public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel) {
 
     }
 
