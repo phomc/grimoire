@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin extends Player implements ServerPlayerAccessor {
     private int armorTick;
-    private boolean ignoreDigger;
+    private boolean ignoreDiggingEnchantment;
 
     public ServerPlayerMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
         super(level, blockPos, f, gameProfile);
@@ -37,12 +37,12 @@ public abstract class ServerPlayerMixin extends Player implements ServerPlayerAc
     }
 
     @Override
-    public boolean shouldIgnoreDigger() {
-        return ignoreDigger;
+    public boolean shouldIgnoreDiggingEnchantment() {
+        return ignoreDiggingEnchantment;
     }
 
     @Override
-    public void ignoreDigger(boolean value) {
-        ignoreDigger = value;
+    public void ignoreDiggingEnchantment(boolean value) {
+        ignoreDiggingEnchantment = value;
     }
 }

@@ -70,7 +70,7 @@ public abstract class BlockMixin {
         if (EnchantmentTarget.PICKAXE.test(itemStack.getItem())) {
             int lv = GrimoireItem.of(itemStack).getEnchantmentFeature().getEnchantment(itemStack, EnchantmentRegistry.DIGGER);
             if (lv > 0 && !blockState.is(GrimoireBlockTags.DIGGER_BLACKLIST) && itemStack.isCorrectToolForDrops(blockState)) {
-                EnchantmentRegistry.DIGGER.dig((ServerPlayer) player, blockPos, blockState, itemStack);
+                EnchantmentRegistry.DIGGER.trigger((ServerPlayer) player, blockPos, blockState, itemStack);
             }
         }
     }

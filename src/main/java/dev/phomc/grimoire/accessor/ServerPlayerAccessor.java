@@ -1,7 +1,7 @@
 package dev.phomc.grimoire.accessor;
 
 public interface ServerPlayerAccessor {
-    boolean shouldIgnoreDigger();
+    boolean shouldIgnoreDiggingEnchantment();
 
-    void ignoreDigger(boolean value);
+    void ignoreDiggingEnchantment(boolean value);
 }
