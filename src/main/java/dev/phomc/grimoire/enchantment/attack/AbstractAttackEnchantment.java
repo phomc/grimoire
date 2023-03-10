@@ -14,7 +14,7 @@ public abstract class AbstractAttackEnchantment extends GrimoireEnchantment {
     protected abstract void execute(AttackRecord attackRecord, int level);
 
     @Override
-    public void onAttack(AttackRecord attackRecord, int level) {
+    public final void onAttack(AttackRecord attackRecord, int level) {
         if (attackRecord.isRanged() || (attackRecord.weapon() != null && EnchantmentTarget.MELEE.test(attackRecord.weapon().getItem()))) {
             execute(attackRecord, level);
         }

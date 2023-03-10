@@ -1,8 +1,6 @@
-package dev.phomc.grimoire.enchantment.melee;
+package dev.phomc.grimoire.enchantment.attack;
 
 import dev.phomc.grimoire.accessor.LightningBoltAccessor;
-import dev.phomc.grimoire.enchantment.EnchantmentTarget;
-import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.event.AttackRecord;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ThunderEnchantment extends GrimoireEnchantment {
+public class ThunderEnchantment extends AbstractAttackEnchantment {
 
     public ThunderEnchantment(@NotNull ResourceLocation identifier) {
-        super(identifier, Rarity.UNCOMMON, EnchantmentTarget.MELEE);
+        super(identifier, Rarity.UNCOMMON);
     }
 
     @Override
@@ -25,8 +23,9 @@ public class ThunderEnchantment extends GrimoireEnchantment {
     }
 
     @Override
-    public void onAttack(AttackRecord attackRecord, int enchantLevel) {
-        if (attackRecord.attacker() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < enchantLevel * 0.1f) {
+    protected void execute(AttackRecord attackRecord, int enchantLevel) {
+        float chance = attackRecord.isRanged() ? enchantLevel * 0.2f : enchantLevel * 0.1f;
+        if (attackRecord.attacker() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < chance) {
             Level level = attackRecord.victim().level;
             LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
             if (lightningBolt == null) return;

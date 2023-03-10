@@ -12,7 +12,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
-import dev.phomc.grimoire.enchantment.melee.ThunderEnchantment;
+import dev.phomc.grimoire.enchantment.attack.ThunderEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
 import dev.phomc.grimoire.enchantment.tool.SmeltingEnchantment;
@@ -40,7 +40,6 @@ public class EnchantmentRegistry {
         // melee
         registerEnchant(ColorShuffleEnchantment.class);
         registerEnchant(VampireEnchantment.class);
-        registerEnchant(ThunderEnchantment.class);
 
         // armor
         registerEnchant(AntidoteEnchantment.class);
@@ -52,15 +51,21 @@ public class EnchantmentRegistry {
         registerEnchant(DiggerEnchantment.class); // pickaxe
         registerEnchant(TunnelEnchantment.class); // pickaxe, shovel
 
-        // melee/ranged - active effect
+        // === start: attack enchantments ===
+        // [melee/ranged]
+        // 1. common group
+        registerEnchant(ThunderEnchantment.class);
+
+        // 2. active effect group
         registerEnchant(WitherEnchantment.class);
         registerEnchant(PoisonEnchantment.class);
         registerEnchant(NauseaEnchantment.class);
         registerEnchant(FrozenEnchantment.class);
         registerEnchant(BlindnessEnchantment.class);
         registerEnchant(LevitationEnchantment.class);
+        // === end: attack enchantments ===
 
-        // armor - passive effect
+        // passive effect group (armor)
         registerEnchant(DecayEnchantment.class);
         registerEnchant(PetrifiedEnchantment.class);
         registerEnchant(VenomEnchantment.class);
