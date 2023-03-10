@@ -2,6 +2,7 @@ package dev.phomc.grimoire.item.features;
 
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class EnchantmentFeature extends ItemFeature implements Displayable {
     private final Map<GrimoireEnchantment, Integer> enchantments = new LinkedHashMap<>(); // preserve order
@@ -53,25 +55,36 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
 
     @Override
     public void save(ItemStack itemStack) {
-        if (enchantments.isEmpty()) return;
-        Map<Enchantment, Integer> map = new LinkedHashMap<>();
-        for(Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(itemStack).entrySet()) {
-            if (entry.getKey() instanceof GrimoireEnchantment) continue;
-            map.put(entry.getKey(), entry.getValue());
+        if (enchantments.isEmpty()) {
+            reset(itemStack);
+            return;
         }
-        map.putAll(enchantments);
-        EnchantmentHelper.setEnchantments(map, itemStack);
+        mergeVanilla(itemStack, map -> map.putAll(enchantments));
     }
 
     @Override
     public void reset(ItemStack itemStack) {
-        if (enchantments.isEmpty()) return;
+        mergeVanilla(itemStack, map -> {});
+    }
+
+    public void mergeVanilla(ItemStack itemStack, Consumer<Map<Enchantment, Integer>> handler) {
         Map<Enchantment, Integer> map = new LinkedHashMap<>();
         for(Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(itemStack).entrySet()) {
             if (entry.getKey() instanceof GrimoireEnchantment) continue;
             map.put(entry.getKey(), entry.getValue());
+            System.out.println(entry.getKey().getClass().getName());
         }
-        EnchantmentHelper.setEnchantments(map, itemStack);
+        handler.accept(map);
+        if (map.isEmpty()) {
+            resetAll(itemStack);
+            return;
+        }
+        String tag = itemStack.is(Items.ENCHANTED_BOOK) ? EnchantedBookItem.TAG_STORED_ENCHANTMENTS : "Enchantments";
+        ListTag listTag = new ListTag();
+        for (Map.Entry<Enchantment, Integer> entry : map.entrySet()) {
+            listTag.add(EnchantmentHelper.storeEnchantment(EnchantmentHelper.getEnchantmentId(entry.getKey()), entry.getValue()));
+        }
+        itemStack.getOrCreateTag().put(tag, listTag);
     }
 
     public void resetAll(ItemStack itemStack) {

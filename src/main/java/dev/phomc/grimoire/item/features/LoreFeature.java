@@ -33,7 +33,10 @@ public class LoreFeature extends ItemFeature implements Displayable {
 
     @Override
     public void save(ItemStack itemStack) {
-        if (lore.isEmpty()) return;
+        if (lore.isEmpty()) {
+            reset(itemStack);
+            return;
+        }
         CompoundTag compoundTag = getOrCreateGrimoireTag(itemStack);
         ListTag listTag = new ListTag();
         for (Component component : lore) {
