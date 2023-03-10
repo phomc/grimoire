@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class EnchantmentFeature extends ItemFeature implements Displayable {
-    private final Map<GrimoireEnchantment, Integer> enchantments = new LinkedHashMap<>(); // preserve order
+    private Map<GrimoireEnchantment, Integer> enchantments = new LinkedHashMap<>(); // preserve order
 
     public int getEnchantment(@Nullable ItemStack itemStack, GrimoireEnchantment enchantment) {
         if (enchantment.canEnchant(itemStack) && EnchantmentRegistry.COMPATIBILITY_GRAPH.isCompatible(itemStack, enchantment)) {
@@ -42,6 +42,10 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
 
     public boolean isEmpty() {
         return enchantments.isEmpty();
+    }
+
+    public void removeAll() {
+        enchantments = new LinkedHashMap<>();
     }
 
     @Override

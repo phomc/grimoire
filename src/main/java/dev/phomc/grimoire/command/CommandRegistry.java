@@ -3,6 +3,7 @@ package dev.phomc.grimoire.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.phomc.grimoire.command.enchant.EnchantAddCommand;
+import dev.phomc.grimoire.command.enchant.EnchantRemoveAllCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveCommand;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -15,6 +16,7 @@ public class CommandRegistry {
         LiteralArgumentBuilder<CommandSourceStack> builder = literal("grimoire");
         builder.then(route("enchant", new EnchantAddCommand()));
         builder.then(route("disenchant", new EnchantRemoveCommand()));
+        builder.then(route("disenchantall", new EnchantRemoveAllCommand()));
         dispatcher.register(builder);
     }
 
