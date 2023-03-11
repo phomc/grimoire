@@ -9,6 +9,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ThunderEnchantment extends AbstractAttackEnchantment {
@@ -35,6 +36,7 @@ public class ThunderEnchantment extends AbstractAttackEnchantment {
             // lightningBolt.setCause((ServerPlayer) attackRecord.attacker());
             ((LightningBoltAccessor) lightningBolt).setOwner((ServerPlayer) attackRecord.attacker());
             level.addFreshEntity(lightningBolt);
+            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(3, attackRecord.attacker(), livingEntity -> {});
         }
     }
 }

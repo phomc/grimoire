@@ -9,6 +9,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class RefillEnchantment extends GrimoireEnchantment {
     public RefillEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.RARE, EnchantmentTarget.HELMET);
@@ -26,7 +28,10 @@ public class RefillEnchantment extends GrimoireEnchantment {
             player.getInventory().items.stream()
                     .filter(i -> i.getItem().getFoodProperties() != null && i.getItem().getFoodProperties().getEffects().isEmpty())
                     .findAny()
-                    .ifPresent(food -> player.eat(player.level, food));
+                    .ifPresent(food -> {
+                        player.eat(player.level, food);
+                        Objects.requireNonNull(itemStack).hurtAndBreak(2, player, livingEntity -> {});
+                    });
         }
     }
 }

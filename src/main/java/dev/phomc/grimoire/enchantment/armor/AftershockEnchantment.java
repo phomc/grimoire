@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AftershockEnchantment extends GrimoireEnchantment {
@@ -35,6 +36,7 @@ public class AftershockEnchantment extends GrimoireEnchantment {
     @Override
     public void onNaturalDamaged(NaturalDamageRecord damageRecord, ItemStack armor, int level) {
         if (!damageRecord.isFall()) return;
+        Objects.requireNonNull(armor).hurtAndBreak(5, damageRecord.victim(), livingEntity -> {});
         damageRecord.victim().getLevel().getNearbyEntities(
                 LivingEntity.class, TARGET_CONDITION,
                 damageRecord.victim(),

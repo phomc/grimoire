@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AntidoteEnchantment extends GrimoireEnchantment {
@@ -41,6 +42,7 @@ public class AntidoteEnchantment extends GrimoireEnchantment {
                 eff.amplifier--;
                 player.forceAddEffect(eff, null);
             }
+            Objects.requireNonNull(itemStack).hurtAndBreak(3, player, livingEntity -> {});
         }
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class VampireEnchantment extends GrimoireEnchantment {
@@ -14,7 +15,7 @@ public class VampireEnchantment extends GrimoireEnchantment {
     private static final float[] TRANSFER_RATE = new float[]{0.1f, 0.15f, 0.2f, 0.3f, 0.4f};
 
     public VampireEnchantment(ResourceLocation identifier) {
-        super(identifier, Rarity.UNCOMMON, EnchantmentTarget.MELEE);
+        super(identifier, Rarity.RARE, EnchantmentTarget.MELEE);
     }
 
     @Override
@@ -27,6 +28,7 @@ public class VampireEnchantment extends GrimoireEnchantment {
         int index = Math.min(level, getMaxLevel()) - 1;
         LivingEntity e = attackRecord.attacker();
         if (ThreadLocalRandom.current().nextFloat() < CHANCE[index] && e.getHealth() < e.getMaxHealth() * 0.5f) {
+            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(5, e, livingEntity -> {});
             e.heal(attackRecord.damage() * TRANSFER_RATE[index]);
         }
     }
