@@ -38,8 +38,9 @@ public abstract class ProjectileMixin implements ProjectileAccessor {
     protected void onHit(HitResult hitResult, CallbackInfo ci) {
         Entity e = getOwner();
         if (e instanceof LivingEntity && weapon != null && hitResult.getType() != HitResult.Type.MISS) {
+            ProjectileHitRecord record = new ProjectileHitRecord((LivingEntity) e, (Projectile) (Object) this, hitResult, weapon);
             GrimoireItem.of(weapon).getEnchantmentFeature().iterateEnchantments(weapon, (enc, lv) -> {
-                enc.onProjectileHit(new ProjectileHitRecord((LivingEntity) e, (Projectile) (Object) this, hitResult, weapon), lv);
+                enc.onProjectileHit(record, lv);
             });
         }
     }

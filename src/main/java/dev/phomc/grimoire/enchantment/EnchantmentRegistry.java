@@ -14,6 +14,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
 import dev.phomc.grimoire.enchantment.attack.ThunderEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
+import dev.phomc.grimoire.enchantment.ranged.ExplosiveEnchantment;
 import dev.phomc.grimoire.enchantment.ranged.RiftEnchantment;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
 import dev.phomc.grimoire.enchantment.tool.SmeltingEnchantment;
@@ -37,6 +38,7 @@ public class EnchantmentRegistry {
     public static DiggerEnchantment DIGGER;
     public static TunnelEnchantment TUNNEL;
     public static RiftEnchantment RIFT;
+    public static ExplosiveEnchantment EXPLOSIVE;
 
     public static void init() {
         // melee
@@ -45,6 +47,7 @@ public class EnchantmentRegistry {
 
         // ranged
         registerEnchant(RiftEnchantment.class);
+        registerEnchant(ExplosiveEnchantment.class);
 
         // armor
         registerEnchant(AntidoteEnchantment.class);
