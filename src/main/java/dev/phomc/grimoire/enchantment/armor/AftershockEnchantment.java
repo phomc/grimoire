@@ -36,11 +36,12 @@ public class AftershockEnchantment extends GrimoireEnchantment {
     @Override
     public void onNaturalDamaged(NaturalDamageRecord damageRecord, ItemStack armor, int level) {
         if (!damageRecord.isFall()) return;
-        Objects.requireNonNull(armor).hurtAndBreak(5, damageRecord.victim(), livingEntity -> {});
+        float damage = getAftershockDamage(damageRecord.damage(), level);
+        Objects.requireNonNull(armor).hurtAndBreak((int) damage >> 2, damageRecord.victim(), livingEntity -> {});
         damageRecord.victim().getLevel().getNearbyEntities(
                 LivingEntity.class, TARGET_CONDITION,
                 damageRecord.victim(),
                 damageRecord.victim().getBoundingBox().inflate(5, 5, 5)
-        ).forEach(e -> e.hurt(damageRecord.damageSource(), getAftershockDamage(damageRecord.damage(), level)));
+        ).forEach(e -> e.hurt(damageRecord.damageSource(), damage));
     }
 }

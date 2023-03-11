@@ -28,7 +28,7 @@ public class VampireEnchantment extends GrimoireEnchantment {
         int index = Math.min(level, getMaxLevel()) - 1;
         LivingEntity e = attackRecord.attacker();
         if (ThreadLocalRandom.current().nextFloat() < CHANCE[index] && e.getHealth() < e.getMaxHealth() * 0.5f) {
-            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(5, e, livingEntity -> {});
+            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(3, e, livingEntity -> {});
             e.heal(attackRecord.damage() * TRANSFER_RATE[index]);
         }
     }

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class RiftEnchantment extends GrimoireEnchantment {
-    private static final double[] COST_MULTIPLIER = new double[]{1.0, 0.8, 0.5, 0.1};
+    private static final double[] COST_MULTIPLIER = new double[]{0.8, 0.6, 0.4, 0.1};
 
     public RiftEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.VERY_RARE, EnchantmentTarget.RANGED);
