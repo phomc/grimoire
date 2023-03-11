@@ -10,13 +10,13 @@ import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ActiveEffectEnchantment extends AbstractAttackEnchantment {
+public class ProactiveEffectEnchantment extends AbstractAttackEnchantment {
     private final MobEffect effect;
     private final int[] amplifiers;
     private final float[] chances;
     private final int[] duration;
 
-    public ActiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
+    public ProactiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
         super(identifier, Enchantment.Rarity.COMMON);
         this.effect = effect;
         this.amplifiers = amplifiers;
@@ -29,7 +29,7 @@ public class ActiveEffectEnchantment extends AbstractAttackEnchantment {
         if (amplifiers.length != chances.length) {
             throw new IllegalArgumentException(String.format("%s: len(amplifiers) != len(chances)", identifier));
         }
-        DebugUtils.debugEffect(identifier, "active", effect, amplifiers, duration, chances);
+        DebugUtils.debugEffect(identifier, "proactive", effect, amplifiers, duration, chances);
     }
 
     @Override

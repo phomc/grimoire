@@ -7,7 +7,7 @@ import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.armor.AftershockEnchantment;
 import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
 import dev.phomc.grimoire.enchantment.armor.RefillEnchantment;
-import dev.phomc.grimoire.enchantment.effect.active.*;
+import dev.phomc.grimoire.enchantment.effect.proactive.*;
 import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;

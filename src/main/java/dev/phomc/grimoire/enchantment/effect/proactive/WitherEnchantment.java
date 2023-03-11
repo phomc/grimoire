@@ -1,10 +1,10 @@
-package dev.phomc.grimoire.enchantment.effect.active;
+package dev.phomc.grimoire.enchantment.effect.proactive;
 
-import dev.phomc.grimoire.enchantment.effect.ActiveEffectEnchantment;
+import dev.phomc.grimoire.enchantment.effect.ProactiveEffectEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 
-public class WitherEnchantment extends ActiveEffectEnchantment {
+public class WitherEnchantment extends ProactiveEffectEnchantment {
     public WitherEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.WITHER,
                 new int[]{0, 1, 2, 3, 4},
