@@ -3,6 +3,7 @@ package dev.phomc.grimoire.enchantment.effect;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.event.AttackRecord;
+import dev.phomc.grimoire.utils.DebugUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,6 +32,7 @@ public class PassiveEffectEnchantment extends GrimoireEnchantment {
         if (amplifiers.length != chances.length) {
             throw new IllegalArgumentException(String.format("%s: len(amplifiers) != len(chances)", identifier));
         }
+        DebugUtils.debugEffect(identifier, "passive", effect, amplifiers, duration, chances);
     }
 
     @Override
