@@ -39,6 +39,7 @@ public class EnchantmentRegistry {
     public static TunnelEnchantment TUNNEL;
     public static RiftEnchantment RIFT;
     public static ExplosiveEnchantment EXPLOSIVE;
+    public static ThunderEnchantment THUNDER;
 
     public static void init() {
         // melee

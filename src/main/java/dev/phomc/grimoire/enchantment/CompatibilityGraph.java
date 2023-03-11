@@ -25,8 +25,9 @@ public class CompatibilityGraph {
         addConflict(EnchantmentRegistry.TUNNEL, EnchantmentRegistry.DIGGER);
         addConflict(EnchantmentRegistry.RIFT, Enchantments.INFINITY_ARROWS);
         addConflict(EnchantmentRegistry.RIFT, Enchantments.MULTISHOT);
+        addConflict(EnchantmentRegistry.RIFT, Enchantments.RIPTIDE);
         addConflict(EnchantmentRegistry.EXPLOSIVE, Enchantments.MULTISHOT);
-        addConflict(EnchantmentRegistry.EXPLOSIVE, Enchantments.INFINITY_ARROWS);
+        addConflict(EnchantmentRegistry.THUNDER, Enchantments.CHANNELING);
     }
 
     public void addConflict(ResourceLocation a, ResourceLocation b) {
