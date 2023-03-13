@@ -6,13 +6,17 @@ import net.minecraft.world.effect.MobEffect;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DebugUtils {
-    public static boolean isDebugEnabled() {
-        return System.getenv("GRIMOIRE_DEBUG").equals("yes");
+public class DevModeUtils {
+    public static boolean isDevModeEnabled() {
+        return System.getenv("GRIMOIRE_DEV").equals("yes");
     }
 
-    public static void debugEffect(ResourceLocation identifier, String type, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
-        if (!isDebugEnabled()) return;
+    public static void runInDev(Runnable runnable) {
+        if (isDevModeEnabled()) runnable.run();
+    }
+
+    public static void onEffectEnchantInit(ResourceLocation identifier, String type, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
+        if (!isDevModeEnabled()) return;
 
         List<String> matrix = new ArrayList<>();
 

@@ -3,6 +3,7 @@ package dev.phomc.grimoire.enchantment;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Ordering;
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.armor.AftershockEnchantment;
 import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
@@ -19,14 +20,17 @@ import dev.phomc.grimoire.enchantment.ranged.RiftEnchantment;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
 import dev.phomc.grimoire.enchantment.tool.SmeltingEnchantment;
 import dev.phomc.grimoire.enchantment.tool.TunnelEnchantment;
+import dev.phomc.grimoire.utils.DevModeUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -83,7 +87,7 @@ public class EnchantmentRegistry {
         reportRegistration();
     }
 
-    private static GrimoireEnchantment registerEnchant(Class<? extends GrimoireEnchantment> clazz) {
+    private static void registerEnchant(Class<? extends GrimoireEnchantment> clazz) {
         try {
             String id = clazz.getSimpleName();
             if (!id.matches("\\w{3,}Enchantment")) throw new RuntimeException("Invalid Enchantment class name");
@@ -103,7 +107,6 @@ public class EnchantmentRegistry {
 
             ALL.put(identifier, instance);
             Registry.register(BuiltInRegistries.ENCHANTMENT, identifier, instance);
-            return instance;
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
                  NoSuchMethodException e) {
             throw new RuntimeException(e);
@@ -111,14 +114,15 @@ public class EnchantmentRegistry {
     }
 
     private static void reportRegistration() {
-        Multimap<Enchantment.Rarity, ResourceLocation> map = ArrayListMultimap.create();
-        for (Map.Entry<ResourceLocation, GrimoireEnchantment> entry : ALL.entrySet()) {
-            map.put(entry.getValue().getRarity(), entry.getKey());
-        }
-        for (Enchantment.Rarity entry : map.keySet()) {
-            Collection<ResourceLocation> collection = map.get(entry);
-            Grimoire.LOGGER.info("{} {} enchantments: {}", collection.size(), entry, collection.stream()
-                    .map(ResourceLocation::toString).collect(Collectors.joining(", ")));
-        }
+        DevModeUtils.runInDev(() -> {
+            Multimap<Enchantment.Rarity, ResourceLocation> map = ArrayListMultimap.create();
+            for (Map.Entry<ResourceKey<Enchantment>, Enchantment> entry : BuiltInRegistries.ENCHANTMENT.entrySet()) {
+                map.put(entry.getValue().getRarity(), entry.getKey().location());
+            }
+            for (Enchantment.Rarity entry : map.keySet()) {
+                List<String> collection = map.get(entry).stream().map(ResourceLocation::toString).sorted().toList();
+                Grimoire.LOGGER.info("{} {} enchantments: {}", collection.size(), entry, String.join(", ", collection));
+            }
+        });
     }
 }

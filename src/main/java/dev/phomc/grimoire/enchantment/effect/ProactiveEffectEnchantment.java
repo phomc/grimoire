@@ -2,7 +2,7 @@ package dev.phomc.grimoire.enchantment.effect;
 
 import dev.phomc.grimoire.enchantment.attack.AbstractAttackEnchantment;
 import dev.phomc.grimoire.event.AttackRecord;
-import dev.phomc.grimoire.utils.DebugUtils;
+import dev.phomc.grimoire.utils.DevModeUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -29,7 +29,7 @@ public class ProactiveEffectEnchantment extends AbstractAttackEnchantment {
         if (amplifiers.length != chances.length) {
             throw new IllegalArgumentException(String.format("%s: len(amplifiers) != len(chances)", identifier));
         }
-        DebugUtils.debugEffect(identifier, "proactive", effect, amplifiers, duration, chances);
+        DevModeUtils.onEffectEnchantInit(identifier, "proactive", effect, amplifiers, duration, chances);
     }
 
     @Override
