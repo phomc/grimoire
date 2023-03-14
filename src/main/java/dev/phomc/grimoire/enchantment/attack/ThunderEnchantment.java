@@ -25,6 +25,7 @@ public class ThunderEnchantment extends AbstractAttackEnchantment {
 
     @Override
     protected void execute(AttackRecord attackRecord, int enchantLevel) {
+        enchantLevel = clampLevel(enchantLevel);
         float chance = attackRecord.isRanged() ? enchantLevel * 0.3f : enchantLevel * 0.25f;
         if (attackRecord.attacker() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < chance) {
             Level level = attackRecord.victim().level;

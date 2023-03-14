@@ -35,6 +35,7 @@ public class ExchangeEnchantment extends GrimoireEnchantment {
 
     @Override
     public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel, MutableBoolean cancelled) {
+        enchantLevel = clampLevel(enchantLevel);
         if (projectileHitRecord.hitResult() instanceof EntityHitResult) {
             Entity target = ((EntityHitResult) projectileHitRecord.hitResult()).getEntity();
             LivingEntity shooter = projectileHitRecord.shooter();

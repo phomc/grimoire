@@ -31,6 +31,7 @@ public class ExplosiveEnchantment extends GrimoireEnchantment {
 
     @Override
     public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel, MutableBoolean cancelled) {
+        enchantLevel = clampLevel(enchantLevel);
         if (projectileHitRecord.shooter() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < CHANCES[enchantLevel - 1]) {
             Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak(3, projectileHitRecord.shooter(), livingEntity -> {
             });

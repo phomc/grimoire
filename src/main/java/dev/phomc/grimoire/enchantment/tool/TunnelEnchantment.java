@@ -18,8 +18,9 @@ public class TunnelEnchantment extends AbstractDiggingEnchantment {
 
     @Override
     protected void onTriggered(Excavator excavator) {
+        int level = clampLevel(excavator.enchantLevel());
         Vec3 v = excavator.player().getViewVector(1.0f);
-        for (int i = 1; i <= excavator.enchantLevel(); i++) {
+        for (int i = 1; i <= level; i++) {
             BlockPos p = excavator.originPos().offset(
                     (int) Math.round(v.x * i),
                     (int) Math.round(v.y * i),

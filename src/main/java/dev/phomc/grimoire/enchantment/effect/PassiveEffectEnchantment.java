@@ -41,7 +41,7 @@ public class PassiveEffectEnchantment extends GrimoireEnchantment {
     }
 
     public void execute(LivingEntity entity, int level) {
-        int index = Math.min(level, chances.length) - 1;
+        int index = clampLevel(level) - 1;
         float rand = ThreadLocalRandom.current().nextFloat();
         if (rand > chances[index]) return;
         entity.addEffect(new MobEffectInstance(effect, duration[index], amplifiers[index]));

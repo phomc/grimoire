@@ -39,7 +39,7 @@ public class ProactiveEffectEnchantment extends AbstractAttackEnchantment {
 
     @Override
     protected void execute(AttackRecord attackRecord, int level) {
-        int index = Math.min(level, chances.length) - 1;
+        int index = clampLevel(level) - 1;
         float rand = ThreadLocalRandom.current().nextFloat();
         if (rand > chances[index]) return;
         attackRecord.victim().addEffect(new MobEffectInstance(effect, duration[index], amplifiers[index]));

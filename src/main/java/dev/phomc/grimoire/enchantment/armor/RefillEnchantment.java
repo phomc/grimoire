@@ -24,7 +24,7 @@ public class RefillEnchantment extends GrimoireEnchantment {
     @Override
     public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, int level, int tick) {
         if (tick % 20 != 0) return;
-        if (player.getHealth() < player.getMaxHealth() * level * 0.2f) {
+        if (player.getHealth() < player.getMaxHealth() * clampLevel(level) * 0.2f) {
             player.getInventory().items.stream()
                     .filter(i -> i.getItem().getFoodProperties() != null && i.getItem().getFoodProperties().getEffects().isEmpty())
                     .findAny()

@@ -36,6 +36,7 @@ public class AftershockEnchantment extends GrimoireEnchantment {
     @Override
     public void onNaturalDamaged(NaturalDamageRecord damageRecord, ItemStack armor, int level) {
         if (!damageRecord.isFall()) return;
+        level = clampLevel(level);
         float damage = getAftershockDamage(damageRecord.damage(), level);
         Objects.requireNonNull(armor).hurtAndBreak((int) damage >> 2, damageRecord.victim(), livingEntity -> {});
         damageRecord.victim().getLevel().getNearbyEntities(

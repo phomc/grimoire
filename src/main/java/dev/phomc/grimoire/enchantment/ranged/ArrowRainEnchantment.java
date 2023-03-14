@@ -27,8 +27,9 @@ public class ArrowRainEnchantment extends GrimoireEnchantment {
 
     @Override
     public void onShoot(LivingEntity shooter, Projectile projectile, ItemStack weapon, int enchantLevel) {
+        enchantLevel = clampLevel(enchantLevel);
         if (projectile instanceof Arrow parent) {
-            int amount = Math.min(getMaxLevel(), enchantLevel) * 2;
+            int amount = enchantLevel * 2;
             Vec3 dir = MathUtils.getDirection(shooter);
             Vec3[] points = MathUtils.getCircularPoints(shooter.getEyePosition(), dir, 1f, amount);
             for (Vec3 point : points) {

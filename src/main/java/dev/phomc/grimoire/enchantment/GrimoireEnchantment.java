@@ -1,5 +1,6 @@
 package dev.phomc.grimoire.enchantment;
 
+import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.event.AttackRecord;
 import dev.phomc.grimoire.event.NaturalDamageRecord;
 import dev.phomc.grimoire.event.ProjectileHitRecord;
@@ -54,6 +55,18 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
     @Override
     protected final boolean checkCompatibility(Enchantment enchantment) {
         return this != enchantment && EnchantmentRegistry.COMPATIBILITY_GRAPH.isCompatible(this, enchantment);
+    }
+
+    protected final int clampLevel(int lv) {
+        if (lv < getMinLevel()) {
+            Grimoire.LOGGER.warn("Invalid {} level detected: {} < min = {}", identifier, lv, getMinLevel());
+            return getMinLevel();
+        }
+        if (lv > getMaxLevel()) {
+            Grimoire.LOGGER.warn("Invalid {} level detected: {} > max = {}", identifier, lv, getMaxLevel());
+            return getMaxLevel();
+        }
+        return lv;
     }
 
     // must have player as either attacker or victim

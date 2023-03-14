@@ -24,6 +24,7 @@ public class RiftEnchantment extends GrimoireEnchantment {
 
     @Override
     public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel, MutableBoolean cancelled) {
+        enchantLevel = clampLevel(enchantLevel);
         Vec3 v = projectileHitRecord.hitResult().getLocation();
         double cost = Math.sqrt(projectileHitRecord.shooter().distanceToSqr(v)) * COST_MULTIPLIER[enchantLevel - 1];
         Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak((int) cost, projectileHitRecord.shooter(), livingEntity -> {});

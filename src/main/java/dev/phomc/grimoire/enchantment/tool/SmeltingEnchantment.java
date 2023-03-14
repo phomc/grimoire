@@ -18,7 +18,7 @@ public class SmeltingEnchantment extends GrimoireEnchantment {
     }
 
     public boolean shouldSmelt(int level) {
-        if (level == getMaxLevel()) return true;
+        if (clampLevel(level) == getMaxLevel()) return true;
         return ThreadLocalRandom.current().nextFloat() < 0.25f * level;
     }
 }
