@@ -2,6 +2,7 @@ package dev.phomc.grimoire.enchantment.tool;
 
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.tags.GrimoireBlockTags;
+import dev.phomc.grimoire.utils.MathUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
@@ -19,7 +20,7 @@ public class TunnelEnchantment extends AbstractDiggingEnchantment {
     @Override
     protected void onTriggered(Excavator excavator) {
         int level = clampLevel(excavator.enchantLevel());
-        Vec3 v = excavator.player().getViewVector(1.0f);
+        Vec3 v = MathUtils.getDirection(excavator.player());
         for (int i = 1; i <= level; i++) {
             BlockPos p = excavator.originPos().offset(
                     (int) Math.round(v.x * i),
