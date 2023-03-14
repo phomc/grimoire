@@ -17,6 +17,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
@@ -71,7 +72,7 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
 
     }
 
-    public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel) {
+    public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel, MutableBoolean cancelled) {
 
     }
 

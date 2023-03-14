@@ -3,18 +3,18 @@ package dev.phomc.grimoire.enchantment;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Ordering;
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.armor.AftershockEnchantment;
 import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
 import dev.phomc.grimoire.enchantment.armor.RefillEnchantment;
-import dev.phomc.grimoire.enchantment.effect.proactive.*;
+import dev.phomc.grimoire.enchantment.attack.ThunderEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
+import dev.phomc.grimoire.enchantment.effect.proactive.*;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
-import dev.phomc.grimoire.enchantment.attack.ThunderEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
+import dev.phomc.grimoire.enchantment.ranged.ExchangeEnchantment;
 import dev.phomc.grimoire.enchantment.ranged.ExplosiveEnchantment;
 import dev.phomc.grimoire.enchantment.ranged.RiftEnchantment;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
@@ -28,11 +28,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class EnchantmentRegistry {
     public static Map<ResourceLocation, GrimoireEnchantment> ALL = new LinkedHashMap<>(); // preserve order
@@ -44,6 +42,7 @@ public class EnchantmentRegistry {
     public static RiftEnchantment RIFT;
     public static ExplosiveEnchantment EXPLOSIVE;
     public static ThunderEnchantment THUNDER;
+    public static ExchangeEnchantment EXCHANGE;
 
     public static void init() {
         // melee
@@ -53,6 +52,7 @@ public class EnchantmentRegistry {
         // ranged
         registerEnchant(RiftEnchantment.class);
         registerEnchant(ExplosiveEnchantment.class);
+        registerEnchant(ExchangeEnchantment.class);
 
         // armor
         registerEnchant(AntidoteEnchantment.class);

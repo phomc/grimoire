@@ -26,6 +26,10 @@ public class CompatibilityGraph {
         addConflict(EnchantmentRegistry.RIFT, Enchantments.INFINITY_ARROWS);
         addConflict(EnchantmentRegistry.RIFT, Enchantments.MULTISHOT);
         addConflict(EnchantmentRegistry.RIFT, Enchantments.RIPTIDE);
+        addConflict(EnchantmentRegistry.EXCHANGE, Enchantments.INFINITY_ARROWS);
+        addConflict(EnchantmentRegistry.EXCHANGE, Enchantments.MULTISHOT);
+        addConflict(EnchantmentRegistry.EXCHANGE, Enchantments.RIPTIDE);
+        addConflict(EnchantmentRegistry.EXCHANGE, EnchantmentRegistry.RIFT);
         addConflict(EnchantmentRegistry.EXPLOSIVE, Enchantments.MULTISHOT);
         addConflict(EnchantmentRegistry.THUNDER, Enchantments.CHANNELING);
     }

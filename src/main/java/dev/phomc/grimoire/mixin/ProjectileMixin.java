@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,15 +34,20 @@ public abstract class ProjectileMixin implements ProjectileAccessor {
 
     @Inject(
             method = "onHit(Lnet/minecraft/world/phys/HitResult;)V",
-            at = @At("TAIL")
+            at = @At("HEAD"),
+            cancellable = true
     )
     protected void onHit(HitResult hitResult, CallbackInfo ci) {
         Entity e = getOwner();
         if (e instanceof LivingEntity && weapon != null && hitResult.getType() != HitResult.Type.MISS) {
             ProjectileHitRecord record = new ProjectileHitRecord((LivingEntity) e, (Projectile) (Object) this, hitResult, weapon);
+            MutableBoolean cancelled = new MutableBoolean(false);
             GrimoireItem.of(weapon).getEnchantmentFeature().iterateEnchantments(weapon, (enc, lv) -> {
-                enc.onProjectileHit(record, lv);
+                enc.onProjectileHit(record, lv, cancelled);
             });
+            if (cancelled.isTrue()) {
+                ci.cancel();
+            }
         }
     }
 }

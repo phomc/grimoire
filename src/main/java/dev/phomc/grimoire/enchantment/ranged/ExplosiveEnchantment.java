@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -29,7 +30,7 @@ public class ExplosiveEnchantment extends GrimoireEnchantment {
     }
 
     @Override
-    public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel) {
+    public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel, MutableBoolean cancelled) {
         if (projectileHitRecord.shooter() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < CHANCES[enchantLevel - 1]) {
             Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak(3, projectileHitRecord.shooter(), livingEntity -> {
             });
