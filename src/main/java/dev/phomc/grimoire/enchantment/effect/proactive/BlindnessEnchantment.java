@@ -8,7 +8,7 @@ public class BlindnessEnchantment extends ProactiveEffectEnchantment {
     public BlindnessEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.BLINDNESS,
                 new int[]{0, 0},
-                new int[]{60, 60},
+                new int[]{60, 100},
                 new float[]{0.15f, 0.3f}
         );
     }

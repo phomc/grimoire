@@ -7,9 +7,9 @@ import net.minecraft.world.effect.MobEffects;
 public class PetrifiedEnchantment extends PassiveEffectEnchantment {
     public PetrifiedEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.MOVEMENT_SLOWDOWN,
-                new int[]{0, 1, 1, 2},
-                new int[]{60, 60, 80, 80},
-                new float[]{0.1f, 0.15f, 0.15f, 0.2f}
+                new int[]{1, 2, 3, 4, 5},
+                new int[]{60, 80, 120, 120, 150},
+                new float[]{0.2f, 0.3f, 0.3f, 0.4f, 0.5f}
         );
     }
 }
