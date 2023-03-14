@@ -1,7 +1,6 @@
 package dev.phomc.grimoire.event;
 
 import dev.phomc.grimoire.accessor.ProjectileAccessor;
-import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.item.GrimoireItem;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -10,8 +9,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.function.BiConsumer;
 
 public class EventDispatcher {
     public static void handleHurt(DamageSource damageSource, float f, LivingEntity victim) {

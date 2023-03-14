@@ -5,7 +5,6 @@ import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.event.AttackRecord;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;

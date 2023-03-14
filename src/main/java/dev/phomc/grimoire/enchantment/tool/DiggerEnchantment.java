@@ -4,7 +4,6 @@ import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.tags.GrimoireBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
 
 public class DiggerEnchantment extends AbstractDiggingEnchantment {

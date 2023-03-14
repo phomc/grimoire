@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.DoubleUnaryOperator;
 
 public class ExchangeEnchantment extends GrimoireEnchantment {
     // use Rift as reference; because Exchange swaps two entities, the cost should be doubled to make sense,
