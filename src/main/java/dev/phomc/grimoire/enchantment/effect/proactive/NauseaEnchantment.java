@@ -8,8 +8,8 @@ public class NauseaEnchantment extends ProactiveEffectEnchantment {
     public NauseaEnchantment(ResourceLocation identifier) {
         super(identifier, MobEffects.CONFUSION,
                 new int[]{0, 1, 1},
-                new int[]{30, 60, 100},
-                new float[]{0.1f, 0.2f, 0.25f}
+                new int[]{60, 80, 100},
+                new float[]{0.2f, 0.3f, 0.4f}
         );
     }
 }

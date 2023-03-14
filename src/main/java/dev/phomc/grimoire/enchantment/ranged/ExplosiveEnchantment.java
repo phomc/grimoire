@@ -17,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ExplosiveEnchantment extends GrimoireEnchantment {
     private static final float[] CHANCES = new float[]{0.5f, 0.6f, 0.7f};
-    private static final float[] RADIUS = new float[]{1.5f, 2.0f, 2.5f};
+    private static final float[] RADIUS = new float[]{1.0f, 1.5f, 2.0f};
 
     public ExplosiveEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.RARE, EnchantmentTarget.RANGED);

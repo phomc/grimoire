@@ -9,7 +9,7 @@ public class LevitationEnchantment extends ProactiveEffectEnchantment {
         super(identifier, MobEffects.LEVITATION,
                 new int[]{0, 1, 1},
                 new int[]{60, 100, 150},
-                new float[]{0.1f, 0.2f, 0.2f}
+                new float[]{0.2f, 0.2f, 0.35f}
         );
     }
 }

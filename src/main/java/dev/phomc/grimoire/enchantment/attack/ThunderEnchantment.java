@@ -25,7 +25,7 @@ public class ThunderEnchantment extends AbstractAttackEnchantment {
 
     @Override
     protected void execute(AttackRecord attackRecord, int enchantLevel) {
-        float chance = attackRecord.isRanged() ? enchantLevel * 0.2f : enchantLevel * 0.1f;
+        float chance = attackRecord.isRanged() ? enchantLevel * 0.3f : enchantLevel * 0.25f;
         if (attackRecord.attacker() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < chance) {
             Level level = attackRecord.victim().level;
             LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
@@ -36,7 +36,7 @@ public class ThunderEnchantment extends AbstractAttackEnchantment {
             // lightningBolt.setCause((ServerPlayer) attackRecord.attacker());
             ((LightningBoltAccessor) lightningBolt).setOwner((ServerPlayer) attackRecord.attacker());
             level.addFreshEntity(lightningBolt);
-            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(3, attackRecord.attacker(), livingEntity -> {});
+            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(2, attackRecord.attacker(), livingEntity -> {});
         }
     }
 }

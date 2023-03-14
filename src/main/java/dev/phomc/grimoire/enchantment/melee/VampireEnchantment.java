@@ -11,8 +11,8 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class VampireEnchantment extends GrimoireEnchantment {
-    private static final float[] CHANCE = new float[]{0.2f, 0.25f, 0.3f, 0.3f, 0.3f};
-    private static final float[] TRANSFER_RATE = new float[]{0.1f, 0.15f, 0.2f, 0.3f, 0.4f};
+    private static final float[] CHANCE = new float[]{0.3f, 0.35f, 0.4f, 0.45f, 0.5f};
+    private static final float[] TRANSFER_RATE = new float[]{0.4f, 0.5f, 0.6f, 0.7f, 0.8f};
 
     public VampireEnchantment(ResourceLocation identifier) {
         super(identifier, Rarity.RARE, EnchantmentTarget.MELEE);
@@ -28,7 +28,7 @@ public class VampireEnchantment extends GrimoireEnchantment {
         int index = Math.min(level, getMaxLevel()) - 1;
         LivingEntity e = attackRecord.attacker();
         if (ThreadLocalRandom.current().nextFloat() < CHANCE[index] && e.getHealth() < e.getMaxHealth() * 0.5f) {
-            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(3, e, livingEntity -> {});
+            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(1, e, livingEntity -> {});
             e.heal(attackRecord.damage() * TRANSFER_RATE[index]);
         }
     }

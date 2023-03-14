@@ -11,7 +11,7 @@ public class DiggerEnchantment extends AbstractDiggingEnchantment {
     private static final int RADIUS = 1;
 
     public DiggerEnchantment(@NotNull ResourceLocation identifier) {
-        super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.PICKAXE);
+        super(identifier, Rarity.VERY_RARE, EnchantmentTarget.PICKAXE);
     }
 
     @Override
