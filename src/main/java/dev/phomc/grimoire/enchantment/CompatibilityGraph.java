@@ -40,6 +40,9 @@ public class CompatibilityGraph {
         addConflict(EnchantmentRegistry.TELEKINESIS, EnchantmentRegistry.RIFT);
         addConflict(EnchantmentRegistry.TELEKINESIS, EnchantmentRegistry.EXCHANGE);
 
+        addConflict(EnchantmentRegistry.ARROW_RAIN, EnchantmentRegistry.RIFT);
+        addConflict(EnchantmentRegistry.ARROW_RAIN, EnchantmentRegistry.EXCHANGE);
+
         addConflict(EnchantmentRegistry.EXPLOSIVE, Enchantments.MULTISHOT);
         addConflict(EnchantmentRegistry.THUNDER, Enchantments.CHANNELING);
     }

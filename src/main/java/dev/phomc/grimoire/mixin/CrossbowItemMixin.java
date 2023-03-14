@@ -1,6 +1,7 @@
 package dev.phomc.grimoire.mixin;
 
 import dev.phomc.grimoire.accessor.ProjectileAccessor;
+import dev.phomc.grimoire.event.EventDispatcher;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -25,5 +26,6 @@ public class CrossbowItemMixin {
     )
     private static void shootProjectile(Level level, LivingEntity livingEntity, InteractionHand interactionHand, ItemStack itemStack, ItemStack itemStack2, float f, boolean bl, float g, float h, float i, CallbackInfo ci, boolean bl2, Projectile projectile) {
         ((ProjectileAccessor) projectile).setWeapon(itemStack);
+        EventDispatcher.handleShoot(livingEntity, projectile, itemStack);
     }
 }

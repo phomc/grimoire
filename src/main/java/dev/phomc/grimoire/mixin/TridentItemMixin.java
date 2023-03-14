@@ -1,6 +1,7 @@
 package dev.phomc.grimoire.mixin;
 
 import dev.phomc.grimoire.accessor.ProjectileAccessor;
+import dev.phomc.grimoire.event.EventDispatcher;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
@@ -25,5 +26,6 @@ public class TridentItemMixin {
     )
     public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int i, CallbackInfo ci, Player player, int j, int k, ThrownTrident thrownTrident) {
         ((ProjectileAccessor) thrownTrident).setWeapon(itemStack);
+        EventDispatcher.handleShoot(livingEntity, thrownTrident, itemStack);
     }
 }

@@ -1,6 +1,7 @@
 package dev.phomc.grimoire.mixin;
 
 import dev.phomc.grimoire.accessor.ProjectileAccessor;
+import dev.phomc.grimoire.event.EventDispatcher;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -26,5 +27,6 @@ public class BowItemMixin {
     )
     public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int i, CallbackInfo ci, Player player, boolean bl, ItemStack itemStack2, int j, float f, boolean bl2, ArrowItem arrowItem, AbstractArrow abstractArrow) {
         ((ProjectileAccessor) abstractArrow).setWeapon(itemStack);
+        EventDispatcher.handleShoot(livingEntity, abstractArrow, itemStack);
     }
 }

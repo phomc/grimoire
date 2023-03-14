@@ -14,10 +14,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.effect.proactive.*;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
-import dev.phomc.grimoire.enchantment.ranged.ExchangeEnchantment;
-import dev.phomc.grimoire.enchantment.ranged.ExplosiveEnchantment;
-import dev.phomc.grimoire.enchantment.ranged.RiftEnchantment;
-import dev.phomc.grimoire.enchantment.ranged.TelekinesisEnchantment;
+import dev.phomc.grimoire.enchantment.ranged.*;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
 import dev.phomc.grimoire.enchantment.tool.SmeltingEnchantment;
 import dev.phomc.grimoire.enchantment.tool.TunnelEnchantment;
@@ -45,6 +42,7 @@ public class EnchantmentRegistry {
     public static ThunderEnchantment THUNDER;
     public static ExchangeEnchantment EXCHANGE;
     public static TelekinesisEnchantment TELEKINESIS;
+    public static ArrowRainEnchantment ARROW_RAIN;
 
     public static void init() {
         // melee
@@ -56,6 +54,7 @@ public class EnchantmentRegistry {
         registerEnchant(ExplosiveEnchantment.class);
         registerEnchant(ExchangeEnchantment.class);
         registerEnchant(TelekinesisEnchantment.class);
+        registerEnchant(ArrowRainEnchantment.class);
 
         // armor
         registerEnchant(AntidoteEnchantment.class);
