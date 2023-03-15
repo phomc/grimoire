@@ -33,6 +33,7 @@ public class TelekinesisEnchantment extends GrimoireEnchantment {
     public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel, MutableBoolean cancelled) {
         enchantLevel = clampLevel(enchantLevel);
         if (projectileHitRecord.hitResult() instanceof EntityHitResult) {
+            cancelled.setTrue();
             Entity target = ((EntityHitResult) projectileHitRecord.hitResult()).getEntity();
             LivingEntity shooter = projectileHitRecord.shooter();
             double cost = Math.sqrt(shooter.distanceToSqr(target)) * COST_MULTIPLIER[enchantLevel - 1];
