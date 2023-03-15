@@ -18,8 +18,8 @@ import java.util.Objects;
 
 public class ExchangeEnchantment extends GrimoireEnchantment {
     // use Rift as reference; because Exchange swaps two entities, the cost should be doubled to make sense,
-    // but we are so kind so there is 50% cost reduction applied for the second entity :D
-    private static final double[] COST_MULTIPLIER = Arrays.stream(RiftEnchantment.COST_MULTIPLIER).map(n -> n * 1.5).toArray();
+    // but we are so kind so there is 25% cost reduction applied for the second entity :D
+    private static final double[] COST_MULTIPLIER = Arrays.stream(RiftEnchantment.COST_MULTIPLIER).map(n -> n * 1.75).toArray();
 
     public ExchangeEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.VERY_RARE, EnchantmentTarget.RANGED);
