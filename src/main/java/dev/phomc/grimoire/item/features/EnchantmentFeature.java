@@ -76,7 +76,6 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
         for(Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(itemStack).entrySet()) {
             if (entry.getKey() instanceof GrimoireEnchantment) continue;
             map.put(entry.getKey(), entry.getValue());
-            System.out.println(entry.getKey().getClass().getName());
         }
         handler.accept(map);
         if (map.isEmpty()) {
