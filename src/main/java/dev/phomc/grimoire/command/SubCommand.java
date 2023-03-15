@@ -12,6 +12,6 @@ public interface SubCommand {
     Predicate<CommandSourceStack> forPlayer = CommandSourceStack::isPlayer;
 
     Predicate<CommandSourceStack> forStaff = (commandSourceStack) -> {
-        return commandSourceStack.withPermission(Commands.LEVEL_GAMEMASTERS).isPlayer();
+        return commandSourceStack.hasPermission(Commands.LEVEL_GAMEMASTERS);
     };
 }
