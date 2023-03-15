@@ -29,7 +29,7 @@ public class RefillEnchantment extends GrimoireEnchantment {
                     .findAny()
                     .ifPresent(food -> {
                         player.eat(player.level, food);
-                        Objects.requireNonNull(itemStack).hurtAndBreak(1, player, livingEntity -> {});
+                        Objects.requireNonNull(itemStack).hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
                     });
         }
     }

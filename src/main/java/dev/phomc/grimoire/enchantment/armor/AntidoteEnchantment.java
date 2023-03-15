@@ -44,7 +44,7 @@ public class AntidoteEnchantment extends GrimoireEnchantment {
                 eff.amplifier--;
                 player.forceAddEffect(eff, null);
             }
-            Objects.requireNonNull(itemStack).hurtAndBreak(1, player, livingEntity -> {});
+            Objects.requireNonNull(itemStack).hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
         }
     }
 

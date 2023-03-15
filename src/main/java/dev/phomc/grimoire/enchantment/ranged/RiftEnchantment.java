@@ -27,7 +27,7 @@ public class RiftEnchantment extends GrimoireEnchantment {
         enchantLevel = clampLevel(enchantLevel);
         Vec3 v = projectileHitRecord.hitResult().getLocation();
         double cost = Math.sqrt(projectileHitRecord.shooter().distanceToSqr(v)) * COST_MULTIPLIER[enchantLevel - 1];
-        Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak((int) cost, projectileHitRecord.shooter(), livingEntity -> {});
+        Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak((int) cost, projectileHitRecord.shooter(), p -> p.broadcastBreakEvent(p.getUsedItemHand()));
         // TODO safe teleportation
         projectileHitRecord.shooter().teleportTo(v.x, v.y, v.z);
     }

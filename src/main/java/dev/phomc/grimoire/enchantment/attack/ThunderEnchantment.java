@@ -37,7 +37,7 @@ public class ThunderEnchantment extends AbstractAttackEnchantment {
             // lightningBolt.setCause((ServerPlayer) attackRecord.attacker());
             ((LightningBoltAccessor) lightningBolt).setOwner((ServerPlayer) attackRecord.attacker());
             level.addFreshEntity(lightningBolt);
-            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(2, attackRecord.attacker(), livingEntity -> {});
+            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(2, attackRecord.attacker(), p -> p.broadcastBreakEvent(p.getUsedItemHand()));
         }
     }
 }

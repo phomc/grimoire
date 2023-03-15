@@ -41,7 +41,7 @@ public class ExchangeEnchantment extends GrimoireEnchantment {
             if (target instanceof LivingEntity && !target.is(shooter) && target.isAlive()) {
                 cancelled.setTrue();
                 double cost = Math.sqrt(target.distanceToSqr(shooter)) * COST_MULTIPLIER[enchantLevel - 1];
-                Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak((int) cost, projectileHitRecord.shooter(), livingEntity -> {});
+                Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak((int) cost, projectileHitRecord.shooter(), p -> p.broadcastBreakEvent(p.getUsedItemHand()));
                 Vec3 m = target.position();
                 Vec3 n = shooter.position();
                 target.teleportTo(n.x, n.y, n.z);

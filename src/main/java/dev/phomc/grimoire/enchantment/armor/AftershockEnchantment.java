@@ -38,7 +38,7 @@ public class AftershockEnchantment extends GrimoireEnchantment {
         if (!damageRecord.isFall()) return;
         level = clampLevel(level);
         float damage = getAftershockDamage(damageRecord.damage(), level);
-        Objects.requireNonNull(armor).hurtAndBreak((int) damage >> 2, damageRecord.victim(), livingEntity -> {});
+        Objects.requireNonNull(armor).hurtAndBreak((int) damage >> 2, damageRecord.victim(), p -> p.broadcastBreakEvent(p.getUsedItemHand()));
         damageRecord.victim().getLevel().getNearbyEntities(
                 LivingEntity.class, TARGET_CONDITION,
                 damageRecord.victim(),

@@ -36,7 +36,7 @@ public class TelekinesisEnchantment extends GrimoireEnchantment {
             Entity target = ((EntityHitResult) projectileHitRecord.hitResult()).getEntity();
             LivingEntity shooter = projectileHitRecord.shooter();
             double cost = Math.sqrt(shooter.distanceToSqr(target)) * COST_MULTIPLIER[enchantLevel - 1];
-            Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak((int) cost, shooter, livingEntity -> {});
+            Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak((int) cost, shooter, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
             target.teleportTo(shooter.position().x, shooter.position().y, shooter.position().z);
         }
     }

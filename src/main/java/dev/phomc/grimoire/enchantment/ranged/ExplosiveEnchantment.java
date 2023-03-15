@@ -33,8 +33,7 @@ public class ExplosiveEnchantment extends GrimoireEnchantment {
     public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel, MutableBoolean cancelled) {
         enchantLevel = clampLevel(enchantLevel);
         if (projectileHitRecord.shooter() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < CHANCES[enchantLevel - 1]) {
-            Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak(3, projectileHitRecord.shooter(), livingEntity -> {
-            });
+            Objects.requireNonNull(projectileHitRecord.weapon()).hurtAndBreak(3, projectileHitRecord.shooter(), p -> p.broadcastBreakEvent(p.getUsedItemHand()));
             Vec3 loc = projectileHitRecord.hitResult().getLocation();
             ServerLevel world = (ServerLevel) projectileHitRecord.projectile().level;
             DamageSource damageSource = world.damageSources().explosion(
