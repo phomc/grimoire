@@ -13,6 +13,7 @@ import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
 import dev.phomc.grimoire.enchantment.effect.proactive.*;
 import dev.phomc.grimoire.enchantment.melee.ColorShuffleEnchantment;
+import dev.phomc.grimoire.enchantment.melee.DashEnchantment;
 import dev.phomc.grimoire.enchantment.melee.VampireEnchantment;
 import dev.phomc.grimoire.enchantment.ranged.*;
 import dev.phomc.grimoire.enchantment.tool.DiggerEnchantment;
@@ -48,6 +49,7 @@ public class EnchantmentRegistry {
         // melee
         registerEnchant(ColorShuffleEnchantment.class);
         registerEnchant(VampireEnchantment.class);
+        registerEnchant(DashEnchantment.class);
 
         // ranged
         registerEnchant(RiftEnchantment.class);
