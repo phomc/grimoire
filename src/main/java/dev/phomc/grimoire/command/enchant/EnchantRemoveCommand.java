@@ -8,6 +8,7 @@ import dev.phomc.grimoire.command.SubCommand;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.item.GrimoireItem;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -23,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class EnchantRemoveCommand implements SubCommand {
     @Override
     public void register(LiteralArgumentBuilder<CommandSourceStack> builder) {
-        builder.requires(forStaff)
+        builder.requires(Permissions.require("grimoire.enchant.remove", Commands.LEVEL_GAMEMASTERS))
             .then(
                 Commands.argument("enchantment", ResourceLocationArgument.id())
                     .suggests(EnchantCommand.ALL_ENCHANTMENTS_SUGGESTION)

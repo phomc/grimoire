@@ -17,6 +17,7 @@
   "accessWidener" : "grimoire.accesswidener",
   "depends": {
     "fabricloader": "${loader_version}",
-    "fabric": "*"
+    "fabric": "*",
+    "fabric-permissions-api-v0": "*"
   }
 }

@@ -9,6 +9,7 @@ group = project.maven_group
 
 repositories {
     maven { url 'https://maven.nucleoid.xyz' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 loom {
@@ -22,6 +23,7 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation include("xyz.nucleoid:server-translations-api:${project.server_translations_api_version}")
+    modImplementation include("me.lucko:fabric-permissions-api:${project.fabric_permissions_api_version}")
 }
 
 shadowJar {
