@@ -5,10 +5,11 @@ import net.minecraft.world.effect.MobEffect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DevModeUtils {
     public static boolean isDevModeEnabled() {
-        return System.getenv("GRIMOIRE_DEV").equals("yes");
+        return Objects.equals(System.getenv("GRIMOIRE_DEV"), "yes");
     }
 
     public static void runInDev(Runnable runnable) {
