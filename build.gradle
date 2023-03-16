@@ -21,7 +21,12 @@ dependencies {
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    [
+            "fabric-command-api-v2"
+    ].forEach {
+        include(modImplementation(fabricApi.module(it, project.fabric_version)))
+    }
+
     modImplementation include("xyz.nucleoid:server-translations-api:${project.server_translations_api_version}")
     modImplementation include("me.lucko:fabric-permissions-api:${project.fabric_permissions_api_version}")
 }
