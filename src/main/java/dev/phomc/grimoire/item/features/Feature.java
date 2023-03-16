@@ -4,7 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 
-public abstract class ItemFeature {
+public abstract class Feature {
     public abstract void load(ItemStack itemStack);
 
     public abstract void save(ItemStack itemStack);
@@ -29,6 +29,11 @@ public abstract class ItemFeature {
         CompoundTag grimoireTag = new CompoundTag();
         compoundTag.put(GRIMOIRE_TAG, grimoireTag);
         return grimoireTag;
+    }
+
+    public CompoundTag getGrimoireElement(ItemStack itemStack, String elem) {
+        CompoundTag compoundTag = getGrimoireTag(itemStack);
+        return compoundTag == null || !compoundTag.contains(elem, Tag.TAG_COMPOUND) ? null : compoundTag.getCompound(elem);
     }
 
     public void removeGrimoireElement(ItemStack itemStack, String elem) {

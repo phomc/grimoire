@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import static dev.phomc.grimoire.enchantment.DummyEnchantment.CURSE_DISPLAY_NAME_FORMAT;
 import static dev.phomc.grimoire.enchantment.DummyEnchantment.NORMAL_DISPLAY_NAME_FORMAT;
 
-public class EnchantmentFeature extends ItemFeature implements Displayable {
+public class EnchantmentFeature extends Feature implements Displayable {
     private Map<GrimoireEnchantment, Integer> enchantments = new LinkedHashMap<>(); // preserve order
 
     public int getEnchantment(@Nullable ItemStack itemStack, GrimoireEnchantment enchantment) {
