@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.mixin;
+package dev.phomc.grimoire.mixin.entity;
 
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import net.minecraft.util.RandomSource;

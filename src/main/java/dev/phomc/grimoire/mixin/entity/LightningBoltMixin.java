@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.mixin;
+package dev.phomc.grimoire.mixin.entity;
 
 import dev.phomc.grimoire.accessor.LightningBoltAccessor;
 import net.minecraft.server.level.ServerPlayer;

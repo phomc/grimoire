@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.mixin;
+package dev.phomc.grimoire.mixin.entity;
 
 import dev.phomc.grimoire.event.EventDispatcher;
 import net.minecraft.world.damagesource.DamageSource;

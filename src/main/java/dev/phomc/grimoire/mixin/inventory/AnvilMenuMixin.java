@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.mixin;
+package dev.phomc.grimoire.mixin.inventory;
 
 import dev.phomc.grimoire.item.GrimoireItem;
 import net.minecraft.world.entity.player.Inventory;

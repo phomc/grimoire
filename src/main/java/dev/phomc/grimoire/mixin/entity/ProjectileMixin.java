@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.mixin;
+package dev.phomc.grimoire.mixin.entity;
 
 import dev.phomc.grimoire.accessor.ProjectileAccessor;
 import dev.phomc.grimoire.event.ProjectileHitRecord;

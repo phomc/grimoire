@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.mixin;
+package dev.phomc.grimoire.mixin.entity;
 
 import com.mojang.authlib.GameProfile;
 import dev.phomc.grimoire.accessor.ServerPlayerAccessor;
