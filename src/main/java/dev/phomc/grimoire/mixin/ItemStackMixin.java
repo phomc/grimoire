@@ -2,7 +2,6 @@ package dev.phomc.grimoire.mixin;
 
 import dev.phomc.grimoire.item.GrimoireItem;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
-import dev.phomc.grimoire.item.features.LoreFeature;
 import dev.phomc.grimoire.utils.ItemStackUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +18,6 @@ public abstract class ItemStackMixin implements GrimoireItem {
     public abstract boolean isEmpty();
 
     private EnchantmentFeature enchantmentFeature;
-    private LoreFeature loreFeature;
 
     private ItemStack self() {
         return (ItemStack) (Object) this;
@@ -34,26 +32,20 @@ public abstract class ItemStackMixin implements GrimoireItem {
         return enchantmentFeature;
     }
 
-    @NotNull
-    public LoreFeature getLoreFeature() {
-        if (loreFeature == null) {
-            loreFeature = new LoreFeature();
-            if (!isEmpty()) loreFeature.load(self());
-        }
-        return loreFeature;
-    }
-
     public void updateDisplay() {
-        List<Component> newLore = new ArrayList<>();
+        List<Component> newLore = ItemStackUtils.getLore(self());
+        if (newLore == null) {
+            newLore = new ArrayList<>();
+        } else {
+            getEnchantmentFeature().resetLore(newLore);
+        }
         getEnchantmentFeature().displayLore(newLore);
-        getLoreFeature().displayLore(newLore);
 
         ItemStackUtils.setLore(self(), newLore);
     }
 
     public void pushChanges() {
         if (isEmpty()) return;
-        getLoreFeature().save(self());
         getEnchantmentFeature().save(self());
         updateDisplay();
     }
