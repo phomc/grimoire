@@ -36,7 +36,17 @@ public class ItemStackUtils {
         return lines;
     }
 
-    public static void setLore(@NotNull ItemStack itemStack, List<Component> lines) {
+    public static void setLore(@NotNull ItemStack itemStack, @Nullable List<Component> lines) {
+        if (lines == null || lines.isEmpty()) {
+            CompoundTag display = itemStack.getTagElement(ItemStack.TAG_DISPLAY);
+            if (display != null) {
+                display.remove(ItemStack.TAG_LORE);
+                if (display.isEmpty()) {
+                    itemStack.removeTagKey(ItemStack.TAG_DISPLAY);
+                }
+            }
+            return;
+        }
         CompoundTag display = itemStack.getOrCreateTagElement(ItemStack.TAG_DISPLAY);
         ListTag listTag = new ListTag();
         for (Component component : lines) {

@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ItemStack.class)
@@ -33,7 +34,11 @@ public abstract class ItemStackMixin implements GrimoireItem {
 
     public void updateDisplay() {
         List<Component> newLore = ItemStackUtils.getLore(self());
-        getEnchantmentFeature().resetLore(newLore);
+        if (newLore == null) {
+            newLore = new ArrayList<>();
+        } else {
+            getEnchantmentFeature().resetLore(newLore);
+        }
         getEnchantmentFeature().displayLore(newLore);
 
         ItemStackUtils.setLore(self(), newLore);
