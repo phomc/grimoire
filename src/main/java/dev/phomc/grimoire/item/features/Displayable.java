@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface Displayable {
     void displayLore(List<Component> lines);
+
+    void resetLore(List<Component> lines);
 }

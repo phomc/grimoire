@@ -4,6 +4,8 @@ import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -14,8 +16,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
+import static dev.phomc.grimoire.enchantment.DummyEnchantment.CURSE_DISPLAY_NAME_FORMAT;
+import static dev.phomc.grimoire.enchantment.DummyEnchantment.NORMAL_DISPLAY_NAME_FORMAT;
 
 public class EnchantmentFeature extends ItemFeature implements Displayable {
     private Map<GrimoireEnchantment, Integer> enchantments = new LinkedHashMap<>(); // preserve order
@@ -103,5 +110,19 @@ public class EnchantmentFeature extends ItemFeature implements Displayable {
         for (Map.Entry<GrimoireEnchantment, Integer> entry : enchantments.entrySet()) {
             lines.add(entry.getKey().getFullname(entry.getValue()));
         }
+    }
+
+    @Override
+    public void resetLore(List<Component> lines) {
+        Set<String> descIds = EnchantmentRegistry.ALL.values().stream()
+                .map(Enchantment::getDescriptionId)
+                .collect(Collectors.toUnmodifiableSet());
+        lines.removeIf(cpn -> {
+            return cpn instanceof MutableComponent &&
+                    cpn.getContents() instanceof TranslatableContents contents &&
+                    descIds.contains(contents.getKey()) &&
+                    (cpn.getStyle().equals(NORMAL_DISPLAY_NAME_FORMAT) ||
+                            cpn.getStyle().equals(CURSE_DISPLAY_NAME_FORMAT));
+        });
     }
 }

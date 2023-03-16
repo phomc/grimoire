@@ -12,6 +12,13 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
 public class DummyEnchantment extends Enchantment {
+    public static final Style CURSE_DISPLAY_NAME_FORMAT = Style.EMPTY
+            .withColor(ChatFormatting.RED)
+            .withItalic(false);
+    public static final Style NORMAL_DISPLAY_NAME_FORMAT = Style.EMPTY
+            .withColor(ChatFormatting.GRAY)
+            .withItalic(false);
+
     public DummyEnchantment(Enchantment.Rarity rarity, EnchantmentCategory category, EquipmentSlot[] equipmentSlots) {
         super(rarity, category, equipmentSlots);
     }
@@ -40,9 +47,9 @@ public class DummyEnchantment extends Enchantment {
     public final @NotNull Component getFullname(int lv) {
         MutableComponent mutableComponent = Component.translatable(this.getDescriptionId());
         if (this.isCurse()) {
-            mutableComponent.withStyle(Style.EMPTY.withColor(ChatFormatting.RED).withItalic(false));
+            mutableComponent.withStyle(CURSE_DISPLAY_NAME_FORMAT);
         } else {
-            mutableComponent.withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(false));
+            mutableComponent.withStyle(NORMAL_DISPLAY_NAME_FORMAT);
         }
         if (lv != 1 || getMaxLevel() != 1) {
             mutableComponent.append(CommonComponents.SPACE).append(StringUtils.intToRoman(lv));
