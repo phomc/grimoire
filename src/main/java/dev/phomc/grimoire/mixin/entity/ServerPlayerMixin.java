@@ -3,14 +3,13 @@ package dev.phomc.grimoire.mixin.entity;
 import com.mojang.authlib.GameProfile;
 import dev.phomc.grimoire.accessor.ServerPlayerAccessor;
 import dev.phomc.grimoire.accessor.VelocityNavigator;
-import dev.phomc.grimoire.item.GrimoireItem;
+import dev.phomc.grimoire.item.ItemHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,7 +32,7 @@ public abstract class ServerPlayerMixin extends Player implements ServerPlayerAc
             if (!slot.isArmor()) continue;
             ItemStack itemStack = getItemBySlot(slot);
             if (itemStack.isEmpty()) continue;
-            GrimoireItem.of(itemStack).getEnchantmentFeature().iterateEnchantments(itemStack, (key, value) -> {
+            ItemHelper.of(itemStack).getEnchantmentFeature().iterateEnchantments(itemStack, (key, value) -> {
                 key.onArmorTick(this, slot, itemStack, value, ticks);
             });
         }

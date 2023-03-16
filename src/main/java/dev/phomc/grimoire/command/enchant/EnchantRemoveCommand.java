@@ -6,7 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.phomc.grimoire.command.SubCommand;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
-import dev.phomc.grimoire.item.GrimoireItem;
+import dev.phomc.grimoire.item.ItemHelper;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.ChatFormatting;
@@ -48,10 +48,10 @@ public class EnchantRemoveCommand implements SubCommand {
         if (itemStack.isEmpty()) {
             throw EnchantCommand.ERROR_NO_ITEM.create(target.getName().getString());
         }
-        GrimoireItem grimoireItem = GrimoireItem.of(itemStack);
-        EnchantmentFeature enchantmentFeature = grimoireItem.getEnchantmentFeature();
+        ItemHelper itemHelper = ItemHelper.of(itemStack);
+        EnchantmentFeature enchantmentFeature = itemHelper.getEnchantmentFeature();
         enchantmentFeature.removeEnchantment(enchantment);
-        grimoireItem.pushChanges();
+        itemHelper.pushChanges();
         target.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
         executor.displayClientMessage(Component.translatable("grimoire.command.disenchant.success", target.getName().getString()).withStyle(ChatFormatting.YELLOW), false);
         return Command.SINGLE_SUCCESS;

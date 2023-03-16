@@ -4,7 +4,7 @@ import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.event.AttackRecord;
 import dev.phomc.grimoire.event.NaturalDamageRecord;
 import dev.phomc.grimoire.event.ProjectileHitRecord;
-import dev.phomc.grimoire.item.GrimoireItem;
+import dev.phomc.grimoire.item.ItemHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -100,7 +100,7 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
         // - The "vanilla" cost is doubled because of being "treasure enchantment"
         // - The "vanilla" cost is not scaled by rarity
         ItemStack result = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(this, enchantLevel));
-        GrimoireItem.of(result).updateDisplay(); // set lore
+        ItemHelper.of(result).updateDisplay(); // set lore
         int k = 0;
         switch (getRarity()) {
             case COMMON -> k = 1;

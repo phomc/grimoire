@@ -1,6 +1,6 @@
 package dev.phomc.grimoire.mixin.item;
 
-import dev.phomc.grimoire.item.GrimoireItem;
+import dev.phomc.grimoire.item.ItemHelper;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import dev.phomc.grimoire.utils.ItemStackUtils;
 import net.minecraft.network.chat.Component;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin implements GrimoireItem {
+public abstract class ItemStackMixin implements ItemHelper {
     @Shadow
     public abstract boolean isEmpty();
 
