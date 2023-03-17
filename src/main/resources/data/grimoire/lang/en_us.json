@@ -6,6 +6,7 @@
   "grimoire.command.enchant.incompatible": "That enchantment is incompatible with existing ones",
   "grimoire.command.enchant.success": "Enchanted %s's item",
   "grimoire.command.disenchant.success": "Disenchanted %s's item",
+  "grimoire.command.give.gemstone": "Gave gemstone to %d players",
   "enchantment.grimoire.color_shuffle": "Color Shuffle",
   "enchantment.grimoire.blindness": "Blindness",
   "enchantment.grimoire.frozen": "Frozen",

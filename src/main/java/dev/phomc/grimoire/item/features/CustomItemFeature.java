@@ -8,12 +8,14 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class CustomItemFeature extends Feature {
     private ResourceLocation itemId;
     private CompoundTag data;
 
     public void setItemId(ResourceLocation itemId) {
-        if (!this.itemId.equals(itemId)) {
+        if (!Objects.equals(this.itemId, itemId)) {
             // reset data when changing item
             data = null;
         }

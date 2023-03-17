@@ -25,7 +25,7 @@ public class GemstoneItem extends GrimoireItem {
 
     @Override
     public ItemStack getIcon() {
-        return null;
+        return create(Gemstone.JADE);
     }
 
     @NotNull

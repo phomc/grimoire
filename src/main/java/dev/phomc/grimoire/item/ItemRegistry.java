@@ -12,6 +12,8 @@ import java.util.Map;
 public class ItemRegistry {
     public static Map<ResourceLocation, GrimoireItem> ALL = new LinkedHashMap<>(); // preserve order
 
+    public static GemstoneItem GEMSTONE;
+
     public static void init() {
         registerItem(GemstoneItem.class);
         registerItem(InkwellItem.class);
