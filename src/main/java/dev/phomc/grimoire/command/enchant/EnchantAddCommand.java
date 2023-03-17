@@ -8,6 +8,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.phomc.grimoire.command.SubCommand;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -23,6 +24,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class EnchantAddCommand implements SubCommand {
     @Override
@@ -69,10 +72,12 @@ public class EnchantAddCommand implements SubCommand {
         if (!EnchantmentRegistry.COMPATIBILITY_GRAPH.isCompatible(itemStack, enchantment)) {
             throw EnchantCommand.ERROR_COMPATIBILITY.create();
         }
-        ItemHelper itemHelper = ItemHelper.of(itemStack);
-        EnchantmentFeature enchantmentFeature = itemHelper.getEnchantmentFeature();
-        enchantmentFeature.setEnchantment(enchantment, lv);
-        itemHelper.saveChanges();
+        ItemHelper.of(itemStack).requestFeatureAndSave(ItemFeature.ENCHANTMENT, new Consumer<EnchantmentFeature>() {
+            @Override
+            public void accept(EnchantmentFeature feature) {
+                feature.setEnchantment(enchantment, lv);
+            }
+        });
         target.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
         executor.displayClientMessage(Component.translatable("grimoire.command.enchant.success", target.getName().getString()).withStyle(ChatFormatting.GREEN), false);
         return Command.SINGLE_SUCCESS;

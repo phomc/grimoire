@@ -1,9 +1,11 @@
 package dev.phomc.grimoire.item;
 
-import dev.phomc.grimoire.item.features.CustomItemFeature;
-import dev.phomc.grimoire.item.features.EnchantmentFeature;
+import dev.phomc.grimoire.item.features.Feature;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public interface ItemHelper {
     static ItemHelper of(ItemStack itemStack) {
@@ -11,9 +13,17 @@ public interface ItemHelper {
         return (ItemHelper) (Object) itemStack;
     }
 
-    @NotNull EnchantmentFeature getEnchantmentFeature();
+    @Nullable
+    <T extends Feature> T getFeature(ItemFeature feature);
 
-    @NotNull CustomItemFeature getCustomItemFeature();
+    @NotNull
+    <T extends Feature> T getOrCreateFeature(ItemFeature feature);
+
+    // feature getter chaining, then finally saveChanges
+    <T extends Feature> ItemHelper requestFeature(ItemFeature feature, Consumer<T> consumer);
+
+    // single feature getter + saveChanges
+    <T extends Feature> void requestFeatureAndSave(ItemFeature feature, Consumer<T> consumer);
 
     void updateDisplay();
 

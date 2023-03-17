@@ -13,6 +13,10 @@ public class CustomItemFeature extends Feature {
     private CompoundTag data;
 
     public void setItemId(ResourceLocation itemId) {
+        if (!this.itemId.equals(itemId)) {
+            // reset data when changing item
+            data = null;
+        }
         this.itemId = itemId;
     }
 

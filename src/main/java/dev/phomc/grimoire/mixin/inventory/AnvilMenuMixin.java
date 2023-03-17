@@ -1,6 +1,8 @@
 package dev.phomc.grimoire.mixin.inventory;
 
+import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
+import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -29,7 +31,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         ItemStack b = inputSlots.getItem(1);
         if (a.is(Items.ENCHANTED_BOOK) || b.is(Items.ENCHANTED_BOOK)) {
             ItemHelper gi = ItemHelper.of(resultSlots.getItem(0));
-            if (gi.getEnchantmentFeature().isEmpty()) return;
+            EnchantmentFeature enchantmentFeature = gi.getFeature(ItemFeature.ENCHANTMENT);
+            if (enchantmentFeature == null || enchantmentFeature.isEmpty()) return;
             gi.updateDisplay(); // set lore
             this.broadcastChanges();
         }
