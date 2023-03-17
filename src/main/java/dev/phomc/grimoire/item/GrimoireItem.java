@@ -1,9 +1,20 @@
 package dev.phomc.grimoire.item;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public interface GrimoireItem {
-    void onUse();
+public abstract class GrimoireItem {
+    public abstract void onUse();
 
-    ItemStack getIcon();
+    public abstract ItemStack getIcon();
+
+    private final ResourceLocation identifier;
+
+    public GrimoireItem(ResourceLocation identifier) {
+        this.identifier = identifier;
+    }
+
+    public ResourceLocation getIdentifier() {
+        return identifier;
+    }
 }

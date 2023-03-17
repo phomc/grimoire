@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.gemstone;
+package dev.phomc.grimoire.item.gemstone;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;

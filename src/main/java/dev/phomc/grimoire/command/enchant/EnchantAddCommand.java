@@ -72,7 +72,7 @@ public class EnchantAddCommand implements SubCommand {
         ItemHelper itemHelper = ItemHelper.of(itemStack);
         EnchantmentFeature enchantmentFeature = itemHelper.getEnchantmentFeature();
         enchantmentFeature.setEnchantment(enchantment, lv);
-        itemHelper.pushChanges();
+        itemHelper.saveChanges();
         target.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
         executor.displayClientMessage(Component.translatable("grimoire.command.enchant.success", target.getName().getString()).withStyle(ChatFormatting.GREEN), false);
         return Command.SINGLE_SUCCESS;

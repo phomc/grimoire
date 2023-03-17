@@ -1,6 +1,7 @@
 package dev.phomc.grimoire.mixin.item;
 
 import dev.phomc.grimoire.item.ItemHelper;
+import dev.phomc.grimoire.item.features.CustomItemFeature;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import dev.phomc.grimoire.utils.ItemStackUtils;
 import net.minecraft.network.chat.Component;
@@ -19,6 +20,8 @@ public abstract class ItemStackMixin implements ItemHelper {
 
     private EnchantmentFeature enchantmentFeature;
 
+    private CustomItemFeature customItemFeature;
+
     private ItemStack self() {
         return (ItemStack) (Object) this;
     }
@@ -30,6 +33,15 @@ public abstract class ItemStackMixin implements ItemHelper {
             if (!isEmpty()) enchantmentFeature.load(self());
         }
         return enchantmentFeature;
+    }
+
+    @NotNull
+    public CustomItemFeature getCustomItemFeature() {
+        if (customItemFeature == null) {
+            customItemFeature = new CustomItemFeature();
+            if (!isEmpty()) customItemFeature.load(self());
+        }
+        return customItemFeature;
     }
 
     public void updateDisplay() {
@@ -44,9 +56,10 @@ public abstract class ItemStackMixin implements ItemHelper {
         ItemStackUtils.setLore(self(), newLore);
     }
 
-    public void pushChanges() {
+    public void saveChanges() {
         if (isEmpty()) return;
         getEnchantmentFeature().save(self());
+        getCustomItemFeature().save(self());
         updateDisplay();
     }
 }

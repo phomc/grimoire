@@ -51,7 +51,7 @@ public class EnchantRemoveCommand implements SubCommand {
         ItemHelper itemHelper = ItemHelper.of(itemStack);
         EnchantmentFeature enchantmentFeature = itemHelper.getEnchantmentFeature();
         enchantmentFeature.removeEnchantment(enchantment);
-        itemHelper.pushChanges();
+        itemHelper.saveChanges();
         target.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
         executor.displayClientMessage(Component.translatable("grimoire.command.disenchant.success", target.getName().getString()).withStyle(ChatFormatting.YELLOW), false);
         return Command.SINGLE_SUCCESS;
