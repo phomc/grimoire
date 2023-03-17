@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.phomc.grimoire.command.SubCommand;
+import dev.phomc.grimoire.command.Suggestions;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
@@ -26,18 +27,18 @@ public class EnchantRemoveCommand implements SubCommand {
     @Override
     public void register(LiteralArgumentBuilder<CommandSourceStack> builder) {
         builder.requires(Permissions.require("grimoire.enchant.remove", Commands.LEVEL_GAMEMASTERS))
-            .then(
-                Commands.argument("enchantment", ResourceLocationArgument.id())
-                    .suggests(EnchantCommand.ALL_ENCHANTMENTS_SUGGESTION)
-                    .executes(context -> disenchant(context, null))
-                        .then(
-                                Commands.argument("target", EntityArgument.player())
-                                        .executes(context -> disenchant(
-                                                context,
-                                                EntityArgument.getPlayer(context, "target")
-                                        ))
-                        )
-            );
+                .then(
+                        Commands.argument("enchantment", ResourceLocationArgument.id())
+                                .suggests(Suggestions.ALL_ENCHANTMENTS_SUGGESTION)
+                                .executes(context -> disenchant(context, null))
+                                .then(
+                                        Commands.argument("target", EntityArgument.player())
+                                                .executes(context -> disenchant(
+                                                        context,
+                                                        EntityArgument.getPlayer(context, "target")
+                                                ))
+                                )
+                );
     }
 
     public int disenchant(CommandContext<CommandSourceStack> context, @Nullable Player target) throws CommandSyntaxException {

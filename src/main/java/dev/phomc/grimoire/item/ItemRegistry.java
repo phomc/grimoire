@@ -13,6 +13,7 @@ public class ItemRegistry {
     public static Map<ResourceLocation, GrimoireItem> ALL = new LinkedHashMap<>(); // preserve order
 
     public static GemstoneItem GEMSTONE;
+    public static InkwellItem INKWELL;
 
     public static void init() {
         registerItem(GemstoneItem.class);

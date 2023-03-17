@@ -7,6 +7,8 @@ import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import dev.phomc.grimoire.item.features.Feature;
 import dev.phomc.grimoire.utils.ItemStackUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,6 +25,8 @@ import java.util.function.Consumer;
 public abstract class ItemStackMixin implements ItemHelper {
     @Shadow
     public abstract boolean isEmpty();
+
+    @Shadow public abstract ItemStack setHoverName(@Nullable Component component);
 
     private final Map<ItemFeature, Feature> featureMap = new EnumMap<>(ItemFeature.class);
 
@@ -60,9 +64,14 @@ public abstract class ItemStackMixin implements ItemHelper {
     }
 
     @Override
-    public <T extends Feature> void requestFeatureAndSave(ItemFeature feature, Consumer<T> consumer) {
+    public <T extends Feature> ItemHelper requestFeatureAndSave(ItemFeature feature, Consumer<T> consumer) {
         consumer.accept(getOrCreateFeature(feature));
         saveChanges();
+        return this;
+    }
+
+    public void setItemName(MutableComponent component) {
+        setHoverName(component.withStyle(Style.EMPTY.withItalic(false)));
     }
 
     public void updateDisplay() {

@@ -17,7 +17,7 @@ public class CustomItemFeature extends Feature {
     public void setItemId(ResourceLocation itemId) {
         if (!Objects.equals(this.itemId, itemId)) {
             // reset data when changing item
-            data = null;
+            this.data = null;
         }
         this.itemId = itemId;
     }
@@ -60,11 +60,17 @@ public class CustomItemFeature extends Feature {
 
     @Override
     public void save(ItemStack itemStack) {
-
+        if (isCustomItem()) {
+            CompoundTag tag = getOrCreateGrimoireElement(itemStack, "custom");
+            tag.putString("id", itemId.toString());
+            if (data != null) {
+                tag.put("data", data);
+            }
+        }
     }
 
     @Override
     public void reset(ItemStack itemStack) {
-
+        removeGrimoireElement(itemStack, "custom");
     }
 }

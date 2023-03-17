@@ -19,13 +19,13 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Collection;
 import java.util.Collections;
 
-public class GemstoneGiveCommand implements SubCommand {
+public class InkwellGiveCommand implements SubCommand {
     @Override
     public void register(LiteralArgumentBuilder<CommandSourceStack> builder) {
-        builder.requires(Permissions.require("grimoire.item.give.gemstone", Commands.LEVEL_GAMEMASTERS))
+        builder.requires(Permissions.require("grimoire.item.give.inkwell", Commands.LEVEL_GAMEMASTERS))
                 .then(
                         Commands.argument("type", GemstoneArgument.gemstone())
-                               // .suggests(Suggestions.ALL_GEMSTONE_SUGGESTION)
+                                //.suggests(Suggestions.ALL_GEMSTONE_SUGGESTION)
                                 .executes(context -> give(context, 1, null))
                                 .then(
                                         Commands.argument("amount", IntegerArgumentType.integer(1, Short.MAX_VALUE))
@@ -50,7 +50,7 @@ public class GemstoneGiveCommand implements SubCommand {
         ServerPlayer executor = context.getSource().getPlayer();
         if (executor == null) throw new RuntimeException();
         if (targets == null || targets.isEmpty()) targets = Collections.singletonList(executor);
-        ItemStack itemStack = ItemRegistry.GEMSTONE.create(type);
+        ItemStack itemStack = ItemRegistry.INKWELL.create(type);
         for (ServerPlayer target : targets) {
             InventoryUtils.give(target, itemStack, amount);
         }

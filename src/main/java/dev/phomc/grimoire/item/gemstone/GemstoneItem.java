@@ -37,7 +37,7 @@ public class GemstoneItem extends GrimoireItem {
                 feature.setItemId(getIdentifier());
                 feature.getOrCreateData().putString("type", type.name());
             }
-        });
+        }).setItemName(type.getDisplayName());
         return itemStack;
     }
 

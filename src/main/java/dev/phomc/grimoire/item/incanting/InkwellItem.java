@@ -5,11 +5,11 @@ import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
 import dev.phomc.grimoire.item.features.CustomItemFeature;
 import dev.phomc.grimoire.item.gemstone.Gemstone;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,15 +47,14 @@ public class InkwellItem extends GrimoireItem {
         if (p == null) {
             throw new UnsupportedOperationException(type + " is unsupported");
         }
-        ItemStack itemStack = new ItemStack(Items.POTION, 1);
-        PotionUtils.setPotion(itemStack, p);
+        ItemStack itemStack = new ItemStack(Items.LINGERING_POTION, 1);
         ItemHelper.of(itemStack).requestFeatureAndSave(ItemFeature.CUSTOM_ITEM, new Consumer<CustomItemFeature>() {
             @Override
             public void accept(CustomItemFeature feature) {
                 feature.setItemId(getIdentifier());
                 feature.getOrCreateData().putString("type", type.name());
             }
-        });
+        }).setItemName(Component.translatable("grimoire.inkwell." + type.getId()));
         return itemStack;
     }
 }

@@ -6,6 +6,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.phomc.grimoire.command.SubCommand;
+import dev.phomc.grimoire.command.Suggestions;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.item.ItemFeature;
@@ -31,26 +32,26 @@ public class EnchantAddCommand implements SubCommand {
     @Override
     public void register(LiteralArgumentBuilder<CommandSourceStack> builder) {
         builder.requires(Permissions.require("grimoire.enchant.add", Commands.LEVEL_GAMEMASTERS))
-            .then(
-                Commands.argument("enchantment", ResourceLocationArgument.id())
-                    .suggests(EnchantCommand.ALL_ENCHANTMENTS_SUGGESTION)
-                    .executes(context -> enchant(context, 1, null))
-                    .then(
-                        Commands.argument("level", IntegerArgumentType.integer(1, Byte.MAX_VALUE))
-                            .executes(context -> enchant(
-                                    context,
-                                    IntegerArgumentType.getInteger(context, "level"),
-                                    null)
-                            ).then(
-                                Commands.argument("target", EntityArgument.player())
-                                    .executes(context -> enchant(
-                                            context,
-                                            IntegerArgumentType.getInteger(context, "level"),
-                                            EntityArgument.getPlayer(context, "target")
-                                    ))
-                            )
-                    )
-            );
+                .then(
+                        Commands.argument("enchantment", ResourceLocationArgument.id())
+                                .suggests(Suggestions.ALL_ENCHANTMENTS_SUGGESTION)
+                                .executes(context -> enchant(context, 1, null))
+                                .then(
+                                        Commands.argument("level", IntegerArgumentType.integer(1, Byte.MAX_VALUE))
+                                                .executes(context -> enchant(
+                                                        context,
+                                                        IntegerArgumentType.getInteger(context, "level"),
+                                                        null)
+                                                ).then(
+                                                        Commands.argument("target", EntityArgument.player())
+                                                                .executes(context -> enchant(
+                                                                        context,
+                                                                        IntegerArgumentType.getInteger(context, "level"),
+                                                                        EntityArgument.getPlayer(context, "target")
+                                                                ))
+                                                )
+                                )
+                );
     }
 
     public int enchant(CommandContext<CommandSourceStack> context, int lv, @Nullable Player target) throws CommandSyntaxException {

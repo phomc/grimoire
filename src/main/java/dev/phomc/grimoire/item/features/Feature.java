@@ -36,6 +36,16 @@ public abstract class Feature {
         return compoundTag == null || !compoundTag.contains(elem, Tag.TAG_COMPOUND) ? null : compoundTag.getCompound(elem);
     }
 
+    public CompoundTag getOrCreateGrimoireElement(ItemStack itemStack, String elem) {
+        CompoundTag compoundTag = getOrCreateGrimoireTag(itemStack);
+        if (compoundTag.contains(elem, Tag.TAG_COMPOUND)) {
+            return compoundTag.getCompound(elem);
+        }
+        CompoundTag tag = new CompoundTag();
+        compoundTag.put(elem, tag);
+        return tag;
+    }
+
     public void removeGrimoireElement(ItemStack itemStack, String elem) {
         CompoundTag compoundTag = itemStack.getTag();
         if (compoundTag != null && compoundTag.contains(GRIMOIRE_TAG, Tag.TAG_COMPOUND)) {

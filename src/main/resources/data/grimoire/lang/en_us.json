@@ -6,7 +6,7 @@
   "grimoire.command.enchant.incompatible": "That enchantment is incompatible with existing ones",
   "grimoire.command.enchant.success": "Enchanted %s's item",
   "grimoire.command.disenchant.success": "Disenchanted %s's item",
-  "grimoire.command.give.gemstone": "Gave gemstone to %d players",
+  "grimoire.command.give": "Gave %s to %d players",
   "enchantment.grimoire.color_shuffle": "Color Shuffle",
   "enchantment.grimoire.blindness": "Blindness",
   "enchantment.grimoire.frozen": "Frozen",
@@ -30,5 +30,13 @@
   "enchantment.grimoire.exchange": "Exchange",
   "enchantment.grimoire.telekinesis": "Telekinesis",
   "enchantment.grimoire.arrow_rain": "Arrow Rain",
-  "enchantment.grimoire.dash": "Dash"
+  "enchantment.grimoire.dash": "Dash",
+  "grimoire.gemstone.musgravite": "Musgravite",
+  "grimoire.gemstone.jade": "Jade",
+  "grimoire.gemstone.sapphire": "Sapphire",
+  "grimoire.gemstone.topaz": "Topaz",
+  "grimoire.inkwell.musgravite": "Musgravite Inkwell",
+  "grimoire.inkwell.jade": "Jade Inkwell",
+  "grimoire.inkwell.sapphire": "Sapphire Inkwell",
+  "grimoire.inkwell.topaz": "Topaz Inkwell"
 }

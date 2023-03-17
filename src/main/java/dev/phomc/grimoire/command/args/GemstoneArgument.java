@@ -1,20 +1,16 @@
 package dev.phomc.grimoire.command.args;
 
-import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.arguments.ArgumentType;
 import dev.phomc.grimoire.item.gemstone.Gemstone;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.arguments.StringRepresentableArgument;
 
-public class GemstoneArgument extends StringRepresentableArgument<Gemstone> {
-    private GemstoneArgument() {
-        super(Gemstone.CODEC, Gemstone::values);
-    }
-
-    public static StringRepresentableArgument<Gemstone> create() {
+public class GemstoneArgument implements ArgumentType<Gemstone> {
+    public static GemstoneArgument gemstone() {
         return new GemstoneArgument();
     }
 
-    public static Gemstone getGemstone(CommandContext<CommandSourceStack> commandContext, String string) {
-        return commandContext.getArgument(string, Gemstone.class);
+    @Override
+    public Gemstone parse(StringReader reader) {
+        return Gemstone.valueOf(reader.readUnquotedString().toUpperCase());
     }
 }
