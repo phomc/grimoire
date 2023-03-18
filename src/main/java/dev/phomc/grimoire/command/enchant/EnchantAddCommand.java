@@ -5,6 +5,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.phomc.grimoire.command.CommandArgs;
+import dev.phomc.grimoire.command.CommandErrors;
 import dev.phomc.grimoire.command.SubCommand;
 import dev.phomc.grimoire.command.Suggestions;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
@@ -55,23 +57,23 @@ public class EnchantAddCommand implements SubCommand {
     }
 
     public int enchant(CommandContext<CommandSourceStack> context, int lv, @Nullable Player target) throws CommandSyntaxException {
-        GrimoireEnchantment enchantment = EnchantCommand.getEnchantment(context, "enchantment");
+        GrimoireEnchantment enchantment = CommandArgs.getEnchantment(context, "enchantment");
         if (enchantment.getMaxLevel() < lv) {
-            throw EnchantCommand.ERROR_OVER_LEVEL.create(enchantment.getMaxLevel());
+            throw CommandErrors.ERROR_OVER_LEVEL.create(enchantment.getMaxLevel());
         }
         ServerPlayer executor = context.getSource().getPlayer();
         if (executor == null) throw new RuntimeException();
         if (target == null) target = executor;
         ItemStack itemStack = target.getMainHandItem();
         if (itemStack.isEmpty()) {
-            throw EnchantCommand.ERROR_NO_ITEM.create(target.getName().getString());
+            throw CommandErrors.ERROR_NO_ITEM.create(target.getName().getString());
         }
         if (!enchantment.getItemCheck().test(itemStack.getItem()) && !itemStack.is(Items.ENCHANTED_BOOK)) {
-            throw EnchantCommand.ERROR_WRONG_ITEM.create(target.getName().getString());
+            throw CommandErrors.ERROR_WRONG_ITEM.create(target.getName().getString());
         }
         // also checks compatibility for enchanted book, no exception
         if (!EnchantmentRegistry.COMPATIBILITY_GRAPH.isCompatible(itemStack, enchantment)) {
-            throw EnchantCommand.ERROR_COMPATIBILITY.create();
+            throw CommandErrors.ERROR_COMPATIBILITY.create();
         }
         ItemHelper.of(itemStack).requestFeatureAndSave(ItemFeature.ENCHANTMENT, new Consumer<EnchantmentFeature>() {
             @Override

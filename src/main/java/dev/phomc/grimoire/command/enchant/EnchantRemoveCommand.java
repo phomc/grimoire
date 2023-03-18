@@ -4,6 +4,8 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.phomc.grimoire.command.CommandArgs;
+import dev.phomc.grimoire.command.CommandErrors;
 import dev.phomc.grimoire.command.SubCommand;
 import dev.phomc.grimoire.command.Suggestions;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
@@ -42,13 +44,13 @@ public class EnchantRemoveCommand implements SubCommand {
     }
 
     public int disenchant(CommandContext<CommandSourceStack> context, @Nullable Player target) throws CommandSyntaxException {
-        GrimoireEnchantment enchantment = EnchantCommand.getEnchantment(context, "enchantment");
+        GrimoireEnchantment enchantment = CommandArgs.getEnchantment(context, "enchantment");
         ServerPlayer executor = context.getSource().getPlayer();
         if (executor == null) throw new RuntimeException();
         if (target == null) target = executor;
         ItemStack itemStack = target.getMainHandItem();
         if (itemStack.isEmpty()) {
-            throw EnchantCommand.ERROR_NO_ITEM.create(target.getName().getString());
+            throw CommandErrors.ERROR_NO_ITEM.create(target.getName().getString());
         }
         ItemHelper itemHelper = ItemHelper.of(itemStack);
         EnchantmentFeature enchantmentFeature = itemHelper.getFeature(ItemFeature.ENCHANTMENT);

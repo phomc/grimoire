@@ -2,30 +2,20 @@ package dev.phomc.grimoire.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import dev.phomc.grimoire.command.args.GemstoneArgument;
 import dev.phomc.grimoire.command.enchant.EnchantAddCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveAllCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveCommand;
 import dev.phomc.grimoire.command.item.GemstoneGiveCommand;
 import dev.phomc.grimoire.command.item.InkwellGiveCommand;
-import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.synchronization.SingletonArgumentInfo;
-import net.minecraft.resources.ResourceLocation;
 
 import static net.minecraft.commands.Commands.literal;
 
 public class CommandRegistry {
     public static void init() {
-        ArgumentTypeRegistry.registerArgumentType(
-                new ResourceLocation("grimoire", "gemstone"),
-                GemstoneArgument.class,
-                SingletonArgumentInfo.contextFree(GemstoneArgument::gemstone)
-        );
-
         CommandRegistrationCallback.EVENT.register(CommandRegistry::registerAll);
     }
 

@@ -4,6 +4,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.phomc.grimoire.command.CommandErrors;
 import dev.phomc.grimoire.command.SubCommand;
 import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
@@ -39,7 +40,7 @@ public class EnchantRemoveAllCommand implements SubCommand {
         if (target == null) target = executor;
         ItemStack itemStack = target.getMainHandItem();
         if (itemStack.isEmpty()) {
-            throw EnchantCommand.ERROR_NO_ITEM.create(target.getName().getString());
+            throw CommandErrors.ERROR_NO_ITEM.create(target.getName().getString());
         }
         ItemHelper itemHelper = ItemHelper.of(itemStack);
         EnchantmentFeature enchantmentFeature = itemHelper.getFeature(ItemFeature.ENCHANTMENT);
