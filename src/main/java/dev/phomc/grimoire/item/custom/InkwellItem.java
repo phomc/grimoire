@@ -1,6 +1,6 @@
-package dev.phomc.grimoire.item.incanting;
+package dev.phomc.grimoire.item.custom;
 
-import dev.phomc.grimoire.item.gemstone.Gemstone;
+import dev.phomc.grimoire.item.Gemstone;
 import eu.pb4.polymer.core.api.item.PolymerItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

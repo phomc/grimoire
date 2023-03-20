@@ -2,7 +2,7 @@ package dev.phomc.grimoire.command;
 
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
-import dev.phomc.grimoire.item.gemstone.Gemstone;
+import dev.phomc.grimoire.item.Gemstone;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.synchronization.SuggestionProviders;

@@ -1,4 +1,4 @@
-package dev.phomc.grimoire.item.gemstone;
+package dev.phomc.grimoire.item;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
