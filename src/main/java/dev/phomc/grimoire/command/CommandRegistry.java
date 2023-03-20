@@ -5,8 +5,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.phomc.grimoire.command.enchant.EnchantAddCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveAllCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveCommand;
-import dev.phomc.grimoire.command.item.GemstoneGiveCommand;
-import dev.phomc.grimoire.command.item.InkwellGiveCommand;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -24,10 +22,6 @@ public class CommandRegistry {
         builder.then(route("enchant", new EnchantAddCommand()));
         builder.then(route("disenchant", new EnchantRemoveCommand()));
         builder.then(route("disenchantall", new EnchantRemoveAllCommand()));
-        builder.then(route("give", builder1 -> {
-            builder1.then(route("gemstone", new GemstoneGiveCommand()));
-            builder1.then(route("inkwell", new InkwellGiveCommand()));
-        }));
         dispatcher.register(builder);
     }
 

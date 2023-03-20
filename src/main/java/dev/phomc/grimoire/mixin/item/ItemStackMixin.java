@@ -2,7 +2,6 @@ package dev.phomc.grimoire.mixin.item;
 
 import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
-import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import dev.phomc.grimoire.item.features.Feature;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -28,12 +27,6 @@ public abstract class ItemStackMixin implements ItemHelper {
 
     private ItemStack self() {
         return (ItemStack) (Object) this;
-    }
-
-    // preserved
-    @NotNull
-    public EnchantmentFeature getEnchantmentFeature() {
-        return getOrCreateFeature(ItemFeature.ENCHANTMENT);
     }
 
     @Override

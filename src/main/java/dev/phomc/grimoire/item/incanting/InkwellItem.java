@@ -1,60 +1,100 @@
 package dev.phomc.grimoire.item.incanting;
 
-import dev.phomc.grimoire.item.GrimoireItem;
-import dev.phomc.grimoire.item.ItemFeature;
-import dev.phomc.grimoire.item.ItemHelper;
-import dev.phomc.grimoire.item.features.CustomItemFeature;
 import dev.phomc.grimoire.item.gemstone.Gemstone;
+import eu.pb4.polymer.core.api.item.PolymerItem;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
-public class InkwellItem extends GrimoireItem {
-    private static final Map<Gemstone, Potion> gemstonePotionMap = new EnumMap<>(Gemstone.class);
+public class InkwellItem extends PotionItem implements PolymerItem {
+    public static final Map<Gemstone, Potion> GEMSTONE_POTION_MAP = new EnumMap<>(Gemstone.class);
 
     static {
-        gemstonePotionMap.put(Gemstone.MUSGRAVITE, Potions.WEAKNESS);
-        gemstonePotionMap.put(Gemstone.JADE, Potions.NIGHT_VISION);
-        gemstonePotionMap.put(Gemstone.SAPPHIRE, Potions.SWIFTNESS);
-        gemstonePotionMap.put(Gemstone.TOPAZ, Potions.STRENGTH);
+        GEMSTONE_POTION_MAP.put(Gemstone.MUSGRAVITE, Potions.WEAKNESS);
+        GEMSTONE_POTION_MAP.put(Gemstone.JADE, Potions.NIGHT_VISION);
+        GEMSTONE_POTION_MAP.put(Gemstone.SAPPHIRE, Potions.SWIFTNESS);
+        GEMSTONE_POTION_MAP.put(Gemstone.TOPAZ, Potions.STRENGTH);
+
+        for (Gemstone value : Gemstone.values()) {
+            if (!GEMSTONE_POTION_MAP.containsKey(value)) {
+                throw new RuntimeException("missing inkwell support from gemstone " + value.getId());
+            }
+        }
     }
 
-    public InkwellItem(ResourceLocation identifier) {
-        super(identifier);
-    }
+    private final Gemstone type;
 
-    @Override
-    public void onUse() {
-
-    }
-
-    @Override
-    public ItemStack getIcon() {
-        return create(Gemstone.MUSGRAVITE);
+    public InkwellItem(Gemstone type, Item.Properties properties) {
+        super(properties);
+        this.type = type;
     }
 
     @NotNull
-    public ItemStack create(@NotNull Gemstone type) {
-        Potion p = gemstonePotionMap.get(type);
-        if (p == null) {
-            throw new UnsupportedOperationException(type + " is unsupported");
-        }
-        ItemStack itemStack = new ItemStack(Items.LINGERING_POTION, 1);
-        ItemHelper.of(itemStack).requestFeatureAndSave(ItemFeature.CUSTOM_ITEM, new Consumer<CustomItemFeature>() {
-            @Override
-            public void accept(CustomItemFeature feature) {
-                feature.setItemId(getIdentifier());
-                feature.getOrCreateData().putString("type", type.name());
-            }
-        }).setItemName(Component.translatable("grimoire.inkwell." + type.getId()));
+    public Gemstone getType() {
+        return type;
+    }
+
+    @Override
+    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayer player) {
+        return Items.POTION;
+    }
+
+    @Override
+    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipFlag context, @Nullable ServerPlayer player) {
+        ItemStack out = PolymerItem.super.getPolymerItemStack(itemStack, context, player);
+        PotionUtils.setPotion(out, GEMSTONE_POTION_MAP.get(type));
+        out.hideTooltipPart(ItemStack.TooltipPart.ADDITIONAL);
+        return out;
+    }
+
+    @Override
+    public @NotNull String getDescriptionId(ItemStack itemStack) {
+        return this.getDescriptionId();
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
+
+    }
+
+    @Override
+    public int getUseDuration(ItemStack itemStack) {
+        return 0;
+    }
+
+    @Override
+    public @NotNull UseAnim getUseAnimation(ItemStack itemStack) {
+        return UseAnim.NONE;
+    }
+
+    @Override
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+        return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
+    }
+
+    @Override
+    public @NotNull InteractionResult useOn(UseOnContext useOnContext) {
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public @NotNull ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity livingEntity) {
         return itemStack;
     }
 }

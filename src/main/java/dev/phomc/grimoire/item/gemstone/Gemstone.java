@@ -7,17 +7,19 @@ import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 public enum Gemstone {
-    MUSGRAVITE(Items.NETHERITE_INGOT),
-    JADE(Items.EMERALD),
-    SAPPHIRE(Items.DIAMOND),
-    TOPAZ(Items.GOLD_INGOT);
+    MUSGRAVITE(Items.NETHERITE_INGOT, null),
+    JADE(Items.EMERALD, null),
+    SAPPHIRE(Items.DIAMOND, null),
+    TOPAZ(Items.GOLD_INGOT, null);
 
     private final String id;
     private final Item backend;
+    private final Item.Properties properties;
 
-    Gemstone(Item backend) {
+    Gemstone(Item backend, Item.Properties properties) {
         this.id = name().toLowerCase();
         this.backend = backend;
+        this.properties = properties == null ? new Item.Properties() : properties;
     }
 
     @NotNull
@@ -31,7 +33,12 @@ public enum Gemstone {
     }
 
     @NotNull
+    public Item.Properties getProperties() {
+        return properties;
+    }
+
+    @NotNull
     public MutableComponent getDisplayName() {
-        return Component.translatable("grimoire.gemstone." + id);
+        return Component.translatable("item.grimoire." + id);
     }
 }

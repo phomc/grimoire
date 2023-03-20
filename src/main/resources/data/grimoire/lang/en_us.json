@@ -32,12 +32,12 @@
   "enchantment.grimoire.telekinesis": "Telekinesis",
   "enchantment.grimoire.arrow_rain": "Arrow Rain",
   "enchantment.grimoire.dash": "Dash",
-  "grimoire.gemstone.musgravite": "Musgravite",
-  "grimoire.gemstone.jade": "Jade",
-  "grimoire.gemstone.sapphire": "Sapphire",
-  "grimoire.gemstone.topaz": "Topaz",
-  "grimoire.inkwell.musgravite": "Musgravite Inkwell",
-  "grimoire.inkwell.jade": "Jade Inkwell",
-  "grimoire.inkwell.sapphire": "Sapphire Inkwell",
-  "grimoire.inkwell.topaz": "Topaz Inkwell"
+  "item.grimoire.musgravite": "Musgravite",
+  "item.grimoire.jade": "Jade",
+  "item.grimoire.sapphire": "Sapphire",
+  "item.grimoire.topaz": "Topaz",
+  "item.grimoire.musgravite_inkwell": "Musgravite Inkwell",
+  "item.grimoire.jade_inkwell": "Jade Inkwell",
+  "item.grimoire.sapphire_inkwell": "Sapphire Inkwell",
+  "item.grimoire.topaz_inkwell": "Topaz Inkwell"
 }
