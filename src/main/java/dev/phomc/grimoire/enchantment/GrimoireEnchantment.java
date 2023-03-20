@@ -5,7 +5,9 @@ import dev.phomc.grimoire.event.AttackRecord;
 import dev.phomc.grimoire.event.NaturalDamageRecord;
 import dev.phomc.grimoire.event.ProjectileHitRecord;
 import dev.phomc.grimoire.item.ItemHelper;
+import eu.pb4.polymer.core.api.other.PolymerEnchantment;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -22,10 +24,11 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
-public abstract class GrimoireEnchantment extends DummyEnchantment {
+public abstract class GrimoireEnchantment extends DummyEnchantment implements PolymerEnchantment {
     private final ResourceLocation identifier;
     private final Predicate<Item> itemCheck;
 
@@ -118,6 +121,12 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
                 result,
                 offer.getMaxUses(), offer.getXp(), offer.getPriceMultiplier()
         );
+    }
+
+    @Nullable
+    @Override
+    public Enchantment getPolymerReplacement(ServerPlayer player) {
+        return null;
     }
 
     @Override

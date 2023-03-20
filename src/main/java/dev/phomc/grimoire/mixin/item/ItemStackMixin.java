@@ -2,10 +2,8 @@ package dev.phomc.grimoire.mixin.item;
 
 import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
-import dev.phomc.grimoire.item.features.Displayable;
 import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import dev.phomc.grimoire.item.features.Feature;
-import dev.phomc.grimoire.utils.ItemStackUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -15,9 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -74,32 +70,10 @@ public abstract class ItemStackMixin implements ItemHelper {
         setHoverName(component.withStyle(Style.EMPTY.withItalic(false)));
     }
 
-    public void updateDisplay() {
-        List<Component> newLore = ItemStackUtils.getLore(self());
-        if (newLore == null) {
-            newLore = new ArrayList<>();
-            for (Feature f : featureMap.values()) {
-                if (f instanceof Displayable) {
-                    ((Displayable) f).displayLore(newLore);
-                }
-            }
-        } else {
-            for (Feature f : featureMap.values()) {
-                if (f instanceof Displayable) {
-                    ((Displayable) f).resetLore(newLore);
-                    ((Displayable) f).displayLore(newLore);
-                }
-            }
-        }
-
-        ItemStackUtils.setLore(self(), newLore);
-    }
-
     public void saveChanges() {
         if (isEmpty()) return;
         for (Feature f : featureMap.values()) {
             f.save(self());
         }
-        updateDisplay();
     }
 }

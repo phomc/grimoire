@@ -28,7 +28,5 @@ public interface ItemHelper {
 
     void setItemName(MutableComponent component);
 
-    void updateDisplay();
-
     void saveChanges();
 }
