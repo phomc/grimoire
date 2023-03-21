@@ -6,7 +6,7 @@
       "item": "grimoire:musgravite"
     },
     "X": {
-      "tag": "minecraft:bottle"
+      "tag": "minecraft:glass_bottle"
     },
     "-": {
       "tag": "minecraft:ink_sac"
@@ -14,8 +14,8 @@
   },
   "pattern": [
     "---",
-    "#X#",
-    "---"
+    "---",
+    "#X#"
   ],
   "result": {
     "item": "grimoire:musgravite_inkwell"

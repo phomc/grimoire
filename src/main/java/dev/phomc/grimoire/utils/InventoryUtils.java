@@ -12,6 +12,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class InventoryUtils {
+    public static void give(ServerPlayer player, @NotNull ItemStack itemStack) {
+        give(player, itemStack, 1);
+    }
+
     public static void give(ServerPlayer player, @NotNull ItemStack itemStack, int times) {
         int remain = add(player.getInventory(), itemStack, times);
         player.containerMenu.broadcastChanges();

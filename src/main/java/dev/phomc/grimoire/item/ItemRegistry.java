@@ -1,9 +1,6 @@
 package dev.phomc.grimoire.item;
 
-import dev.phomc.grimoire.item.custom.GemstoneItem;
-import dev.phomc.grimoire.item.custom.InkwellItem;
-import dev.phomc.grimoire.item.custom.ParchmentItem;
-import dev.phomc.grimoire.item.custom.QuillItem;
+import dev.phomc.grimoire.item.custom.*;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -11,6 +8,7 @@ import net.minecraft.world.item.Item;
 
 public class ItemRegistry {
     public static QuillItem QUILL;
+    public static UnidentifiedGrimoireItem UNIDENTIFIED_GRIMOIRE;
 
     public static void init() {
         for (Gemstone value : Gemstone.values()) {
@@ -19,6 +17,7 @@ public class ItemRegistry {
         }
         registerItem("parchment", new ParchmentItem(new Item.Properties().stacksTo(16)));
         registerItem("quill", QUILL = new QuillItem(new Item.Properties()));
+        registerItem("unidentified_grimoire", UNIDENTIFIED_GRIMOIRE = new UnidentifiedGrimoireItem(new Item.Properties().stacksTo(1)));
     }
 
     private static void registerItem(String id, Item item) {
