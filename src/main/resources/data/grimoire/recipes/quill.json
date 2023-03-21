@@ -4,14 +4,10 @@
   "key": {
     "#": {
       "item": "minecraft:feather"
-    },
-    "X": {
-      "tag": "minecraft:stick"
     }
   },
   "pattern": [
-    "#",
-    "X"
+    "###"
   ],
   "result": {
     "item": "grimoire:quill"
