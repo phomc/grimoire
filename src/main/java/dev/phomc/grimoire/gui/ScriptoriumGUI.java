@@ -1,9 +1,12 @@
 package dev.phomc.grimoire.gui;
 
+import dev.phomc.grimoire.item.ItemFeature;
+import dev.phomc.grimoire.item.ItemHelper;
 import dev.phomc.grimoire.item.ItemRegistry;
 import dev.phomc.grimoire.item.custom.InkwellItem;
 import dev.phomc.grimoire.item.custom.ParchmentItem;
 import dev.phomc.grimoire.item.custom.QuillItem;
+import dev.phomc.grimoire.item.features.GemstoneElementFeature;
 import dev.phomc.grimoire.utils.InventoryUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.elements.GuiElementInterface;
@@ -17,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ScriptoriumGUI extends SimpleGui {
@@ -84,6 +88,12 @@ public class ScriptoriumGUI extends SimpleGui {
             return;
         }
 
+        ItemStack out = new ItemStack(ItemRegistry.UNIDENTIFIED_GRIMOIRE);
+        ItemHelper.of(out).requestFeatureAndSave(ItemFeature.GEMSTONE_ELEMENT, (Consumer<GemstoneElementFeature>) feature -> {
+            feature.element = ((InkwellItem) inkwellSlot.getItemStack().getItem()).getType();
+        });
+        InventoryUtils.give(player, out);
+
         for (int i : INGREDIENT_SLOTS) {
             GuiElementInterface slot = getSlot(i);
             ItemStack item = slot.getItemStack();
@@ -94,7 +104,6 @@ public class ScriptoriumGUI extends SimpleGui {
             }
         }
 
-        InventoryUtils.give(player, new ItemStack(ItemRegistry.UNIDENTIFIED_GRIMOIRE));
-        player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 2.0f, 1.0f);
+        player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 3.0f, 1.0f);
     }
 }

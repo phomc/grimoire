@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class EnchantmentFeature extends Feature {
+public class EnchantmentFeature implements Feature {
     private Map<GrimoireEnchantment, Integer> enchantments = new LinkedHashMap<>(); // preserve order
 
     public int getEnchantment(@Nullable ItemStack itemStack, GrimoireEnchantment enchantment) {

@@ -40,6 +40,7 @@ public abstract class ItemStackMixin implements ItemHelper {
         Feature f = featureMap.get(feature);
         if (f == null) {
             f = feature.create();
+            f.load(self());
             featureMap.put(feature, f);
         }
         //noinspection unchecked

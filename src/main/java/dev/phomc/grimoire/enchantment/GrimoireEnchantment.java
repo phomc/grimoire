@@ -4,6 +4,7 @@ import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.event.AttackRecord;
 import dev.phomc.grimoire.event.NaturalDamageRecord;
 import dev.phomc.grimoire.event.ProjectileHitRecord;
+import dev.phomc.grimoire.item.Gemstone;
 import eu.pb4.polymer.core.api.other.PolymerEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,6 +29,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Predicate;
 
 public abstract class GrimoireEnchantment extends DummyEnchantment implements PolymerEnchantment {
+    public static double[] getProbabilityPerLevel(int minLv, int maxLv, int rarityDiff) {
+        // TODO Cache this
+        double[] chances = new double[maxLv - minLv + 1];
+        for (int i = 0; i < chances.length; i++) {
+            double k = (i + minLv - 1) / (double) maxLv;
+            chances[i] = Math.max(0.0, Math.min(1.0, 1.0 - k + rarityDiff * 0.1));
+        }
+        return chances;
+    }
+
     private final ResourceLocation identifier;
     private final Predicate<Item> itemCheck;
 
@@ -69,6 +80,16 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
             return getMaxLevel();
         }
         return lv;
+    }
+
+    public boolean isIdentifiableBy(Gemstone gemstone) {
+        // Gemstone with rarity level N can identify enchantments rated level 1 to N
+        return gemstone.getEnchantmentRarity().compareTo(getRarity()) >= 0;
+    }
+
+    public double[] getProbabilityPerLevel(Gemstone gemstone) {
+        int diff = gemstone.getEnchantmentRarity().compareTo(getRarity());
+        return getProbabilityPerLevel(getMinLevel(), getMaxLevel(), diff);
     }
 
     // must have player as either attacker or victim

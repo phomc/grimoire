@@ -16,6 +16,51 @@ import java.util.List;
 import java.util.Objects;
 
 public class ItemStackUtils {
+    public static final String GRIMOIRE_TAG = "grimoire";
+
+    public static CompoundTag getGrimoireTag(ItemStack itemStack) {
+        CompoundTag compoundTag = itemStack.getTag();
+        if (compoundTag != null && compoundTag.contains(GRIMOIRE_TAG, Tag.TAG_COMPOUND)) {
+            return compoundTag.getCompound(GRIMOIRE_TAG);
+        }
+        return null;
+    }
+
+    public static CompoundTag getOrCreateGrimoireTag(ItemStack itemStack) {
+        CompoundTag compoundTag = itemStack.getOrCreateTag();
+        if (compoundTag.contains(GRIMOIRE_TAG, Tag.TAG_COMPOUND)) {
+            return compoundTag.getCompound(GRIMOIRE_TAG);
+        }
+        CompoundTag grimoireTag = new CompoundTag();
+        compoundTag.put(GRIMOIRE_TAG, grimoireTag);
+        return grimoireTag;
+    }
+
+    public static CompoundTag getGrimoireElement(ItemStack itemStack, String elem) {
+        CompoundTag compoundTag = getGrimoireTag(itemStack);
+        return compoundTag == null || !compoundTag.contains(elem, Tag.TAG_COMPOUND) ? null : compoundTag.getCompound(elem);
+    }
+
+    public static CompoundTag getOrCreateGrimoireElement(ItemStack itemStack, String elem) {
+        CompoundTag compoundTag = getOrCreateGrimoireTag(itemStack);
+        if (compoundTag.contains(elem, Tag.TAG_COMPOUND)) {
+            return compoundTag.getCompound(elem);
+        }
+        CompoundTag tag = new CompoundTag();
+        compoundTag.put(elem, tag);
+        return tag;
+    }
+
+    public static void removeGrimoireElement(ItemStack itemStack, String elem) {
+        CompoundTag compoundTag = itemStack.getTag();
+        if (compoundTag != null && compoundTag.contains(GRIMOIRE_TAG, Tag.TAG_COMPOUND)) {
+            CompoundTag grimoireTag = compoundTag.getCompound(GRIMOIRE_TAG);
+            grimoireTag.remove(elem);
+            if (grimoireTag.isEmpty()) {
+                itemStack.removeTagKey(GRIMOIRE_TAG);
+            }
+        }
+    }
 
     @Nullable
     public static List<Component> getLore(@Nullable ItemStack itemStack) {
