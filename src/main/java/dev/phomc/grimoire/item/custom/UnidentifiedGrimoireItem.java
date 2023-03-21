@@ -47,7 +47,6 @@ public class UnidentifiedGrimoireItem extends EnchantedBookItem implements Polym
             totalWeight += grimoireEnchantment.getRarity().getWeight();
         }
         double val = ThreadLocalRandom.current().nextDouble(totalWeight);
-        GrimoireEnchantment selected = null;
         for (GrimoireEnchantment grimoireEnchantment : list) {
             if (val > 0) {
                 val -= grimoireEnchantment.getRarity().getWeight();
