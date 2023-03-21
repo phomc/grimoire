@@ -34,20 +34,25 @@ public class InventoryUtils {
         if (itemStack == null || itemStack.isEmpty()) return 0;
         int amount  = times * itemStack.getCount();
 
+        // try to fill existing first
         for (int i = 0; i < inv.items.size() && amount > 0; i++) {
             ItemStack it = inv.items.get(i);
-            if (it.isEmpty()) {
-                int delta = itemStack.isStackable() ? Math.min(itemStack.getMaxStackSize(), amount) : 1;
-                inv.items.set(i, itemStack.copyWithCount(delta));
-                amount -= delta;
-                continue;
-            }
             if (ItemStack.isSameItemSameTags(it, itemStack) && it.isStackable() && itemStack.isStackable()) {
                 int delta = Math.min(it.getMaxStackSize() - it.getCount(), amount);
                 if (delta > 0) {
                     it.setCount(it.getCount() + delta);
                     amount -= delta;
                 }
+            }
+        }
+
+        // then fill empty slots
+        for (int i = 0; i < inv.items.size() && amount > 0; i++) {
+            ItemStack it = inv.items.get(i);
+            if (it.isEmpty()) {
+                int delta = itemStack.isStackable() ? Math.min(itemStack.getMaxStackSize(), amount) : 1;
+                inv.items.set(i, itemStack.copyWithCount(delta));
+                amount -= delta;
             }
         }
 
