@@ -8,6 +8,8 @@
   "grimoire.command.disenchant.success": "Disenchanted %s's item",
   "grimoire.command.give.invalid_gemstone": "Invalid gemstone: %s",
   "grimoire.command.give.success": "Gave %s to %d players",
+  "grimoire.gui.scriptorium.title": "Scriptorium",
+  "grimoire.gui.scriptorium.write": "Start writing",
   "enchantment.grimoire.color_shuffle": "Color Shuffle",
   "enchantment.grimoire.blindness": "Blindness",
   "enchantment.grimoire.frozen": "Frozen",

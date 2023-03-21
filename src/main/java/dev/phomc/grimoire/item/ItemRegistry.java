@@ -10,8 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public class ItemRegistry {
-    public static GemstoneItem GEMSTONE;
-    public static InkwellItem INKWELL;
+    public static QuillItem QUILL;
 
     public static void init() {
         for (Gemstone value : Gemstone.values()) {
@@ -19,7 +18,7 @@ public class ItemRegistry {
             registerItem(value.getId() + "_inkwell", new InkwellItem(value, new Item.Properties().stacksTo(1)));
         }
         registerItem("parchment", new ParchmentItem(new Item.Properties().stacksTo(16)));
-        registerItem("quill", new QuillItem(new Item.Properties()));
+        registerItem("quill", QUILL = new QuillItem(new Item.Properties()));
     }
 
     private static void registerItem(String id, Item item) {

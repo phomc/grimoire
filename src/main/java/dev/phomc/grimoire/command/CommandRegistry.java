@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.phomc.grimoire.command.enchant.EnchantAddCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveAllCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveCommand;
+import dev.phomc.grimoire.command.gui.ScriptoriumOpenCommand;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -23,6 +24,7 @@ public class CommandRegistry {
         builder.then(route("disenchant", new EnchantRemoveCommand()));
         builder.then(route("disenchantall", new EnchantRemoveAllCommand()));
         dispatcher.register(builder);
+        dispatcher.register(route("scriptorium", new ScriptoriumOpenCommand()));
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> route(String path, SubCommand subCommand) {
