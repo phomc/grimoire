@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "grimoire:jade"
+    },
+    "X": {
+      "tag": "minecraft:glass_bottle"
+    },
+    "-": {
+      "tag": "minecraft:ink_sac"
+    }
+  },
+  "pattern": [
+    "---",
+    "---",
+    "#X#"
+  ],
+  "result": {
+    "item": "grimoire:jade_inkwell"
+  },
+  "show_notification": true
+}

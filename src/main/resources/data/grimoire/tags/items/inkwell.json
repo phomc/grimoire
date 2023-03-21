@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "grimoire:musgravite_inkwell",
+    "grimoire:jade_inkwell",
+    "grimoire:sapphire_inkwell",
+    "grimoire:topaz_inkwell"
+  ]
+}

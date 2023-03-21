@@ -7,17 +7,16 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "inventory.AnvilMenuMixin",
     "block.BlockMixin",
-    "item.BowItemMixin",
-    "item.CrossbowItemMixin",
-    "item.ItemStackMixin",
     "entity.LightningBoltMixin",
     "entity.LivingEntityMixin",
     "entity.PlayerMixin",
     "entity.ProjectileMixin",
     "entity.ServerPlayerMixin",
-    "item.TridentItemMixin",
-    "entity.VillagerTradeEnchantedBook"
+    "entity.VillagerTradeEnchantedBook",
+    "item.BowItemMixin",
+    "item.CrossbowItemMixin",
+    "item.ItemStackMixin",
+    "item.TridentItemMixin"
   ]
 }

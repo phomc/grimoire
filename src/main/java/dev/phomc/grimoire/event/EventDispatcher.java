@@ -1,7 +1,9 @@
 package dev.phomc.grimoire.event;
 
 import dev.phomc.grimoire.accessor.ProjectileAccessor;
+import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
+import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -27,18 +29,24 @@ public class EventDispatcher {
 
             AttackRecord attackRecord = new AttackRecord(attacker, victim, projectile, f, weapon);
             if (weapon != null) {
-                ItemHelper.of(weapon).getEnchantmentFeature().iterateEnchantments(weapon, (key, value) -> {
-                    if (value < 1) return;
-                    key.onAttack(attackRecord, value);
-                });
+                EnchantmentFeature enchantmentFeature = ItemHelper.of(weapon).getFeature(ItemFeature.ENCHANTMENT);
+                if (enchantmentFeature != null) {
+                    enchantmentFeature.iterateEnchantments(weapon, (key, value) -> {
+                        if (value < 1) return;
+                        key.onAttack(attackRecord, value);
+                    });
+                }
             }
 
             victim.getArmorSlots().forEach(armor -> {
                 if (armor == null) return;
-                ItemHelper.of(armor).getEnchantmentFeature().iterateEnchantments(armor, (key, value) -> {
-                    if (value < 1) return;
-                    key.onAttacked(attackRecord, armor, value);
-                });
+                EnchantmentFeature enchantmentFeature = ItemHelper.of(armor).getFeature(ItemFeature.ENCHANTMENT);
+                if (enchantmentFeature != null) {
+                   enchantmentFeature.iterateEnchantments(armor, (key, value) -> {
+                        if (value < 1) return;
+                        key.onAttacked(attackRecord, armor, value);
+                    });
+                }
             });
         }
         else if (damageSource.is(DamageTypeTags.IS_FALL) ||
@@ -49,16 +57,21 @@ public class EventDispatcher {
             NaturalDamageRecord damageRecord = new NaturalDamageRecord(victim, f, damageSource);
             victim.getArmorSlots().forEach(armor -> {
                 if (armor == null) return;
-                ItemHelper.of(armor).getEnchantmentFeature().iterateEnchantments(armor, (key, value) -> {
-                    if (value < 1) return;
-                    key.onNaturalDamaged(damageRecord, armor, value);
-                });
+                EnchantmentFeature enchantmentFeature = ItemHelper.of(armor).getFeature(ItemFeature.ENCHANTMENT);
+                if (enchantmentFeature != null) {
+                    enchantmentFeature.iterateEnchantments(armor, (key, value) -> {
+                        if (value < 1) return;
+                        key.onNaturalDamaged(damageRecord, armor, value);
+                    });
+                }
             });
         }
     }
 
     public static void handleShoot(LivingEntity shooter, Projectile projectile, ItemStack weapon) {
-        ItemHelper.of(weapon).getEnchantmentFeature().iterateEnchantments(weapon, (enc, integer) -> {
+        EnchantmentFeature enchantmentFeature = ItemHelper.of(weapon).getFeature(ItemFeature.ENCHANTMENT);
+        if (enchantmentFeature == null) return;
+        enchantmentFeature.iterateEnchantments(weapon, (enc, integer) -> {
             enc.onShoot(shooter, projectile, weapon, integer);
         });
     }

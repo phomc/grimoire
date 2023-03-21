@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "grimoire:sapphire"
+    },
+    "X": {
+      "tag": "minecraft:glass_bottle"
+    },
+    "-": {
+      "tag": "minecraft:ink_sac"
+    }
+  },
+  "pattern": [
+    "---",
+    "---",
+    "#X#"
+  ],
+  "result": {
+    "item": "grimoire:sapphire_inkwell"
+  },
+  "show_notification": true
+}

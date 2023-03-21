@@ -4,8 +4,10 @@ import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.event.AttackRecord;
 import dev.phomc.grimoire.event.NaturalDamageRecord;
 import dev.phomc.grimoire.event.ProjectileHitRecord;
-import dev.phomc.grimoire.item.ItemHelper;
+import dev.phomc.grimoire.item.Gemstone;
+import eu.pb4.polymer.core.api.other.PolymerEnchantment;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -22,10 +24,21 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
-public abstract class GrimoireEnchantment extends DummyEnchantment {
+public abstract class GrimoireEnchantment extends DummyEnchantment implements PolymerEnchantment {
+    public static double[] getProbabilityPerLevel(int minLv, int maxLv, int rarityDiff) {
+        // TODO Cache this
+        double[] chances = new double[maxLv - minLv + 1];
+        for (int i = 0; i < chances.length; i++) {
+            double k = (i + minLv - 1) / (double) maxLv;
+            chances[i] = Math.max(0.0, Math.min(1.0, 1.0 - k + rarityDiff * 0.1));
+        }
+        return chances;
+    }
+
     private final ResourceLocation identifier;
     private final Predicate<Item> itemCheck;
 
@@ -69,6 +82,16 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
         return lv;
     }
 
+    public boolean isIdentifiableBy(Gemstone gemstone) {
+        // Gemstone with rarity level N can identify enchantments rated level 1 to N
+        return gemstone.getEnchantmentRarity().compareTo(getRarity()) >= 0;
+    }
+
+    public double[] getProbabilityPerLevel(Gemstone gemstone) {
+        int diff = gemstone.getEnchantmentRarity().compareTo(getRarity());
+        return getProbabilityPerLevel(getMinLevel(), getMaxLevel(), diff);
+    }
+
     // must have player as either attacker or victim
     public void onAttack(AttackRecord attackRecord, int enchantLevel) {
 
@@ -100,8 +123,7 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
         // - The "vanilla" cost is doubled because of being "treasure enchantment"
         // - The "vanilla" cost is not scaled by rarity
         ItemStack result = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(this, enchantLevel));
-        ItemHelper.of(result).updateDisplay(); // set lore
-        int k = 0;
+        int k;
         switch (getRarity()) {
             case COMMON -> k = 1;
             case UNCOMMON -> k = 2;
@@ -118,6 +140,12 @@ public abstract class GrimoireEnchantment extends DummyEnchantment {
                 result,
                 offer.getMaxUses(), offer.getXp(), offer.getPriceMultiplier()
         );
+    }
+
+    @Nullable
+    @Override
+    public Enchantment getPolymerReplacement(ServerPlayer player) {
+        return null;
     }
 
     @Override

@@ -27,9 +27,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class EnchantmentRegistry {
     public static Map<ResourceLocation, GrimoireEnchantment> ALL = new LinkedHashMap<>(); // preserve order
@@ -126,6 +128,14 @@ public class EnchantmentRegistry {
             for (Enchantment.Rarity entry : map.keySet()) {
                 List<String> collection = map.get(entry).stream().map(ResourceLocation::toString).sorted().toList();
                 Grimoire.LOGGER.info("{} {} enchantments: {}", collection.size(), entry, String.join(", ", collection));
+            }
+
+            for (int i = 1; i <= 7; i++) {
+                for (int j = 0; j <= 3; j++) {
+                    Grimoire.LOGGER.info("Probability lv 1 to {}, rarity diff {}: {}", i, j, Arrays.stream(GrimoireEnchantment.getProbabilityPerLevel(1, i, j))
+                            .mapToObj(value -> String.format("%.2f", value))
+                            .collect(Collectors.joining(", ")));
+                }
             }
         });
     }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:feather"
+    }
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "item": "grimoire:quill"
+  },
+  "show_notification": true
+}

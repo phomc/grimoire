@@ -2,7 +2,9 @@ package dev.phomc.grimoire.mixin.entity;
 
 import dev.phomc.grimoire.accessor.ProjectileAccessor;
 import dev.phomc.grimoire.event.ProjectileHitRecord;
+import dev.phomc.grimoire.item.ItemFeature;
 import dev.phomc.grimoire.item.ItemHelper;
+import dev.phomc.grimoire.item.features.EnchantmentFeature;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -40,9 +42,11 @@ public abstract class ProjectileMixin implements ProjectileAccessor {
     protected void onHit(HitResult hitResult, CallbackInfo ci) {
         Entity e = getOwner();
         if (e instanceof LivingEntity && weapon != null && hitResult.getType() != HitResult.Type.MISS) {
+            EnchantmentFeature enchantmentFeature = ItemHelper.of(weapon).getFeature(ItemFeature.ENCHANTMENT);
+            if (enchantmentFeature == null) return;
             ProjectileHitRecord record = new ProjectileHitRecord((LivingEntity) e, (Projectile) (Object) this, hitResult, weapon);
             MutableBoolean cancelled = new MutableBoolean(false);
-            ItemHelper.of(weapon).getEnchantmentFeature().iterateEnchantments(weapon, (enc, lv) -> {
+            enchantmentFeature.iterateEnchantments(weapon, (enc, lv) -> {
                 enc.onProjectileHit(record, lv, cancelled);
             });
             if (cancelled.isTrue()) {
