@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "grimoire:topaz"
+    },
+    "X": {
+      "tag": "minecraft:bottle"
+    },
+    "-": {
+      "tag": "minecraft:ink_sac"
+    }
+  },
+  "pattern": [
+    "---",
+    "#X#",
+    "---"
+  ],
+  "result": {
+    "item": "grimoire:topaz_inkwell"
+  },
+  "show_notification": true
+}
