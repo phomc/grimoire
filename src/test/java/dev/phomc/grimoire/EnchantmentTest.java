@@ -9,8 +9,9 @@ public class EnchantmentTest {
     public static void main(String[] args) {
         System.out.println("PROBABILITY PER ENCHANTMENT LEVEL");
         for (int i = 1; i <= 6; i++) {
+            System.out.println("If maximum level = " + i);
             for (int j = 0; j <= 3; j++) {
-                System.out.printf("Lv 1 to %d, rarity diff %d = %s\n", i, j, Arrays.stream(GrimoireEnchantment.getNormalizedLevelProbability(1, i, j))
+                System.out.printf("- and rarity diff = %d, then chances per level = %s\n", j, Arrays.stream(GrimoireEnchantment.getNormalizedLevelProbability(1, i, j))
                         .mapToObj(value -> String.format("%.2f%%", value * 100))
                         .collect(Collectors.joining(", ")));
             }
