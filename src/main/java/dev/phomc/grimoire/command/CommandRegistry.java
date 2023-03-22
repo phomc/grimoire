@@ -3,6 +3,7 @@ package dev.phomc.grimoire.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.phomc.grimoire.command.enchant.EnchantAddCommand;
+import dev.phomc.grimoire.command.enchant.EnchantListCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveAllCommand;
 import dev.phomc.grimoire.command.enchant.EnchantRemoveCommand;
 import dev.phomc.grimoire.command.give.UnidentifiedGrimoireGiveCommand;
@@ -22,6 +23,7 @@ public class CommandRegistry {
     public static void registerAll(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context, Commands.CommandSelection selection) {
         LiteralArgumentBuilder<CommandSourceStack> builder = literal("grimoire");
         builder.then(route("enchant", new EnchantAddCommand()));
+        builder.then(route("enchants", new EnchantListCommand()));
         builder.then(route("disenchant", new EnchantRemoveCommand()));
         builder.then(route("disenchantall", new EnchantRemoveAllCommand()));
         builder.then(literal("give")

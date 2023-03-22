@@ -43,16 +43,32 @@ public class DummyEnchantment extends Enchantment {
         return Integer.MAX_VALUE;
     }
 
-    @Override
-    public final @NotNull Component getFullname(int lv) {
+    public final @NotNull MutableComponent getDisplayName() {
         MutableComponent mutableComponent = Component.translatable(this.getDescriptionId());
         if (this.isCurse()) {
             mutableComponent.withStyle(CURSE_DISPLAY_NAME_FORMAT);
         } else {
             mutableComponent.withStyle(NORMAL_DISPLAY_NAME_FORMAT);
         }
+        return mutableComponent;
+    }
+
+    @Override
+    public final @NotNull Component getFullname(int lv) {
+        MutableComponent mutableComponent = getDisplayName();
         if (lv != 1 || getMaxLevel() != 1) {
             mutableComponent.append(CommonComponents.SPACE).append(StringUtils.intToRoman(lv));
+        }
+        return mutableComponent;
+    }
+
+    public final @NotNull Component getRarityDisplay() {
+        MutableComponent mutableComponent = Component.translatable("grimoire.enchantment_rarity." + getRarity().name().toLowerCase());
+        switch (getRarity()) {
+            case COMMON -> mutableComponent.withStyle(ChatFormatting.GREEN);
+            case UNCOMMON -> mutableComponent.withStyle(ChatFormatting.YELLOW);
+            case RARE -> mutableComponent.withStyle(ChatFormatting.GOLD);
+            case VERY_RARE -> mutableComponent.withStyle(ChatFormatting.RED);
         }
         return mutableComponent;
     }
