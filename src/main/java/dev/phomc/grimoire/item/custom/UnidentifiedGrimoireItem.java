@@ -58,7 +58,7 @@ public class UnidentifiedGrimoireItem extends EnchantedBookItem implements Polym
     }
 
     public static int selectEnchantmentLevel(Gemstone gemstone, GrimoireEnchantment enchantment) {
-        double[] chances = enchantment.getProbabilityPerLevel(gemstone);
+        double[] chances = enchantment.getLevelWeights(gemstone);
         double total = 0;
         for (double chance : chances) {
             total += chance;

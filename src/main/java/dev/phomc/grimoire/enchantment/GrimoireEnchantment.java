@@ -29,14 +29,26 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Predicate;
 
 public abstract class GrimoireEnchantment extends DummyEnchantment implements PolymerEnchantment {
-    public static double[] getProbabilityPerLevel(int minLv, int maxLv, int rarityDiff) {
+    public static double[] getLevelWeights(int minLv, int maxLv, int rarityDiff) {
         // TODO Cache this
-        double[] chances = new double[maxLv - minLv + 1];
-        for (int i = 0; i < chances.length; i++) {
+        double[] weights = new double[maxLv - minLv + 1];
+        for (int i = 0; i < weights.length; i++) {
             double k = (i + minLv - 1) / (double) maxLv;
-            chances[i] = Math.max(0.0, Math.min(1.0, 1.0 - k + rarityDiff * 0.1));
+            weights[i] = Math.max(0.0, 1.0 - k + rarityDiff * 0.1) * 100;
         }
-        return chances;
+        return weights;
+    }
+
+    public static double[] getNormalizedLevelProbability(int minLv, int maxLv, int rarityDiff) {
+        double[] weights = getLevelWeights(minLv, maxLv, rarityDiff);
+        double total = 0;
+        for (double w : weights) {
+            total += w;
+        }
+        for (int i = 0; i < weights.length; i++) {
+            weights[i] /= total;
+        }
+        return weights;
     }
 
     private final ResourceLocation identifier;
@@ -87,9 +99,9 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
         return gemstone.getEnchantmentRarity().compareTo(getRarity()) >= 0;
     }
 
-    public double[] getProbabilityPerLevel(Gemstone gemstone) {
+    public double[] getLevelWeights(Gemstone gemstone) {
         int diff = gemstone.getEnchantmentRarity().compareTo(getRarity());
-        return getProbabilityPerLevel(getMinLevel(), getMaxLevel(), diff);
+        return getLevelWeights(getMinLevel(), getMaxLevel(), diff);
     }
 
     // must have player as either attacker or victim

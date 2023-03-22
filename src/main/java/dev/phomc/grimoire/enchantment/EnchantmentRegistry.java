@@ -132,7 +132,7 @@ public class EnchantmentRegistry {
 
             for (int i = 1; i <= 7; i++) {
                 for (int j = 0; j <= 3; j++) {
-                    Grimoire.LOGGER.info("Probability lv 1 to {}, rarity diff {}: {}", i, j, Arrays.stream(GrimoireEnchantment.getProbabilityPerLevel(1, i, j))
+                    Grimoire.LOGGER.info("Lv 1 to {}, rarity diff {} then weights = {}", i, j, Arrays.stream(GrimoireEnchantment.getLevelWeights(1, i, j))
                             .mapToObj(value -> String.format("%.2f", value))
                             .collect(Collectors.joining(", ")));
                 }
