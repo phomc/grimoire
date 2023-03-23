@@ -1,9 +1,6 @@
 package dev.phomc.grimoire.enchantment;
 
 import dev.phomc.grimoire.Grimoire;
-import dev.phomc.grimoire.event.AttackRecord;
-import dev.phomc.grimoire.event.NaturalDamageRecord;
-import dev.phomc.grimoire.event.ProjectileHitRecord;
 import dev.phomc.grimoire.item.Gemstone;
 import eu.pb4.polymer.core.api.other.PolymerEnchantment;
 import net.minecraft.resources.ResourceLocation;
@@ -11,9 +8,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,13 +16,17 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.IntToDoubleFunction;
 import java.util.function.Predicate;
 
-public abstract class GrimoireEnchantment extends DummyEnchantment implements PolymerEnchantment {
+public abstract class GrimoireEnchantment extends DummyEnchantment implements PolymerEnchantment, EnchantmentEventListener {
     public static double[] getLevelWeights(int minLv, int maxLv, int rarityDiff) {
         // TODO Cache this
         double[] weights = new double[maxLv - minLv + 1];
@@ -53,6 +51,7 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
 
     private final ResourceLocation identifier;
     private final Predicate<Item> itemCheck;
+    private final Map<String, double[]> enchantmentProperties = new LinkedHashMap<>(5);
 
     public GrimoireEnchantment(@NotNull ResourceLocation identifier,
                                @NotNull Enchantment.Rarity rarity,
@@ -70,6 +69,35 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
     @NotNull
     public final Predicate<Item> getItemCheck() {
         return itemCheck;
+    }
+
+    @NotNull
+    public Map<String, double[]> getEnchantmentProperties() {
+        return enchantmentProperties;
+    }
+
+    public int createProperty(String id, IntToDoubleFunction supplier) {
+        double[] doubles = new double[getMaxLevel() - getMinLevel() + 1];
+        for (int i = 0; i < doubles.length; i++) {
+            doubles[i] = supplier.applyAsDouble(getMinLevel() + i);
+        }
+        enchantmentProperties.put(id, doubles);
+        return enchantmentProperties.size() - 1;
+    }
+
+    public int createProperty(String id, double value) {
+        double[] doubles = new double[getMaxLevel() - getMinLevel() + 1];
+        Arrays.fill(doubles, value);
+        enchantmentProperties.put(id, doubles);
+        return enchantmentProperties.size() - 1;
+    }
+
+    public double getPropertyValue(String property, int level) {
+        return enchantmentProperties.get(property)[level - getMinLevel()];
+    }
+
+    public boolean randomPropertyValue(String property, int level) {
+        return ThreadLocalRandom.current().nextDouble() <= getPropertyValue(property, level);
     }
 
     @Override
@@ -102,32 +130,6 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
     public double[] getLevelWeights(Gemstone gemstone) {
         int diff = gemstone.getEnchantmentRarity().compareTo(getRarity());
         return getLevelWeights(getMinLevel(), getMaxLevel(), diff);
-    }
-
-    // must have player as either attacker or victim
-    public void onAttack(AttackRecord attackRecord, int enchantLevel) {
-
-    }
-
-    // must have player as either attacker or victim
-    public void onAttacked(AttackRecord attackRecord, ItemStack armor, int enchantLevel) {
-
-    }
-
-    public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, int enchantLevel, int tick) {
-
-    }
-
-    public void onNaturalDamaged(NaturalDamageRecord naturalDamageRecord, ItemStack armor, int enchantLevel) {
-
-    }
-
-    public void onProjectileHit(ProjectileHitRecord projectileHitRecord, int enchantLevel, MutableBoolean cancelled) {
-
-    }
-
-    public void onShoot(LivingEntity shooter, Projectile projectile, ItemStack weapon, int enchantLevel) {
-
     }
 
     public MerchantOffer handleEnchantedBookOffer(Entity entity, RandomSource randomSource, MerchantOffer offer, Integer enchantLevel) {

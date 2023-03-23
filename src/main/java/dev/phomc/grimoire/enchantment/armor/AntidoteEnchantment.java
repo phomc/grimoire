@@ -19,6 +19,8 @@ public class AntidoteEnchantment extends GrimoireEnchantment {
 
     public AntidoteEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Enchantment.Rarity.RARE, EnchantmentTarget.ARMOR);
+
+        createProperty("chance", level -> (level + 1) * 0.05f);
     }
 
     public int getMaxLevel() {
@@ -28,7 +30,7 @@ public class AntidoteEnchantment extends GrimoireEnchantment {
     @Override
     public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, int level, int tick) {
         level = clampLevel(level);
-        if (tick % 20 == 0 && ThreadLocalRandom.current().nextFloat() < (level + 1) * 0.05f) {
+        if (tick % 20 == 0 && randomPropertyValue("chance", level)) {
             int lv = level;
             List<MobEffectInstance> harmfulEffects = player.getActiveEffects().stream()
                     .filter(mobEffectInstance -> {

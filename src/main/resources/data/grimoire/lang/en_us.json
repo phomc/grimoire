@@ -39,6 +39,7 @@
   "enchantment.grimoire.vampire": "Vampire",
   "enchantment.grimoire.digger": "Digger",
   "enchantment.grimoire.aftershock": "Aftershock",
+  "enchantment.grimoire.aftershock.desc": "Deals {%damage_rate}% fall damage to nearby mobs",
   "enchantment.grimoire.thunder": "Thunder",
   "enchantment.grimoire.tunnel": "Tunnel",
   "enchantment.grimoire.rift": "Rift",
