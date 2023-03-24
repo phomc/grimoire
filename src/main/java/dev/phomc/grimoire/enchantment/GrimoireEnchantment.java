@@ -1,6 +1,9 @@
 package dev.phomc.grimoire.enchantment;
 
 import dev.phomc.grimoire.Grimoire;
+import dev.phomc.grimoire.enchantment.property.ConditionalProperty;
+import dev.phomc.grimoire.enchantment.property.NumericProperty;
+import dev.phomc.grimoire.enchantment.property.Property;
 import dev.phomc.grimoire.item.Gemstone;
 import eu.pb4.polymer.core.api.other.PolymerEnchantment;
 import net.minecraft.resources.ResourceLocation;
@@ -19,11 +22,9 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.IntToDoubleFunction;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public abstract class GrimoireEnchantment extends DummyEnchantment implements PolymerEnchantment, EnchantmentEventListener {
@@ -51,7 +52,7 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
 
     private final ResourceLocation identifier;
     private final Predicate<Item> itemCheck;
-    private final Map<String, double[]> enchantmentProperties = new LinkedHashMap<>(5);
+    private final Map<String, Property> enchantmentProperties = new LinkedHashMap<>(5);
 
     public GrimoireEnchantment(@NotNull ResourceLocation identifier,
                                @NotNull Enchantment.Rarity rarity,
@@ -72,32 +73,27 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
     }
 
     @NotNull
-    public Map<String, double[]> getEnchantmentProperties() {
+    public Map<String, Property> getEnchantmentProperties() {
         return enchantmentProperties;
     }
 
-    public int createProperty(String id, IntToDoubleFunction supplier) {
-        double[] doubles = new double[getMaxLevel() - getMinLevel() + 1];
-        for (int i = 0; i < doubles.length; i++) {
-            doubles[i] = supplier.applyAsDouble(getMinLevel() + i);
-        }
-        enchantmentProperties.put(id, doubles);
-        return enchantmentProperties.size() - 1;
+    public void createProperty(String id, Property<?> property) {
+        enchantmentProperties.put(id, property);
     }
 
-    public int createProperty(String id, double value) {
-        double[] doubles = new double[getMaxLevel() - getMinLevel() + 1];
-        Arrays.fill(doubles, value);
-        enchantmentProperties.put(id, doubles);
-        return enchantmentProperties.size() - 1;
+    @NotNull
+    public Property<?> requireProperty(String property) {
+        return Objects.requireNonNull(enchantmentProperties.get(property));
     }
 
-    public double getPropertyValue(String property, int level) {
-        return enchantmentProperties.get(property)[level - getMinLevel()];
+    @NotNull
+    public NumericProperty requireNumericProperty(String property) {
+        return (NumericProperty) requireProperty(property);
     }
 
-    public boolean randomPropertyValue(String property, int level) {
-        return ThreadLocalRandom.current().nextDouble() <= getPropertyValue(property, level);
+    @NotNull
+    public ConditionalProperty requireConditionalProperty(String property) {
+        return (ConditionalProperty) requireProperty(property);
     }
 
     @Override
