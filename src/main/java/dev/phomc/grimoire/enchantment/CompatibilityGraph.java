@@ -44,7 +44,7 @@ public class CompatibilityGraph {
         addConflict(EnchantmentRegistry.ARROW_RAIN, EnchantmentRegistry.EXCHANGE);
 
         addConflict(EnchantmentRegistry.EXPLOSIVE, Enchantments.MULTISHOT);
-        addConflict(EnchantmentRegistry.THUNDER, Enchantments.CHANNELING);
+        addConflict(EnchantmentRegistry.SKYBREAKER, Enchantments.CHANNELING);
     }
 
     public void addConflict(ResourceLocation a, ResourceLocation b) {

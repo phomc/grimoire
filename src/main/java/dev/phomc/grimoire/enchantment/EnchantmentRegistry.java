@@ -7,7 +7,7 @@ import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.armor.AftershockEnchantment;
 import dev.phomc.grimoire.enchantment.armor.AntidoteEnchantment;
 import dev.phomc.grimoire.enchantment.armor.RefillEnchantment;
-import dev.phomc.grimoire.enchantment.attack.ThunderEnchantment;
+import dev.phomc.grimoire.enchantment.melee.ThunderEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.DecayEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.PetrifiedEnchantment;
 import dev.phomc.grimoire.enchantment.effect.passive.VenomEnchantment;
@@ -42,7 +42,7 @@ public class EnchantmentRegistry {
     public static TunnelEnchantment TUNNEL;
     public static RiftEnchantment RIFT;
     public static ExplosiveEnchantment EXPLOSIVE;
-    public static ThunderEnchantment THUNDER;
+    public static SkybreakerEnchantment SKYBREAKER;
     public static ExchangeEnchantment EXCHANGE;
     public static TelekinesisEnchantment TELEKINESIS;
     public static ArrowRainEnchantment ARROW_RAIN;
@@ -52,6 +52,7 @@ public class EnchantmentRegistry {
         registerEnchant(ColorShuffleEnchantment.class);
         registerEnchant(VampireEnchantment.class);
         registerEnchant(DashEnchantment.class);
+        registerEnchant(ThunderEnchantment.class);
 
         // ranged
         registerEnchant(RiftEnchantment.class);
@@ -59,6 +60,7 @@ public class EnchantmentRegistry {
         registerEnchant(ExchangeEnchantment.class);
         registerEnchant(TelekinesisEnchantment.class);
         registerEnchant(ArrowRainEnchantment.class);
+        registerEnchant(SkybreakerEnchantment.class);
 
         // armor
         registerEnchant(AntidoteEnchantment.class);
@@ -70,19 +72,13 @@ public class EnchantmentRegistry {
         registerEnchant(DiggerEnchantment.class); // pickaxe
         registerEnchant(TunnelEnchantment.class); // pickaxe, shovel
 
-        // === start: attack enchantments ===
-        // [melee/ranged]
-        // 1. common group
-        registerEnchant(ThunderEnchantment.class);
-
-        // 2. active effect group
+        // active effect group (melee/ranged)
         registerEnchant(WitherEnchantment.class);
         registerEnchant(PoisonEnchantment.class);
         registerEnchant(NauseaEnchantment.class);
         registerEnchant(FrozenEnchantment.class);
         registerEnchant(BlindnessEnchantment.class);
         registerEnchant(LevitationEnchantment.class);
-        // === end: attack enchantments ===
 
         // passive effect group (armor)
         registerEnchant(DecayEnchantment.class);
