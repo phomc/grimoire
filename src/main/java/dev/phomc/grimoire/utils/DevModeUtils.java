@@ -1,5 +1,6 @@
 package dev.phomc.grimoire.utils;
 
+import dev.phomc.grimoire.enchantment.effect.EffectStage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 
@@ -16,15 +17,15 @@ public class DevModeUtils {
         if (isDevModeEnabled()) runnable.run();
     }
 
-    public static void onEffectEnchantInit(ResourceLocation identifier, String type, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
+    public static void onEffectEnchantInit(ResourceLocation identifier, String type, MobEffect effect, EffectStage[] effectStages) {
         if (!isDevModeEnabled()) return;
 
         List<String> matrix = new ArrayList<>();
 
-        for (int i = 0; i < amplifiers.length; i++) {
-            matrix.add(String.valueOf(chances[i]));
-            matrix.add(String.valueOf(amplifiers[i]));
-            matrix.add(String.valueOf(duration[i]));
+        for (EffectStage effectStage : effectStages) {
+            matrix.add(String.valueOf(effectStage.chance()));
+            matrix.add(String.valueOf(effectStage.amplifier()));
+            matrix.add(String.valueOf(effectStage.duration()));
         }
         System.out.printf(
                 "EnchantmentList.set(\"%s|%s\", { effect: \"%s\", params: [%s] })%n",
