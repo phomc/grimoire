@@ -9,7 +9,7 @@ public class WitherEnchantment extends ProactiveEffectEnchantment {
         super(identifier, MobEffects.WITHER,
                 new int[]{0, 1, 2, 3, 4},
                 new int[]{60, 80, 80, 100, 100},
-                new float[]{0.2f, 0.3f, 0.4f, 0.5f, 0.5f}
+                new double[]{0.2, 0.3, 0.4, 0.5, 0.5}
         );
     }
 }

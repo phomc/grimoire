@@ -2,6 +2,8 @@ package dev.phomc.grimoire.enchantment.effect;
 
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
+import dev.phomc.grimoire.enchantment.property.IntegerProperty;
 import dev.phomc.grimoire.event.AttackRecord;
 import dev.phomc.grimoire.utils.DevModeUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -16,10 +18,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PassiveEffectEnchantment extends GrimoireEnchantment {
     private final MobEffect effect;
     private final int[] amplifiers;
-    private final float[] chances;
+    private final double[] chances;
     private final int[] duration;
 
-    public PassiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
+    public PassiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, double[] chances) {
         super(identifier, Enchantment.Rarity.UNCOMMON, EnchantmentTarget.ARMOR);
         this.effect = effect;
         this.amplifiers = amplifiers;
@@ -33,6 +35,10 @@ public class PassiveEffectEnchantment extends GrimoireEnchantment {
             throw new IllegalArgumentException(String.format("%s: len(amplifiers) != len(chances)", identifier));
         }
         DevModeUtils.onEffectEnchantInit(identifier, "passive", effect, amplifiers, duration, chances);
+
+        createProperty("amplifier", (IntegerProperty) level -> amplifiers[level - getMinLevel()]);
+        createProperty("duration", (IntegerProperty) level -> duration[level - getMinLevel()]);
+        createProperty("chance", (DecimalProperty) level -> chances[level - getMinLevel()]);
     }
 
     @Override

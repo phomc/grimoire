@@ -137,6 +137,18 @@ public class EnchantmentRegistry {
                             .collect(Collectors.joining(", ")));
                 }
             }
+
+            for (GrimoireEnchantment e : ALL.values()) {
+                if (e.getProperties().isEmpty()) continue;
+                Grimoire.LOGGER.info(
+                        "{} has {} properties: {}",
+                        e.getIdentifier(),
+                        e.getProperties().size(),
+                        e.getProperties().entrySet().stream()
+                                .map(x -> String.format("%s (%s)", x.getKey(), x.getValue().type().getSimpleName()))
+                                .collect(Collectors.joining(", "))
+                );
+            }
         });
     }
 }

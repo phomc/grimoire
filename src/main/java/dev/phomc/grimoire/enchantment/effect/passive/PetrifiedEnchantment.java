@@ -9,7 +9,7 @@ public class PetrifiedEnchantment extends PassiveEffectEnchantment {
         super(identifier, MobEffects.MOVEMENT_SLOWDOWN,
                 new int[]{1, 2, 3, 4, 5},
                 new int[]{60, 80, 120, 120, 150},
-                new float[]{0.2f, 0.3f, 0.3f, 0.4f, 0.5f}
+                new double[]{0.2, 0.3, 0.3, 0.4, 0.5}
         );
     }
 }

@@ -2,7 +2,8 @@ package dev.phomc.grimoire.enchantment;
 
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.property.ConditionalProperty;
-import dev.phomc.grimoire.enchantment.property.NumericProperty;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
+import dev.phomc.grimoire.enchantment.property.IntegerProperty;
 import dev.phomc.grimoire.enchantment.property.Property;
 import dev.phomc.grimoire.item.Gemstone;
 import eu.pb4.polymer.core.api.other.PolymerEnchantment;
@@ -52,7 +53,7 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
 
     private final ResourceLocation identifier;
     private final Predicate<Item> itemCheck;
-    private final Map<String, Property> enchantmentProperties = new LinkedHashMap<>(5);
+    private final Map<String, Property<?>> propertyMap = new LinkedHashMap<>(5);
 
     public GrimoireEnchantment(@NotNull ResourceLocation identifier,
                                @NotNull Enchantment.Rarity rarity,
@@ -73,22 +74,27 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
     }
 
     @NotNull
-    public Map<String, Property> getEnchantmentProperties() {
-        return enchantmentProperties;
+    public Map<String, Property<?>> getProperties() {
+        return propertyMap;
     }
 
-    public void createProperty(String id, Property<?> property) {
-        enchantmentProperties.put(id, property);
+    public <T> void createProperty(String id, Property<T> property) {
+        propertyMap.put(id, property);
     }
 
     @NotNull
     public Property<?> requireProperty(String property) {
-        return Objects.requireNonNull(enchantmentProperties.get(property));
+        return Objects.requireNonNull(propertyMap.get(property));
     }
 
     @NotNull
-    public NumericProperty requireNumericProperty(String property) {
-        return (NumericProperty) requireProperty(property);
+    public IntegerProperty requireIntegerProperty(String property) {
+        return (IntegerProperty) requireProperty(property);
+    }
+
+    @NotNull
+    public DecimalProperty requireDecimalProperty(String property) {
+        return (DecimalProperty) requireProperty(property);
     }
 
     @NotNull

@@ -13,10 +13,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ProactiveEffectEnchantment extends AbstractAttackEnchantment {
     private final MobEffect effect;
     private final int[] amplifiers;
-    private final float[] chances;
+    private final double[] chances;
     private final int[] duration;
 
-    public ProactiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
+    public ProactiveEffectEnchantment(ResourceLocation identifier, MobEffect effect, int[] amplifiers, int[] duration, double[] chances) {
         super(identifier, Enchantment.Rarity.COMMON);
         this.effect = effect;
         this.amplifiers = amplifiers;

@@ -9,7 +9,7 @@ public class DecayEnchantment extends PassiveEffectEnchantment {
         super(identifier, MobEffects.WITHER,
                 new int[]{1, 2, 3, 4},
                 new int[]{80, 80, 100, 120},
-                new float[]{0.3f, 0.4f, 0.5f, 0.6f}
+                new double[]{0.3, 0.4, 0.5, 0.6}
         );
     }
 }

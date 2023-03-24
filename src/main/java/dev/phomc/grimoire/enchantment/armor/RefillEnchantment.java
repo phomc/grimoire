@@ -2,7 +2,7 @@ package dev.phomc.grimoire.enchantment.armor;
 
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
-import dev.phomc.grimoire.enchantment.property.NumericProperty;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ public class RefillEnchantment extends GrimoireEnchantment {
     public RefillEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.RARE, EnchantmentTarget.HELMET);
 
-        createProperty("threshold", (NumericProperty) level -> level * 0.2);
+        createProperty("threshold", (DecimalProperty) level -> level * 0.2);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class RefillEnchantment extends GrimoireEnchantment {
     public void onArmorTick(Player player, EquipmentSlot slot, ItemStack itemStack, int level, int tick) {
         if (tick % 20 != 0) return;
         level = clampLevel(level);
-        if (player.getHealth() < player.getMaxHealth() * requireNumericProperty("threshold").evaluate(level)) {
+        if (player.getHealth() < player.getMaxHealth() * requireDecimalProperty("threshold").evaluate(level)) {
             player.getInventory().items.stream()
                     .filter(i -> i.getItem().getFoodProperties() != null && i.getItem().getFoodProperties().getEffects().isEmpty())
                     .findAny()

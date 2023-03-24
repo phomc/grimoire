@@ -9,7 +9,7 @@ public class FrozenEnchantment extends ProactiveEffectEnchantment {
         super(identifier, MobEffects.MOVEMENT_SLOWDOWN,
                 new int[]{0, 1, 2, 3, 4},
                 new int[]{40, 60, 80, 120, 120},
-                new float[]{0.2f, 0.2f, 0.3f, 0.3f, 0.4f}
+                new double[]{0.2, 0.2, 0.3, 0.3, 0.4}
         );
     }
 }

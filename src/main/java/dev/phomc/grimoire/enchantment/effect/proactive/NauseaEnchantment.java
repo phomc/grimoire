@@ -9,7 +9,7 @@ public class NauseaEnchantment extends ProactiveEffectEnchantment {
         super(identifier, MobEffects.CONFUSION,
                 new int[]{0, 1, 1},
                 new int[]{60, 80, 100},
-                new float[]{0.2f, 0.3f, 0.4f}
+                new double[]{0.2, 0.3, 0.4}
         );
     }
 }

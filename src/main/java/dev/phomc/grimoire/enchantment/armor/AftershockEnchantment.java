@@ -2,6 +2,7 @@ package dev.phomc.grimoire.enchantment.armor;
 
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
 import dev.phomc.grimoire.event.NaturalDamageRecord;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +19,7 @@ public class AftershockEnchantment extends GrimoireEnchantment {
     public AftershockEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.UNCOMMON, EnchantmentTarget.BOOTS);
 
-        createProperty("damage_rate", level -> {
+        createProperty("damage_rate", (DecimalProperty) level -> {
             double power = level;
             if (level == getMaxLevel()) power++;
             return power / (double) getMaxLevel();
@@ -34,7 +35,7 @@ public class AftershockEnchantment extends GrimoireEnchantment {
     public void onNaturalDamaged(NaturalDamageRecord damageRecord, ItemStack armor, int level) {
         if (!damageRecord.isFall()) return;
         level = clampLevel(level);
-        float damage = (float) (damageRecord.damage() * requireNumericProperty("damage_rate").evaluate(level));
+        float damage = (float) (damageRecord.damage() * requireDecimalProperty("damage_rate").evaluate(level));
         Objects.requireNonNull(armor).hurtAndBreak((int) damage >> 2, damageRecord.victim(), p -> p.broadcastBreakEvent(p.getUsedItemHand()));
         damageRecord.victim().getLevel().getNearbyEntities(
                 LivingEntity.class, TARGET_CONDITION,

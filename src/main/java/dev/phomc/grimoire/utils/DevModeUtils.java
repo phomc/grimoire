@@ -16,7 +16,7 @@ public class DevModeUtils {
         if (isDevModeEnabled()) runnable.run();
     }
 
-    public static void onEffectEnchantInit(ResourceLocation identifier, String type, MobEffect effect, int[] amplifiers, int[] duration, float[] chances) {
+    public static void onEffectEnchantInit(ResourceLocation identifier, String type, MobEffect effect, int[] amplifiers, int[] duration, double[] chances) {
         if (!isDevModeEnabled()) return;
 
         List<String> matrix = new ArrayList<>();

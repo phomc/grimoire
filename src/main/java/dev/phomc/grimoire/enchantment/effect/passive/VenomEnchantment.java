@@ -9,7 +9,7 @@ public class VenomEnchantment extends PassiveEffectEnchantment {
         super(identifier, MobEffects.POISON,
                 new int[]{1, 2, 3, 4},
                 new int[]{60, 80, 100, 100},
-                new float[]{0.3f, 0.4f, 0.4f, 0.5f}
+                new double[]{0.3, 0.4, 0.4, 0.5}
         );
     }
 }
