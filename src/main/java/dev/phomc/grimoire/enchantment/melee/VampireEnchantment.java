@@ -2,19 +2,24 @@ package dev.phomc.grimoire.enchantment.melee;
 
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
+import dev.phomc.grimoire.enchantment.property.InfoProperty;
 import dev.phomc.grimoire.event.AttackRecord;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class VampireEnchantment extends GrimoireEnchantment {
-    private static final float[] CHANCE = new float[]{0.3f, 0.35f, 0.4f, 0.45f, 0.5f};
-    private static final float[] TRANSFER_RATE = new float[]{0.4f, 0.5f, 0.6f, 0.7f, 0.8f};
+    private static final double[] CHANCE = new double[]{0.3, 0.35, 0.4, 0.45, 0.5};
+    private static final double[] TRANSFER_RATE = new double[]{0.4, 0.5, 0.6, 0.7, 0.8};
 
     public VampireEnchantment(ResourceLocation identifier) {
         super(identifier, Rarity.RARE, EnchantmentTarget.MELEE);
+
+        createProperty("chance", (DecimalProperty) level -> CHANCE[level - getMinLevel()]);
+        createProperty("transferRate", (DecimalProperty) level -> TRANSFER_RATE[level - getMinLevel()]);
+        createProperty("cost", new InfoProperty());
     }
 
     @Override
@@ -24,11 +29,11 @@ public class VampireEnchantment extends GrimoireEnchantment {
 
     @Override
     public void onAttack(AttackRecord attackRecord, int level) {
-        int index = clampLevel(level) - 1;
+        level = clampLevel(level);
         LivingEntity e = attackRecord.attacker();
-        if (ThreadLocalRandom.current().nextFloat() < CHANCE[index] && e.getHealth() < e.getMaxHealth() * 0.5f) {
-            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(1, e, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
-            e.heal(attackRecord.damage() * TRANSFER_RATE[index]);
+        if (requireDecimalProperty("chance").randomize(level) && e.getHealth() < e.getMaxHealth() * 0.5f) {
+            Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(2, e, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
+            e.heal((float) (attackRecord.damage() * requireDecimalProperty("transferRate").evaluate(level)));
         }
     }
 }

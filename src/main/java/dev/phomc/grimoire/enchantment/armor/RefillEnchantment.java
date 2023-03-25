@@ -3,6 +3,7 @@ package dev.phomc.grimoire.enchantment.armor;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
 import dev.phomc.grimoire.enchantment.property.DecimalProperty;
+import dev.phomc.grimoire.enchantment.property.InfoProperty;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +17,7 @@ public class RefillEnchantment extends GrimoireEnchantment {
         super(identifier, Rarity.RARE, EnchantmentTarget.HELMET);
 
         createProperty("threshold", (DecimalProperty) level -> level * 0.2);
+        createProperty("cost", new InfoProperty());
     }
 
     @Override
