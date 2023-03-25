@@ -6,7 +6,9 @@ import dev.phomc.grimoire.enchantment.property.DecimalProperty;
 import dev.phomc.grimoire.enchantment.property.IntegerProperty;
 import dev.phomc.grimoire.enchantment.property.Property;
 import dev.phomc.grimoire.item.Gemstone;
+import dev.phomc.grimoire.utils.StringUtils;
 import eu.pb4.polymer.core.api.other.PolymerEnchantment;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -23,9 +25,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
 
 public abstract class GrimoireEnchantment extends DummyEnchantment implements PolymerEnchantment, EnchantmentEventListener {
@@ -100,6 +100,17 @@ public abstract class GrimoireEnchantment extends DummyEnchantment implements Po
     @NotNull
     public ConditionalProperty requireConditionalProperty(String property) {
         return (ConditionalProperty) requireProperty(property);
+    }
+
+    @NotNull
+    public List<Component> getPropertyDescription(int level) {
+        List<Component> lines = new ArrayList<>(StringUtils.formatEnchantmentDesc(Component.translatable(getDescriptionId() + ".desc"), this, level));
+        for (Map.Entry<String, Property<?>> e : propertyMap.entrySet()) {
+            if (e.getValue() instanceof ConditionalProperty p && p.hasExtraDescription() && p.evaluate(level)) {
+                lines.addAll(StringUtils.formatEnchantmentDesc(Component.translatable(getDescriptionId() + ".desc." + e.getKey()), this, level));
+            }
+        }
+        return lines;
     }
 
     @Override

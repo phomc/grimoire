@@ -1,6 +1,7 @@
 package dev.phomc.grimoire.enchantment.tool;
 
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
+import dev.phomc.grimoire.enchantment.property.IntegerProperty;
 import dev.phomc.grimoire.tags.GrimoireBlockTags;
 import dev.phomc.grimoire.utils.MathUtils;
 import net.minecraft.core.BlockPos;
@@ -11,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 public class TunnelEnchantment extends AbstractDiggingEnchantment {
     public TunnelEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.UNCOMMON, EnchantmentTarget.PICKAXE.or(EnchantmentTarget.SHOVEL));
+
+        createProperty("width", (IntegerProperty) level -> level + 1);
     }
 
     public int getMaxLevel() {

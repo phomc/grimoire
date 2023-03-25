@@ -33,7 +33,7 @@ public class ThunderEnchantment extends GrimoireEnchantment {
     @Override
     public final void onAttack(AttackRecord attackRecord, int enchantLevel) {
         enchantLevel = clampLevel(enchantLevel);
-        if (attackRecord.attacker() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < 0.25f * enchantLevel) {
+        if (attackRecord.attacker() instanceof ServerPlayer && requireDecimalProperty("chance").randomize(enchantLevel)) {
             Level level = attackRecord.victim().level;
             LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
             if (lightningBolt == null) return;

@@ -2,14 +2,15 @@ package dev.phomc.grimoire.enchantment.tool;
 
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 public class SmeltingEnchantment extends GrimoireEnchantment {
     public SmeltingEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.UNCOMMON, EnchantmentTarget.DIGGER);
+
+        createProperty("chance", (DecimalProperty) level -> level * 0.25);
     }
 
     public int getMaxLevel() {
@@ -17,7 +18,6 @@ public class SmeltingEnchantment extends GrimoireEnchantment {
     }
 
     public boolean shouldSmelt(int level) {
-        if (clampLevel(level) == getMaxLevel()) return true;
-        return ThreadLocalRandom.current().nextFloat() < 0.25f * level;
+        return requireDecimalProperty("chance").randomize(level);
     }
 }

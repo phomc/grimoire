@@ -6,8 +6,11 @@ import dev.phomc.grimoire.enchantment.property.DecimalProperty;
 import dev.phomc.grimoire.enchantment.property.IntegerProperty;
 import dev.phomc.grimoire.enchantment.property.Property;
 import net.minecraft.network.chat.Component;
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +25,14 @@ public class StringUtils {
         String[] X = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
         String[] I = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
         return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];
+    }
+
+    public static List<Component> formatEnchantmentDesc(Component component, GrimoireEnchantment enc, int level) {
+        List<Component> lines = new ArrayList<>();
+        for (String s : WordUtils.wrap(formatEnchantmentDesc(component.getString(), enc, level), 40, "\n", false).split("\\n")) {
+            lines.add(Component.literal(s));
+        }
+        return lines;
     }
 
     public static String formatEnchantmentDesc(String str, GrimoireEnchantment enc, int level) {
@@ -48,7 +59,7 @@ public class StringUtils {
                 } else if (property instanceof IntegerProperty p) {
                     int val = p.evaluate(level);
                     switch (format) {
-                        case "I" -> replaced = intToRoman(val);
+                        case "I" -> replaced = val == 0 ? "0" : intToRoman(val);
                         case "ts" -> replaced = String.valueOf(val / 20.0);
                         default -> replaced = String.valueOf(val);
                     }
