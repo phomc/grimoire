@@ -4,6 +4,9 @@ import dev.phomc.grimoire.accessor.ServerPlayerAccessor;
 import dev.phomc.grimoire.accessor.VelocityNavigator;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.property.ConditionalProperty;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
+import dev.phomc.grimoire.enchantment.property.InfoProperty;
 import dev.phomc.grimoire.event.AttackRecord;
 import dev.phomc.grimoire.utils.MathUtils;
 import net.minecraft.core.particles.ParticleTypes;
@@ -20,16 +23,32 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DashEnchantment extends GrimoireEnchantment {
-    private static final float[] CHANCES = new float[]{0.4f, 0.5f, 0.6f, 0.75f};
-    private static final float[] DAMAGE_PERCENTAGE = new float[]{0.6f, 0.7f, 0.8f, 1.0f};
-    private static final float SPECIAL_DAMAGE_PERCENTAGE = 1.2f;
-    private static final float[] RADIUS = new float[]{0.5f, 0.6f, 0.7f, 0.7f};
+    private static final double[] CHANCES = new double[]{0.4, 0.5, 0.6, 0.75};
+    private static final double[] DAMAGE_PERCENTAGE = new double[]{0.6, 0.7, 0.8, 1.0};
+    private static final double SPECIAL_DAMAGE_PERCENTAGE = 1.2f;
+    private static final double[] RADIUS = new double[]{0.5, 0.6, 0.7, 0.7};
 
     public DashEnchantment(ResourceLocation identifier) {
         super(identifier, Rarity.VERY_RARE, EnchantmentTarget.MELEE);
+
+        createProperty("chance", (DecimalProperty) level -> CHANCES[level - getMinLevel()]);
+        createProperty("damageRatio", (DecimalProperty) level -> DAMAGE_PERCENTAGE[level - getMinLevel()]);
+        createProperty("radius", (DecimalProperty) level -> RADIUS[level - getMinLevel()]);
+        createProperty("specialDamageRatio", (DecimalProperty) level -> SPECIAL_DAMAGE_PERCENTAGE);
+        createProperty("finalBonus", new ConditionalProperty() {
+            @Override
+            public boolean hasExtraDescription() {
+                return true;
+            }
+
+            @Override
+            public Boolean evaluate(int level) {
+                return level == getMaxLevel();
+            }
+        });
+        createProperty("cost", new InfoProperty());
     }
 
     @Override
@@ -39,14 +58,16 @@ public class DashEnchantment extends GrimoireEnchantment {
 
     @Override
     public void onAttack(AttackRecord attackRecord, int level) {
+        level = clampLevel(level);
+
         if (attackRecord.attacker() instanceof ServerPlayer player) {
             // prevent recursive calls; also intended feature: can not do dash while being navigated
             if (((ServerPlayerAccessor) player).isNavigated()) return;
-            int index = clampLevel(level) - 1;
 
-            if (ThreadLocalRandom.current().nextFloat() < CHANCES[index]) {
+            if (requireDecimalProperty("chance").randomize(level)) {
                 Vec3 dir = MathUtils.getDirection(attackRecord.attacker());
                 DamageSource damageSource = player.level.damageSources().playerAttack(player);
+                int finalLevel = level;
                 VelocityNavigator nav = new VelocityNavigator(dir.multiply(8.0, 8.0, 8.0), 0.15f) {
                     @Override
                     public void onTick(boolean lastTick) {
@@ -54,15 +75,17 @@ public class DashEnchantment extends GrimoireEnchantment {
                         ((ServerLevel) player.level).sendParticles(ParticleTypes.EXPLOSION, pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);
                         player.level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 2.0f, 1.0f);
 
-                        float radius = RADIUS[index];
-                        float damagePercent = lastTick && level == getMaxLevel() ? SPECIAL_DAMAGE_PERCENTAGE : DAMAGE_PERCENTAGE[index];
+                        double radius = requireDecimalProperty("radius").evaluate(finalLevel);
+                        double damagePercent = lastTick && requireConditionalProperty("finalBonus").evaluate(finalLevel) ?
+                                requireDecimalProperty("specialDamageRatio").evaluate(finalLevel) :
+                                requireDecimalProperty("damageRatio").evaluate(finalLevel);
                         AABB box = player.getBoundingBox().inflate(radius, radius, radius);
                         List<LivingEntity> list = player.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forCombat(), player, box);
                         for (LivingEntity livingEntity : list) {
                             // multiple damages will be discarded because there is a short invulnerable time between
                             // attacks, so we have to reset it first:
                             livingEntity.invulnerableTime = 0;
-                            livingEntity.hurt(damageSource, attackRecord.damage() * damagePercent);
+                            livingEntity.hurt(damageSource, (float) (attackRecord.damage() * damagePercent));
                         }
 
                         Objects.requireNonNull(attackRecord.weapon()).hurtAndBreak(list.size(), player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));

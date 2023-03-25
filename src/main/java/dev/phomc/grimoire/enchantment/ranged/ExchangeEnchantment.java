@@ -3,6 +3,8 @@ package dev.phomc.grimoire.enchantment.ranged;
 import dev.phomc.grimoire.Grimoire;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
+import dev.phomc.grimoire.enchantment.property.InfoProperty;
 import dev.phomc.grimoire.event.ProjectileHitRecord;
 import dev.phomc.grimoire.utils.DevModeUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +25,9 @@ public class ExchangeEnchantment extends GrimoireEnchantment {
 
     public ExchangeEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.VERY_RARE, EnchantmentTarget.RANGED);
+
+        createProperty("cost", new InfoProperty());
+        createProperty("blockPerDurability", (DecimalProperty) level -> 1.0 / COST_MULTIPLIER[level - getMinLevel()]);
 
         DevModeUtils.runInDev(() -> Grimoire.LOGGER.info("Exchange travelling cost: {}", Arrays.toString(COST_MULTIPLIER)));
     }

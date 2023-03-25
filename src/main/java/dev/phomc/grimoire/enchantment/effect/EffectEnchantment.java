@@ -1,13 +1,14 @@
 package dev.phomc.grimoire.enchantment.effect;
 
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
+import dev.phomc.grimoire.enchantment.property.IntegerProperty;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 
 public class EffectEnchantment extends GrimoireEnchantment {
@@ -18,6 +19,10 @@ public class EffectEnchantment extends GrimoireEnchantment {
         super(identifier, rarity, target);
         this.effect = effect;
         this.effectStages = effectStages;
+
+        createProperty("amplifier", (IntegerProperty) level -> effectStages[level - getMinLevel()].amplifier());
+        createProperty("duration", (IntegerProperty) level -> effectStages[level - getMinLevel()].duration());
+        createProperty("chance", (DecimalProperty) level -> effectStages[level - getMinLevel()].chance());
     }
 
     @Override
@@ -26,9 +31,13 @@ public class EffectEnchantment extends GrimoireEnchantment {
     }
 
     public void execute(LivingEntity entity, int level) {
-        int index = clampLevel(level) - 1;
-        float rand = ThreadLocalRandom.current().nextFloat();
-        if (rand > effectStages[index].chance()) return;
-        entity.addEffect(new MobEffectInstance(effect, effectStages[index].duration(), effectStages[index].amplifier()));
+        level = clampLevel(level);
+        if (requireDecimalProperty("chance").randomize(level)) {
+            entity.addEffect(new MobEffectInstance(
+                    effect,
+                    requireIntegerProperty("duration").evaluate(level),
+                    requireIntegerProperty("amplifier").evaluate(level)
+            ));
+        }
     }
 }

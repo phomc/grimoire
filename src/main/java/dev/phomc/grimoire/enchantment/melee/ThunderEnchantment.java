@@ -3,6 +3,8 @@ package dev.phomc.grimoire.enchantment.melee;
 import dev.phomc.grimoire.accessor.LightningBoltAccessor;
 import dev.phomc.grimoire.enchantment.EnchantmentTarget;
 import dev.phomc.grimoire.enchantment.GrimoireEnchantment;
+import dev.phomc.grimoire.enchantment.property.DecimalProperty;
+import dev.phomc.grimoire.enchantment.property.InfoProperty;
 import dev.phomc.grimoire.event.AttackRecord;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,6 +20,9 @@ public class ThunderEnchantment extends GrimoireEnchantment {
 
     public ThunderEnchantment(@NotNull ResourceLocation identifier) {
         super(identifier, Rarity.UNCOMMON, EnchantmentTarget.MELEE);
+
+        createProperty("chance", (DecimalProperty) level -> 0.25 * level);
+        createProperty("cost", new InfoProperty());
     }
 
     @Override
@@ -28,7 +33,7 @@ public class ThunderEnchantment extends GrimoireEnchantment {
     @Override
     public final void onAttack(AttackRecord attackRecord, int enchantLevel) {
         enchantLevel = clampLevel(enchantLevel);
-        if (attackRecord.attacker() instanceof ServerPlayer && ThreadLocalRandom.current().nextFloat() < 0.25f * enchantLevel) {
+        if (attackRecord.attacker() instanceof ServerPlayer && requireDecimalProperty("chance").randomize(enchantLevel)) {
             Level level = attackRecord.victim().level;
             LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
             if (lightningBolt == null) return;

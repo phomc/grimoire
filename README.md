@@ -24,3 +24,20 @@ PhoMC Discord server: https://discord.gg/tbJUamaCbP
 3. Ensure it can't be abused. Idea: reduce item's durability, define conflicts
 4. No "permanent effect" enchantment! e.g: grant "speed" while wearing armour
 5. Chance is preferred over "cooldown"
+
+## Locale
+### * Enchantment description placeholders
+Grammar: `{format:key}` or `{key}`
+
+- Conditional property format:
+  + i: Show icon tick or cross
+  + yn: Show yes or no
+  + Default: true or false (not localized)
+- Integer property format:
+  + I: Format as roman number
+  + ts: Given ticks, convert ticks to seconds
+  + Default: integer
+- Decimal property format (formatted up to 2 decimal places)
+  + ts: Given ticks, convert ticks to seconds
+  + %: Given 0.0 - 1.0, multiply by 100.0 to get percentage
+  + Default: decimal
