@@ -36,7 +36,9 @@ public class ScriptoriumGUI extends SimpleGui {
         }
 
         for (int i : BACKGROUND_SLOTS) {
-            setSlot(i, new GuiElementBuilder(Items.BARRIER, 1).setCallback((index, type, action) -> {
+            setSlot(i, new GuiElementBuilder(Items.GRAY_STAINED_GLASS_PANE, 1)
+                    .setName(Component.empty())
+                    .setCallback((index, type, action) -> {
 
             }));
         }
