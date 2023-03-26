@@ -98,7 +98,7 @@ public class LootRegistry {
             @Override
             public void run() {
                 Grimoire.LOGGER.info("{} contains {}", block.getName().getString(), Arrays.stream(pairs)
-                        .map(p -> p.getSecond() + " " + p.getFirst().getType().getId())
+                        .map(p -> String.format("%.1f%% ", p.getSecond() == null ? 100 : p.getSecond() * 100d) + p.getFirst().getType().getId())
                         .collect(Collectors.joining(", ")));
             }
         });
