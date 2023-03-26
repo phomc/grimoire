@@ -2,7 +2,7 @@
 
 A Fabric server-side mod to enhance item upgrade mechanism.
 
-**Currently in progress. Not ready for production!**
+Modrinth: https://modrinth.com/mod/grimoire
 
 ## Features
 - Custom enchantments
