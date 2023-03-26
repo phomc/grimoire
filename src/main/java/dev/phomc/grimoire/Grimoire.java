@@ -2,6 +2,7 @@ package dev.phomc.grimoire;
 
 import dev.phomc.grimoire.command.CommandRegistry;
 import dev.phomc.grimoire.enchantment.EnchantmentRegistry;
+import dev.phomc.grimoire.event.listener.LootTableModifyListener;
 import dev.phomc.grimoire.event.listener.UseBlockListener;
 import dev.phomc.grimoire.item.ItemRegistry;
 import net.fabricmc.api.DedicatedServerModInitializer;
@@ -17,5 +18,6 @@ public class Grimoire implements DedicatedServerModInitializer {
         ItemRegistry.init();
         CommandRegistry.init();
         new UseBlockListener();
+        new LootTableModifyListener();
     }
 }
